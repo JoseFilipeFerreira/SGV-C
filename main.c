@@ -4,5 +4,5 @@
 int main() {
     initClients();
     printf("%d\n", searchClient("F2916"));
-    printf("%d\n", getClientLetter('A'));
+    printf("%d\n", getClientLetter('B'));
 }
