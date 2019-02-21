@@ -7,8 +7,10 @@ void readClients() {
     int i;
     FILE* f = fopen("./db/Clientes.txt", "r");
     char* buff = malloc(10);
-    for(i = 0; fgets(buff, 10, f); i++)
+    for(i = 0; fgets(buff, 10, f); i++) {
         clientes[i] = strdup(buff);
+        clientes[i][5] = '\0';
+    }
     clientNumber = i;
 }
 

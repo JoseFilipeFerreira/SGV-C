@@ -3,6 +3,6 @@
 
 int main() {
     initClients();
-    int productNumber = verifyProducts(readProducts());
-    printf("%d\n", searchClient("F2916\r\n"));
+    printf("%d\n", searchClient("F2916"));
+    printf("%d\n", getClientLetter('A'));
 }
