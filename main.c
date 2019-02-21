@@ -3,6 +3,8 @@
 
 int main() {
     initClients();
-    printf("%d\n", searchClient("F2916"));
+    initProducts();
+    printf("Client Cenas exists? %d\n", searchClient("F2916"));
+    printf("Product Cenas exists? %d\n", searchProduct("FD1087"));
     printf("%d\n", getClientLetter('B'));
 }

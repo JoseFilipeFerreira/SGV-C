@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int readProducts();
+int searchProduct(char*);
 
-int verifyProducts();
+int getProductNumber();
+
+void initProducts();
