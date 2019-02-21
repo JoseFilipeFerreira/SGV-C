@@ -4,4 +4,8 @@
 
 int searchClient(char*);
 
+int getClientNumber();
+
+int getClientLetter(char);
+
 void initClients();

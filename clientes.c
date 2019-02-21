@@ -29,6 +29,18 @@ int searchClient(char* id) {
     return 0;
 }
 
+int getClientNumber() {
+    return clientNumber;
+}
+
+int getClientLetter(char id) {
+    int i, r;
+    r = 0;
+    for(i = 0; i < clientNumber; i++)
+        if(clientes[i][0] == id) r++;
+    return r;
+}
+
 void initClients() {
     readClients();
     verifyClients();
