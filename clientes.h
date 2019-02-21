@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int readClients();
+int searchClient(char*);
 
-int verifyClients(int);
-
-int searchClient(char*, int);
+void initClients();
