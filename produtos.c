@@ -20,8 +20,10 @@ void verifyProducts() {
     int r, w, id;
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%*2c%4d%*s", &id);
-        if(id >= 1000 && id <= 9999) 
-            produtos[w++] = strdup(produtos[r]);
+        if(id >= 1000 && id <= 9999) { 
+            produtos[w] = malloc(10);
+            strcpy(produtos[w++], produtos[r]);
+        }
     }
     productNumber = w;
 }
