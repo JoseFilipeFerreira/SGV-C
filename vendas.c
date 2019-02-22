@@ -5,9 +5,9 @@
 char* vendas[1000000];
 int salesNumber;
 
-void readVendas() {
+void readSalesFile(char* path) {
     int i;
-    FILE* f = fopen("./db/Vendas_1M.txt", "r");
+    FILE* f = fopen(path, "r");
     char* buff = malloc(35);
     for(i = 0; fgets(buff, 35, f); i++) {
         vendas[i] = malloc(35);
@@ -16,12 +16,17 @@ void readVendas() {
     salesNumber = i;    
 }
 
+void readVendas() {
+    readSalesFile("./db/Vendas_1M.txt");
+}
+
 void verifySales() {
     int r, w, quantity, filial, month;
     float price;
     char* product = malloc(10);
     char* client = malloc(10);
     char saleType;
+    FILE* f = fopen("./db/Vendas_1MValidas.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
         sscanf(vendas[r], "%s %f %d %c %s %d %d%*2c", product, &price, &quantity, &saleType, client, &month, &filial);
         if(filial > 3 || filial < 1);
@@ -31,10 +36,11 @@ void verifySales() {
         else if(quantity > 250 || quantity < 0);
         else if(price > 999.99 && price < 0);
         else if(!searchProduct(product));
-        else vendas[w++] = strdup(vendas[r]);
+        else fprintf(f, "%s", vendas[r]);
         printf("%d\n", r);
     }
-    salesNumber = w;
+    fclose(f);
+    readSalesFile("./db/Vendas_1MValidas.txt");
 }
 
 int getSalesNumber() {
