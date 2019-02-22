@@ -26,12 +26,13 @@ void verifySales() {
         sscanf(vendas[r], "%s %f %d %c %s %d %d%*2c", product, &price, &quantity, &saleType, client, &month, &filial);
         if(filial > 3 || filial < 1);
         else if(month > 12 || month < 1);
-        /*else if(!searchClient(client));*/
+        else if(!searchClient(client));
         else if(saleType != 'P' && saleType != 'N');
         else if(quantity > 250 || quantity < 0);
         else if(price > 999.99 && price < 0);
-        /*else if(!searchProduct(product));*/
+        else if(!searchProduct(product));
         else vendas[w++] = strdup(vendas[r]);
+        printf("%d\n", r);
     }
     salesNumber = w;
 }
