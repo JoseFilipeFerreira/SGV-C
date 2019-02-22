@@ -37,7 +37,6 @@ void verifySales() {
         else if(price > 999.99 && price < 0);
         else if(!searchProduct(product));
         else fprintf(f, "%s", vendas[r]);
-        printf("%d\n", r);
     }
     fclose(f);
     readSalesFile("./db/Vendas_1MValidas.txt");

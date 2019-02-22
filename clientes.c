@@ -20,8 +20,11 @@ void verifyClients() {
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%*c%4d%*s", &id);
         if(id >= 1000 && id <= 5000) { 
-            clientes[w] = malloc(10);
-            strcpy(clientes[w++], clientes[r]);
+            if(w != r) {
+                clientes[w] = malloc(10);
+                strcpy(clientes[w], clientes[r]);
+            }
+            w++;
         }
     }
     clientNumber = w;
