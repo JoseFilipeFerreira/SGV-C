@@ -9,7 +9,8 @@ void readProducts() {
     FILE* f = fopen("./db/Produtos.txt", "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
-        produtos[i] = strdup(buff);
+        produtos[i] = malloc(10);
+        strcpy(produtos[i], buff);
         produtos[i][6] = '\0';
     }
     productNumber = i;
