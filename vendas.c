@@ -36,10 +36,15 @@ void verifySales() {
         else if(quantity > 250 || quantity < 0);
         else if(price > 999.99 && price < 0);
         else if(!searchProduct(product));
-        else fprintf(f, "%s", vendas[r]);
+        else {
+            fprintf(f, "%s", vendas[r]);
+            if(w != r)
+                strcpy(vendas[w], vendas[r]);
+            w++;
+        }
     }
     fclose(f);
-    readSalesFile("./db/Vendas_1MValidas.txt");
+    salesNumber = w;
 }
 
 int getSalesNumber() {
