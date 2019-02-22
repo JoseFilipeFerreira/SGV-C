@@ -13,6 +13,7 @@ void readClients() {
         clientes[i][5] = '\0';
     }
     clientNumber = i;
+    fclose(f);
 }
 
 void verifyClients() {
@@ -20,8 +21,11 @@ void verifyClients() {
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%*c%4d%*s", &id);
         if(id >= 1000 && id <= 5000) { 
-            if(w != r)
+            if(w != r) {
+                clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
+                free(clientes[r]);
+            }
             w++;
         }
     }

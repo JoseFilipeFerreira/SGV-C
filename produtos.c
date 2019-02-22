@@ -13,7 +13,9 @@ void readProducts() {
         strcpy(produtos[i], buff);
         produtos[i][6] = '\0';
     }
+    free(buff);
     productNumber = i;
+    fclose(f);
 }
 
 void verifyProducts() {
@@ -21,8 +23,11 @@ void verifyProducts() {
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%*2c%4d%*s", &id);
         if(id >= 1000 && id <= 9999) {
-            if(w != r) 
+            if(w != r) {
+                produtos[w] = malloc(10); 
                 strcpy(produtos[w], produtos[r]);
+                free(produtos[r]);
+            }
             w++;
         }
     }
