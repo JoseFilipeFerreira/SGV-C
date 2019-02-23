@@ -4,5 +4,5 @@
 
 int main() {
     initDB();
-    printf("%d %d %d\n", getProductNumber(), getSalesNumber(), getClientNumber());
+    printf("%d %d %d\n", getSalesNumber(), getClientNumber(), getProductNumber());
 }

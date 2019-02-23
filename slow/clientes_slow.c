@@ -1,8 +1,6 @@
 #include "clientes.h"
-#include <gmodule.h>
 
 char* clientes[20000];
-GHashTable* fast;
 int clientNumber;
 
 void readClients() {
@@ -20,19 +18,25 @@ void readClients() {
 
 void verifyClients() {
     int r, w, id;
-    fast = g_hash_table_new(g_str_hash, g_str_equal);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%*c%4d%*s", &id);
         if(id >= 1000 && id <= 5000) { 
-            if(g_hash_table_add(fast, clientes[r]))
-                w++;
+            if(w != r) {
+                clientes[w] = malloc(10);
+                strcpy(clientes[w], clientes[r]);
+                free(clientes[r]);
+            }
+            w++;
         }
     }
     clientNumber = w;
 }
 
 int searchClient(char* id) {
-    return (g_hash_table_contains(fast, id) != 0L);
+    int i;
+    for(i = 0; i < clientNumber; i++)
+        if(!strcmp(clientes[i], id)) return 1;
+    return 0;
 }
 
 int getClientNumber() {
@@ -40,13 +44,10 @@ int getClientNumber() {
 }
 
 int getClientLetter(char id) {
-    int r;
+    int i, r;
     r = 0;
-    GHashTableIter iter;
-    gpointer key, value;
-    g_hash_table_iter_init(&iter, fast);
-    while(g_hash_table_iter_next(&iter, &key, &value))
-            if(((char*)key)[0] == id) r++;
+    for(i = 0; i < clientNumber; i++)
+        if(clientes[i][0] == id) r++;
     return r;
 }
 
