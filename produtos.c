@@ -14,23 +14,21 @@ void readProducts() {
         buff[6] = '\0';
         produtos[i] = malloc(10);
         strcpy(produtos[i], buff);
-        g_hash_table_add(productTable, produtos[i]);
     }
     free(buff);
     productNumber = i;
     fclose(f);
 }
 
-gboolean validProduct(gpointer key, gpointer value, gpointer user_data) {
-    int id;
-    sscanf((char*)key, "%*2c%4d%*s", &id);
-    if(id >= 1000 && id <= 9999)
-        return FALSE;
-    return TRUE;
-}
-
 void verifyProducts() {
-    productNumber -= g_hash_table_foreach_remove(productTable, validProduct, "");
+    int r, w, id;
+    for(r = w = 0; r < productNumber; r++) {
+        sscanf(produtos[r], "%*2c%4d%*s", &id);
+        if(id >= 1000 && id <= 9999)
+            if(g_hash_table_add(productTable, produtos[r]))
+                w++;
+    }
+    productNumber = w;
 }
 
 int searchProduct(char* id) {

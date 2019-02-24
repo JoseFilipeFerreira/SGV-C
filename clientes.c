@@ -2,7 +2,7 @@
 #include <gmodule.h>
 
 char* clientes[20000];
-GHashTable* fast;
+GHashTable* clientTable;
 int clientNumber;
 
 void readClients() {
@@ -20,11 +20,11 @@ void readClients() {
 
 void verifyClients() {
     int r, w, id;
-    fast = g_hash_table_new(g_str_hash, g_str_equal);
+    clientTable = g_hash_table_new(g_str_hash, g_str_equal);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%*c%4d%*s", &id);
         if(id >= 1000 && id <= 5000) { 
-            if(g_hash_table_add(fast, clientes[r]))
+            if(g_hash_table_add(clientTable, clientes[r]))
                 w++;
         }
     }
@@ -32,7 +32,7 @@ void verifyClients() {
 }
 
 int searchClient(char* id) {
-    return (g_hash_table_contains(fast, id) != 0L);
+    return (g_hash_table_contains(clientTable, id) != 0L);
 }
 
 int getClientNumber() {
@@ -44,7 +44,7 @@ int getClientLetter(char id) {
     r = 0;
     GHashTableIter iter;
     gpointer key, value;
-    g_hash_table_iter_init(&iter, fast);
+    g_hash_table_iter_init(&iter, clientTable);
     while(g_hash_table_iter_next(&iter, &key, &value))
             if(((char*)key)[0] == id) r++;
     return r;
