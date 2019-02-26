@@ -1,7 +1,10 @@
 #include "produtos.h"
 #include <gmodule.h>
 
-char* produtos[200000];
+#define MAXPROD 200000
+#define MAXBPROD 10
+
+char* produtos[MAXPROD];
 GHashTable* productTable;
 int productNumber;
 
@@ -9,11 +12,10 @@ void readProducts() {
     int i;
     FILE* f = fopen("./db/Produtos.txt", "r");
     productTable = g_hash_table_new(g_str_hash, g_str_equal);
-    char* buff = malloc(10);
-    for(i = 0; fgets(buff, 10, f); i++) {
-        buff[6] = '\0';
-        produtos[i] = malloc(10);
-        strcpy(produtos[i], buff);
+    char* buff = malloc(MAXBPROD);
+    for(i = 0; fgets(buff, MAXBPROD, f); i++) {
+        produtos[i] = malloc(MAXBPROD);
+        strcpy(produtos[i], strtok(buff, "\n\r"));
     }
     free(buff);
     productNumber = i;

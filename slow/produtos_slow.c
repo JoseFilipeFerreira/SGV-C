@@ -6,12 +6,11 @@ int productNumber;
 
 void readProducts() {
     int i;
-    FILE* f = fopen("./db/Produtos.txt", "r");
+    FILE* f = fopen("../db/Produtos.txt", "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
         produtos[i] = malloc(10);
-        strcpy(produtos[i], buff);
-        produtos[i][6] = '\0';
+        strcpy(produtos[i], strtok(buff, "\n\r"));
     }
     free(buff);
     productNumber = i;

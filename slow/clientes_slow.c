@@ -5,12 +5,11 @@ int clientNumber;
 
 void readClients() {
     int i;
-    FILE* f = fopen("./db/Clientes.txt", "r");
+    FILE* f = fopen("../db/Clientes.txt", "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
-        clientes[i] = malloc(10);
-        strcpy(clientes[i], buff);
-        clientes[i][5] = '\0';
+        clientes[i] = malloc(strlen(buff)+1);
+        strcpy(clientes[i], strtok(buff, "\n\r"));
     }
     clientNumber = i;
     fclose(f);
@@ -18,9 +17,10 @@ void readClients() {
 
 void verifyClients() {
     int r, w, id;
+    char c;
     for(r = w = 0; r < clientNumber; r++) {
-        sscanf(clientes[r], "%*c%4d%*s", &id);
-        if(id >= 1000 && id <= 5000) { 
+        sscanf(clientes[r], "%c%4d%*s", &c, &id);
+        if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
             if(w != r) {
                 clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
