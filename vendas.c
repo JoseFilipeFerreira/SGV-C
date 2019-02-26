@@ -1,8 +1,20 @@
 #include "clientes.h"
 #include "produtos.h"
 #include "vendas.h"
+#include <gmodule.h>
 
 char* vendas[1000000];
+GHashTable* saleTable;
+
+typedef struct venda {
+    char* produto;
+    int price;
+    int quantity;
+    char saleType;
+    int month;
+    int filial;
+} Venda;
+
 int salesNumber;
 
 void readSalesFile(char* path) {
