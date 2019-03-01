@@ -1,20 +1,8 @@
 #include "clientes.h"
 #include "produtos.h"
 #include "vendas.h"
-#include <gmodule.h>
 
 char* vendas[1000000];
-GHashTable* saleTable;
-
-typedef struct venda {
-    char* produto;
-    int price;
-    int quantity;
-    char saleType;
-    int month;
-    int filial;
-} Venda;
-
 int salesNumber;
 
 void readSalesFile(char* path) {
@@ -30,7 +18,7 @@ void readSalesFile(char* path) {
 }
 
 void readVendas() {
-    readSalesFile("./db/Vendas_1M.txt");
+    readSalesFile("../db/Vendas_1M.txt");
 }
 
 void verifySales() {
@@ -39,7 +27,7 @@ void verifySales() {
     char* product = malloc(10);
     char* client = malloc(10);
     char saleType;
-    FILE* f = fopen("./db/Vendas_1MValidas.txt", "w");
+    FILE* f = fopen("../db/Vendas_1MValidas.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
         sscanf(vendas[r], "%s %f %d %c %s %d %d%*2c", product, &price, &quantity, &saleType, client, &month, &filial);
         if(filial > 3 || filial < 1);

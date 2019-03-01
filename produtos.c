@@ -1,20 +1,15 @@
 #include "produtos.h"
-#include <gmodule.h>
 
-#define MAXPROD 200000
-#define MAXBPROD 10
+char* produtos[200000];
 
-char* produtos[MAXPROD];
-GHashTable* productTable;
 int productNumber;
 
 void readProducts() {
     int i;
-    FILE* f = fopen("./db/Produtos.txt", "r");
-    productTable = g_hash_table_new(g_str_hash, g_str_equal);
-    char* buff = malloc(MAXBPROD);
-    for(i = 0; fgets(buff, MAXBPROD, f); i++) {
-        produtos[i] = malloc(MAXBPROD);
+    FILE* f = fopen("../db/Produtos.txt", "r");
+    char* buff = malloc(10);
+    for(i = 0; fgets(buff, 10, f); i++) {
+        produtos[i] = malloc(10);
         strcpy(produtos[i], strtok(buff, "\n\r"));
     }
     free(buff);
@@ -26,15 +21,23 @@ void verifyProducts() {
     int r, w, id;
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%*2c%4d%*s", &id);
-        if(id >= 1000 && id <= 9999)
-            if(g_hash_table_add(productTable, produtos[r]))
-                w++;
+        if(id >= 1000 && id <= 9999) {
+            if(w != r) {
+                produtos[w] = malloc(10); 
+                strcpy(produtos[w], produtos[r]);
+                free(produtos[r]);
+            }
+            w++;
+        }
     }
     productNumber = w;
 }
 
 int searchProduct(char* id) {
-    return (g_hash_table_contains(productTable,id) != 0L);
+    int i;
+    for(i = 0; i < productNumber; i++)
+        if(!strcmp(produtos[i], id)) return 1;
+    return 0;
 }
 
 int getProductNumber() {
