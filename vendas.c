@@ -22,21 +22,27 @@ void readVendas() {
 }
 
 void verifySales() {
-    int r, w, quantity, filial, month;
-    float price;
-    char* product = malloc(10);
-    char* client = malloc(10);
-    char saleType;
+    int r, w, i;
+    char* buff = malloc(10);
+    char* tempSale;
+    char* fieldOfSales[7];
     FILE* f = fopen("db/Vendas_1MValidas.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
-        sscanf(vendas[r], "%s %f %d %c %s %d %d%*2c", product, &price, &quantity, &saleType, client, &month, &filial);
-        if(filial > 3 || filial < 1);
-        else if(month > 12 || month < 1);
-        else if(saleType != 'P' && saleType != 'N');
-        else if(quantity > 250 || quantity < 0);
-        else if(price > 999.99 && price < 0);
-        else if(!searchClient(client));
-        else if(!searchProduct(product));
+        tempSale = malloc(strlen(vendas[r]) + 1);
+        strcpy(tempSale, vendas[r]);
+        buff = strtok(tempSale, " ");
+        for(i = 0; i < 7 && buff; i++) {
+            fieldOfSales[i] = malloc(strlen(buff) + 1);
+            strcpy(fieldOfSales[i], buff);
+            buff = strtok(NULL, " ");
+        }
+        if(atoi(fieldOfSales[6]) > 3 || atoi(fieldOfSales[6]) < 1);
+        else if(atoi(fieldOfSales[5]) > 12 || atoi(fieldOfSales[5]) < 1);
+        else if(fieldOfSales[3][0] != 'P' && fieldOfSales[3][0] != 'N');
+        else if(atoi(fieldOfSales[2]) > 250 || atoi(fieldOfSales[2]) < 0);
+        else if(atof(fieldOfSales[1]) > 999.99 && atof(fieldOfSales[1]) < 0);
+        else if(!searchClient(fieldOfSales[4]));
+        else if(!searchProduct(fieldOfSales[0]));
         else {
             fprintf(f, "%s", vendas[r]);
             if(w != r) {
@@ -47,8 +53,6 @@ void verifySales() {
             w++;
         }
     }
-    free(product);
-    free(client);
     fclose(f);
     salesNumber = w;
 }
