@@ -5,7 +5,7 @@ int clientNumber;
 
 void readClients() {
     int i;
-    FILE* f = fopen("../db/Clientes.txt", "r");
+    FILE* f = fopen("db/Clientes.txt", "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
         clientes[i] = malloc(strlen(buff)+1);
