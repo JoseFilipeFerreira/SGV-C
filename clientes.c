@@ -18,9 +18,11 @@ void readClients() {
 void verifyClients() {
     int r, w, id;
     char c;
+    FILE* f = fopen("db/ClientesOK.txt", "w");
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
         if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
+            fprintf(f, clientes[r]);
             if(w != r) {
                 clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
@@ -30,6 +32,7 @@ void verifyClients() {
         }
     }
     clientNumber = w;
+    fclose(f);
 }
 
 int searchClient(char* id) {

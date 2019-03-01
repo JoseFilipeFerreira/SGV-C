@@ -26,7 +26,7 @@ void verifySales() {
     char* buff = malloc(10);
     char* tempSale;
     char* fieldOfSales[7];
-    FILE* f = fopen("db/Vendas_1MValidas.txt", "w");
+    FILE* f = fopen("db/VendasOK.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
         tempSale = malloc(strlen(vendas[r]) + 1);
         strcpy(tempSale, vendas[r]);

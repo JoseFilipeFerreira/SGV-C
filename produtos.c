@@ -19,9 +19,11 @@ void readProducts() {
 
 void verifyProducts() {
     int r, w, id;
+    FILE* f = fopen("db/ProdutosOK.txt", "w");
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%*2c%4d%*s", &id);
         if(id >= 1000 && id <= 9999) {
+            fprintf(f, produtos[r]);
             if(w != r) {
                 produtos[w] = malloc(10); 
                 strcpy(produtos[w], produtos[r]);
@@ -31,6 +33,7 @@ void verifyProducts() {
         }
     }
     productNumber = w;
+    fclose(f);
 }
 
 int searchProduct(char* id) {
