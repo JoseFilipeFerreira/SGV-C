@@ -2,16 +2,17 @@
 CFLAGS= -ansi -O2 
 
 FICHEIROS= main.o produtos.o clientes.o vendas.o
+FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
 EXECUTAVEL=main.out
 
 $(EXECUTAVEL): $(FICHEIROS)
 	gcc -o $(EXECUTAVEL) $(FICHEIROS)
 
 clean:
-	rm -rf *.o $(EXECUTAVEL) db/*Validas.txt db/*Validos.txt
+	rm -rf *.o $(EXECUTAVEL) $(FICHEIROSVAL)
 
 inval:
-	rm -rf *.o db/*Validas.txt db/*Validos.txt
+	rm -rf $(FICHEIROSVAL)
 
 grind:
 	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL)
