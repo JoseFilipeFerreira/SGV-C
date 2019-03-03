@@ -1,9 +1,18 @@
 #include "produtos.h"
 
+/**
+\brief Array que contem os produtos.
+*/
 char* produtos[200000];
 
+/**
+\brief Número de produtos no array produtos.
+*/
 int productNumber;
 
+/**
+\brief Lê os produtos de um ficheiro e coloca-os no array produtos.
+*/
 void readProducts() {
     int i;
     FILE* f = fopen("db/Produtos.txt", "r");
@@ -17,6 +26,9 @@ void readProducts() {
     fclose(f);
 }
 
+/**
+\brief Filtra os produtos do array de produtos.
+*/
 void verifyProducts() {
     int r, w, id;
     FILE* f = fopen("db/ProdutosOK.txt", "w");

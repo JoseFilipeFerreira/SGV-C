@@ -1,8 +1,18 @@
 #include "clientes.h"
 
+/**
+\brief Array que contem os clientes.
+*/
 char* clientes[20000];
+
+/**
+\brief Número de clientes no array clientes.
+*/
 int clientNumber;
 
+/**
+\brief Lê os clientes de um ficheiro e coloca-os no array clientes.
+*/
 void readClients() {
     int i;
     FILE* f = fopen("db/Clientes.txt", "r");
@@ -15,6 +25,9 @@ void readClients() {
     fclose(f);
 }
 
+/**
+\brief Filtra os clientes do array de clientes.
+*/
 void verifyClients() {
     int r, w, id;
     char c;

@@ -1,10 +1,20 @@
 #include "clientes.h"
-#include "produtos.h"
-#include "vendas.h"
 
+/**
+\brief Array que contem as vendas.
+*/
 char* vendas[1000000];
+
+/**
+\brief Número de vendas no array vendas.
+*/
 int salesNumber;
 
+/**
+\brief Lê os produtos de um ficheiro e coloca-os no array vendas.
+
+@param path caminho para o ficheiro.
+*/
 void readSalesFile(char* path) {
     int i;
     FILE* f = fopen(path, "r");
@@ -21,6 +31,9 @@ void readVendas() {
     readSalesFile("db/Vendas_1M.txt");
 }
 
+/**
+\brief Filtra as vendas do array de vendas.
+*/
 void verifySales() {
     int r, w, i;
     char* buff = malloc(10);
