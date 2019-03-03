@@ -47,7 +47,7 @@ int getProductNumber() {
     return productNumber;
 }
 
-void initProducts() {
+void initProducts(int filter) {
     readProducts();
-    verifyProducts();
+    if(filter) verifyProducts();
 }

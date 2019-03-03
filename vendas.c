@@ -61,9 +61,10 @@ int getSalesNumber() {
     return salesNumber;
 }
 
-void initDB() {
-    initProducts();
-    initClients();
+void initDB(int filter) {
+    initProducts(filter);
+    initClients(filter);
+    
     readVendas();
-    verifySales();
+    if (filter) verifySales();
 }

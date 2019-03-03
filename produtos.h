@@ -6,4 +6,4 @@ int searchProduct(char*);
 
 int getProductNumber();
 
-void initProducts();
+void initProducts(int);

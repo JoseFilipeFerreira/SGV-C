@@ -8,4 +8,4 @@ int getClientNumber();
 
 int getClientLetter(char);
 
-void initClients();
+void initClients(int);

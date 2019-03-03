@@ -4,4 +4,4 @@
 
 int getSalesNumber();
 
-void initDB();
+void initDB(int);

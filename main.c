@@ -3,6 +3,7 @@
 #include "vendas.h"
 
 int main() {
-    initDB();
+    initDB(1);
     printf("%d %d %d\n", getSalesNumber(), getClientNumber(), getProductNumber());
+    return 0;
 }

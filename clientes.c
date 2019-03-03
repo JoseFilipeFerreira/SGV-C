@@ -54,7 +54,7 @@ int getClientLetter(char id) {
     return r;
 }
 
-void initClients() {
+void initClients(int filter) {
     readClients();
-    verifyClients();
+    if(filter) verifyClients();
 }
