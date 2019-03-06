@@ -9,6 +9,9 @@ EXECUTAVEL=main.out
 $(EXECUTAVEL): $(FICHEIROS)
 	gcc -o $(EXECUTAVEL) $(FICHEIROS)
 
+run:
+	./main.out
+
 clean:
 	rm -rf *.o $(EXECUTAVEL) $(FICHEIROSVAL) $(DOC)
 
