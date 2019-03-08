@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "produtos.h"
-#include "vendas.h"
+#include "clientes.h"
 
 /**
 \brief Devolve o número de vendas armazenadas.
