@@ -1,5 +1,18 @@
 #include "vendas.h"
 
+#define CAMPOSVENDA 7
+
+typedef struct venda {
+    char* codProd;
+    char* codCli;
+    double precoUnit;
+    int quantidade;
+    char* tipo;
+    int mes;
+    int filial;
+} * Venda;
+
+
 /**
 \brief Array que contem as vendas.
 */
@@ -80,4 +93,15 @@ void initDB(int filter) {
     
     readVendas();
     if (filter) verifySales();
+}
+
+void printVenda(Venda vendaAux) {
+    printf("Produto %s - ", vendaAux -> codProd);
+    printf("Cliente: %s ", vendaAux -> codCli);
+    printf("Preco: %f ", vendaAux -> precoUnit);
+    printf("Quant: %d ", vendaAux -> quantidade);
+    printf("Tipo: %s ",  vendaAux -> tipo); 
+    printf("Mes: %d ", vendaAux -> mes);
+    printf("Filial: %d\n ", vendaAux -> filial); 
+    printf("Total da Venda = %f\n", vendaAux->precoUnit * vendaAux->quantidade);
 }

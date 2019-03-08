@@ -13,6 +13,11 @@
 #include "clientes.h"
 
 /**
+\brief Struct para guardar uma venda
+*/ 
+typedef struct venda * Venda;
+
+/**
 \brief Devolve o número de vendas armazenadas.
 */
 int getSalesNumber();
@@ -23,5 +28,12 @@ int getSalesNumber();
 @param filter Indica se é necessário filtrar as vendas, os produtos e os clientes lidos.
 */
 void initDB(int filter);
+
+/**
+\brief Imprime uma venda no terminal.
+
+@param venda A venda a imprimir.
+*/
+void printVenda(Venda vendaAux);
 
 #endif
