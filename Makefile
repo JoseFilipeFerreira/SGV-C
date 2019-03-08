@@ -1,5 +1,5 @@
 ############################# Makefile ##########################
-CFLAGS= -ansi -O2 
+CFLAGS= -O2 
 
 FICHEIROS= main.o produtos.o clientes.o vendas.o
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
