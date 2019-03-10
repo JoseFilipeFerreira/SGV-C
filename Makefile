@@ -1,5 +1,5 @@
 ############################# Makefile ##########################
-CFLAGS= -O2 -ansi `pkg-config --cflags glib-2.0`
+CFLAGS= -g -O2 -ansi `pkg-config --cflags --libs glib-2.0`
 
 FICHEIROS= main.o produtos.o clientes.o vendas.o
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
@@ -7,7 +7,7 @@ DOC = docs
 EXECUTAVEL=main.out
 
 $(EXECUTAVEL): $(FICHEIROS)
-	gcc -o $(EXECUTAVEL) $(FICHEIROS)
+	cc $(CFLAGS) -o $(EXECUTAVEL) $(FICHEIROS)
 
 run:
 	./main.out

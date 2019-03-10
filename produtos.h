@@ -13,7 +13,7 @@
 /**
 \brief Verifica se um dado produto existe.
 */
-int searchProduct(char*);
+int* searchProduct(char*);
 
 /**
 \brief Devolve o número de produtos armazenados.
