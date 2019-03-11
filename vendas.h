@@ -26,14 +26,17 @@ int getSalesNumber();
 \brief Inicializa a base de dados de vendas, produtos e clientes.
 
 @param filter Indica se é necessário filtrar as vendas, os produtos e os clientes lidos.
+@param pathProdutos ficheiro onde estão os produtos
+@param pathClientes ficheiro onde estão os clientes
+@param pathVendas ficheiro onde estão as vendas
 */
-void initDB(int filter);
+void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas);
 
 /**
 \brief Imprime uma venda no terminal.
 
 @param venda A venda a imprimir.
 */
-void printVenda(Venda vendaAux);
+void printVenda(Venda venda);
 
 #endif

@@ -1,10 +1,16 @@
 #include "clientes.h"
 #include <glib.h>
+
 /**
 \brief Array que contem os clientes.
 */
 char* clientes[20000];
+
+/**
+\brief AVL que contem os clientes.
+*/
 GTree* avlC;
+
 /**
 \brief Número de clientes no array clientes.
 */
@@ -12,10 +18,12 @@ int clientNumber;
 
 /**
 \brief Lê os clientes de um ficheiro e coloca-os no array clientes.
+
+@param path ficheiro onde estão os clientes
 */
-void readClients() {
+void readClients(char * path) {
     int i;
-    FILE* f = fopen("db/Clientes.txt", "r");
+    FILE* f = fopen(path, "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
         clientes[i] = malloc(strlen(buff)+1);
@@ -71,7 +79,7 @@ int getClientLetter(char id) {
     return r;
 }
 
-void initClients(int filter) {
-    readClients();
+void initClients(int filter, char * path) {
+    readClients(path);
     if(filter) verifyClients();
 }

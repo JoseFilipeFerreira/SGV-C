@@ -24,7 +24,8 @@ int getProductNumber();
 \brief Inicializa a base de dados de produtos.
 
 @param filter Indica se é necessário filtrar os produtos lidos.
+@param path ficheiro onde estão os produtos
 */
-void initProducts(int filter);
+void initProducts(int filter, char * path);
 
 #endif

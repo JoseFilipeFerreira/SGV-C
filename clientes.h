@@ -29,8 +29,9 @@ int getClientLetter(char);
 \brief Inicializa a base de dados de clientes.
 
 @param filter Indica se é necessário filtrar os clientes lidos.
+@param path ficheiro onde estão os clientes
 */
-void initClients(int filter);
+void initClients(int filter, char * path);
 
 
 #endif

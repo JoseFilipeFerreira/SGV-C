@@ -5,7 +5,12 @@
 \brief Array que contem os produtos.
 */
 char* produtos[200000];
+
+/**
+\brief AVL que contem os produtos.
+*/
 GTree* avlP;
+
 /**
 \brief Número de produtos no array produtos.
 */
@@ -13,10 +18,12 @@ int productNumber;
 
 /**
 \brief Lê os produtos de um ficheiro e coloca-os no array produtos.
+
+@param path ficheiro onde estão os produtos
 */
-void readProducts() {
+void readProducts(char * path) {
     int i;
-    FILE* f = fopen("db/Produtos.txt", "r");
+    FILE* f = fopen(path, "r");
     char* buff = malloc(10);
     for(i = 0; fgets(buff, 10, f); i++) {
         produtos[i] = malloc(10);
@@ -64,7 +71,7 @@ int getProductNumber() {
     return productNumber;
 }
 
-void initProducts(int filter) {
-    readProducts();
+void initProducts(int filter, char * path) {
+    readProducts(path);
     if(filter) verifyProducts();
 }

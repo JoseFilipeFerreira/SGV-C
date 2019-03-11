@@ -2,16 +2,18 @@
 
 #define CAMPOSVENDA 7
 
+/**
+\brief Estrutura para guardar uma venda.
+*/
 typedef struct venda {
-    char* codProd;
-    char* codCli;
-    double precoUnit;
-    int quantidade;
-    char* tipo;
-    int mes;
-    int filial;
+    char* codProd;    /**< código de produto */
+    char* codCli;     /**< código de clientes */
+    double precoUnit; /**< preço unitário */
+    int quantidade;   /**< quantidade comprada */
+    char* tipo;       /**< tipo de compra (N/P) */
+    int mes;          /**< mês da compra */
+    int filial;       /**< filial */
 } * Venda;
-
 
 /**
 \brief Array que contem as vendas.
@@ -26,7 +28,7 @@ int salesNumber;
 /**
 \brief Lê os produtos de um ficheiro e coloca-os no array vendas.
 
-@param path caminho para o ficheiro.
+@param path ficheiro onde estão as vendas
 */
 void readSalesFile(char* path) {
     int i;
@@ -38,10 +40,6 @@ void readSalesFile(char* path) {
     }
     salesNumber = i;
     fclose(f); 
-}
-
-void readVendas() {
-    readSalesFile("db/Vendas_1M.txt");
 }
 
 /**
@@ -87,11 +85,11 @@ int getSalesNumber() {
     return salesNumber;
 }
 
-void initDB(int filter) {
-    initProducts(filter);
-    initClients(filter);
+void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas){
+    initProducts(filter, pathProdutos);
+    initClients(filter, pathClientes);
     
-    readVendas();
+    readSalesFile(pathVendas);
     if (filter) verifySales();
 }
 
