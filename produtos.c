@@ -34,7 +34,7 @@ void readProducts(char * path) {
     fclose(f);
 }
 
-int cmp1(const void* a, const void* b) {
+int cmp1(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
@@ -43,7 +43,7 @@ int cmp1(const void* a, const void* b) {
 */
 void verifyProducts() {
     int r, w, id;
-    avlP = g_tree_new(&cmp1);
+    avlP = g_tree_new_full(&cmp1, NULL, &free, &free);
     FILE* f = fopen("db/ProdutosOK.txt", "w");
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%*2c%4d%*s", &id);

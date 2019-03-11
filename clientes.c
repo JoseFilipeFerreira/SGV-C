@@ -33,7 +33,7 @@ void readClients(char * path) {
     fclose(f);
 }
 
-int cmp(const void* a, const void* b) {
+int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
@@ -43,7 +43,7 @@ int cmp(const void* a, const void* b) {
 void verifyClients() {
     int r, w, id;
     char c;
-    avlC = g_tree_new(&cmp);
+    avlC = g_tree_new_full(&cmp, NULL, &free, &free);
     FILE* f = fopen("db/ClientesOK.txt", "w");
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
