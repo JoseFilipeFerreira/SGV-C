@@ -71,11 +71,20 @@ int getClientNumber() {
     return clientNumber;
 }
 
+gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
+    char* ree = (char*) key;
+    int* r = (int*) ((int**) data)[0];
+    char* id = (char*) ((int**) data)[1];
+    if(ree[0] > *id) return TRUE;
+    if(ree[0] == *id) (*r)++;
+    return FALSE;
+}
+
 int getClientLetter(char id) {
-    int i, r;
+    int r;
     r = 0;
-    for(i = 0; i < clientNumber; i++)
-        if(clientes[i][0] == id) r++;
+    void* cenas[2] = {&r, &id};
+    g_tree_foreach(avlC, clientLetter, &cenas);
     return r;
 }
 

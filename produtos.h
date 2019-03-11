@@ -20,6 +20,8 @@ int* searchProduct(char*);
 */
 int getProductNumber();
 
+int getProductLetter(char);
+
 /**
 \brief Inicializa a base de dados de produtos.
 

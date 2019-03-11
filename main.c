@@ -25,7 +25,6 @@ int messageCheck(char * message){
 int main(int argc, char ** argv) {
     int r = 1;
     /*r = messageCheck("Would you like to filter the input?");*/
-
     initDB(r, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
     printf("%d %d %d\n", getSalesNumber(), getClientNumber(), getProductNumber());
     return 0;

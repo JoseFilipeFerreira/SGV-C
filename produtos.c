@@ -71,6 +71,23 @@ int getProductNumber() {
     return productNumber;
 }
 
+gboolean productLetter(gpointer key, gpointer value, gpointer data) {
+    char* ree = (char*) key;
+    int* r = (int*) ((int**) data)[0];
+    char* id = (char*) ((int**) data)[1];
+    if(ree[0] > *id) return TRUE;
+    if(ree[0] == *id) (*r)++;
+    return FALSE;
+}
+
+int getProductLetter(char id) {
+    int r;
+    r = 0;
+    void* cenas[2] = {&r, &id};
+    g_tree_foreach(avlP, productLetter, &cenas);
+    return r;
+}
+
 void initProducts(int filter, char * path) {
     readProducts(path);
     if(filter) verifyProducts();
