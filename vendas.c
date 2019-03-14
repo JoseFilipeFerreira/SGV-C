@@ -5,7 +5,7 @@
 /**
 \brief Estrutura para guardar uma venda.
 */
-typedef struct venda {
+struct venda {
     char* codProd;    /**< código de produto */
     char* codCli;     /**< código de clientes */
     double precoUnit; /**< preço unitário */
@@ -13,7 +13,7 @@ typedef struct venda {
     char* tipo;       /**< tipo de compra (N/P) */
     int mes;          /**< mês da compra */
     int filial;       /**< filial */
-} * Venda;
+};
 
 /**
 \brief Array que contem as vendas.

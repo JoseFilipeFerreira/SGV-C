@@ -34,6 +34,7 @@ void readClients(char * path) {
 }
 
 int cmp(const void* a, const void* b, void* c) {
+    (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
@@ -43,13 +44,13 @@ int cmp(const void* a, const void* b, void* c) {
 void verifyClients() {
     int r, w, id;
     char c;
-    avlC = g_tree_new_full(&cmp, NULL, &free, &free);
     FILE* f = fopen("db/ClientesOK.txt", "w");
+    avlC = g_tree_new_full(&cmp, NULL, &free, &free);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
         if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
-            fprintf(f, "%s\n", clientes[r]);
             int* content = malloc(sizeof(int));
+            fprintf(f, "%s\n", clientes[r]);
             *content = id;
             g_tree_insert(avlC, clientes[r], content);
             if(w != r) {
@@ -73,17 +74,19 @@ int getClientNumber() {
 
 gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
     char* ree = (char*) key;
-    int* r = (int*) ((int**) data)[0];
+    int* r = ((int**) data)[0];
     char* id = (char*) ((int**) data)[1];
+    (void) value;
     if(ree[0] > *id) return TRUE;
     if(ree[0] == *id) (*r)++;
     return FALSE;
 }
 
 int getClientLetter(char id) {
-    int r;
-    r = 0;
-    void* cenas[2] = {&r, &id};
+    int r = 0;
+    void* cenas[2];
+    cenas[0] = &r;
+    cenas[1] = &id;
     g_tree_foreach(avlC, clientLetter, &cenas);
     return r;
 }

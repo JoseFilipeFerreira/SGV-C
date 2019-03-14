@@ -1,5 +1,5 @@
 ############################# Makefile ##########################
-CFLAGS= -g -O2 -ansi `pkg-config --cflags --libs glib-2.0`
+CFLAGS= -W -Wall -Wextra -pedantic -g -O2 -ansi `pkg-config --cflags --libs glib-2.0`
 
 FICHEIROS= main.o produtos.o clientes.o vendas.o
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
