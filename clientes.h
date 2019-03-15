@@ -33,5 +33,6 @@ int getClientLetter(char);
 */
 void initClients(int filter, char * path);
 
+void clearClients();
 
 #endif

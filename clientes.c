@@ -45,7 +45,7 @@ void verifyClients() {
     int r, w, id;
     char c;
     FILE* f = fopen("db/ClientesOK.txt", "w");
-    avlC = g_tree_new_full(&cmp, NULL, &free, &free);
+    avlC = g_tree_new_full(cmp, NULL, free, free);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
         if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
@@ -54,6 +54,7 @@ void verifyClients() {
             *content = id;
             g_tree_insert(avlC, clientes[r], content);
             if(w != r) {
+                free(clientes[w]);
                 clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
             }
@@ -94,4 +95,8 @@ int getClientLetter(char id) {
 void initClients(int filter, char * path) {
     readClients(path);
     if(filter) verifyClients();
+}
+
+void clearClients() {
+    g_tree_destroy(avlC);
 }

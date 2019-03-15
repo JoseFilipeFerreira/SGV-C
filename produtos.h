@@ -30,4 +30,6 @@ int getProductLetter(char);
 */
 void initProducts(int filter, char * path);
 
+void clearProducts();
+
 #endif

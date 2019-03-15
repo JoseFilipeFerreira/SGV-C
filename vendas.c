@@ -47,7 +47,7 @@ void readSalesFile(char* path) {
 */
 void verifySales() {
     int r, w, i;
-    char* buff = malloc(10);
+    char* buff;
     char* tempSale;
     char* fieldOfSales[7];
     FILE* f = fopen("db/VendasOK.txt", "w");
@@ -70,12 +70,15 @@ void verifySales() {
         else {
             fprintf(f, "%s", vendas[r]);
             if(w != r) {
-                vendas[w] = malloc(35);
+                free(vendas[w]);
+                vendas[w] = malloc(strlen(vendas[r]) + 1);
                 strcpy(vendas[w], vendas[r]);
-                free(vendas[r]);
             }
             w++;
         }
+        for(i = 0; i < 7; i++)
+            free(fieldOfSales[i]);
+        free(tempSale);
     }
     fclose(f);
     salesNumber = w;
@@ -83,6 +86,12 @@ void verifySales() {
 
 int getSalesNumber() {
     return salesNumber;
+}
+
+void cleanVendas() {
+    int i;
+    for(i = 0; i < salesNumber; i++)
+        free(vendas[i]);
 }
 
 void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas){
