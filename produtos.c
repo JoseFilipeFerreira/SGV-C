@@ -56,6 +56,7 @@ void verifyProducts() {
             *content = id;
             g_tree_insert(avlP[c - 'A'], produtos[r], content);
             if(w != r) {
+                free(produtos[w]);
                 produtos[w] = malloc(10); 
                 strcpy(produtos[w], produtos[r]); 
             }
@@ -91,4 +92,10 @@ int getProductLetter(char id) {
 void initProducts(int filter, char * path) {
     readProducts(path);
     if(filter) verifyProducts();
+}
+
+void clearProducts() {
+    int i;
+    for(i = 0; i < 26; i++)
+        g_tree_destroy(avlP[i]);
 }

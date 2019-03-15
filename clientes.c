@@ -54,6 +54,7 @@ void verifyClients() {
             *content = id;
             g_tree_insert(avlC[c - 'A'], clientes[r], content);
             if(w != r) {
+                free(clientes[w]);
                 clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
             }
@@ -89,4 +90,10 @@ int getClientLetter(char id) {
 void initClients(int filter, char * path) {
     readClients(path);
     if(filter) verifyClients();
+}
+
+void clearClients() {
+    int i;
+    for(i = 0; i < 26; i++)
+        g_tree_destroy(avlC[i]);
 }
