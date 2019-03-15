@@ -32,11 +32,4 @@ int getSalesNumber();
 */
 void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas);
 
-/**
-\brief Imprime uma venda no terminal.
-
-@param venda A venda a imprimir.
-*/
-void printVenda(Venda venda);
-
 #endif

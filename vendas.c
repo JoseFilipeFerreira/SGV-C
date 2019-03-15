@@ -49,13 +49,13 @@ void verifySales() {
     int r, w, i;
     char* buff;
     char* tempSale;
-    char* fieldOfSales[7];
+    char* fieldOfSales[CAMPOSVENDA];
     FILE* f = fopen("db/VendasOK.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
         tempSale = malloc(strlen(vendas[r]) + 1);
         strcpy(tempSale, vendas[r]);
         buff = strtok(tempSale, " ");
-        for(i = 0; i < 7 && buff; i++) {
+        for(i = 0; i < CAMPOSVENDA && buff; i++) {
             fieldOfSales[i] = malloc(strlen(buff) + 1);
             strcpy(fieldOfSales[i], buff);
             buff = strtok(NULL, " ");
@@ -76,7 +76,7 @@ void verifySales() {
             }
             w++;
         }
-        for(i = 0; i < 7; i++)
+        for(i = 0; i < CAMPOSVENDA; i++)
             free(fieldOfSales[i]);
         free(tempSale);
     }
@@ -102,13 +102,3 @@ void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVen
     if (filter) verifySales();
 }
 
-void printVenda(Venda vendaAux) {
-    printf("Produto %s - ", vendaAux -> codProd);
-    printf("Cliente: %s ", vendaAux -> codCli);
-    printf("Preco: %f ", vendaAux -> precoUnit);
-    printf("Quant: %d ", vendaAux -> quantidade);
-    printf("Tipo: %s ",  vendaAux -> tipo); 
-    printf("Mes: %d ", vendaAux -> mes);
-    printf("Filial: %d\n ", vendaAux -> filial); 
-    printf("Total da Venda = %f\n", vendaAux->precoUnit * vendaAux->quantidade);
-}
