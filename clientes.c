@@ -5,10 +5,11 @@
 \brief Array que contem os clientes.
 */
 char* clientes[20000];
-GTree* avlC[26];
+
 /**
 \brief AVL que contem os clientes.
 */
+GTree* avlC[26];
 
 /**
 \brief Número de clientes no array clientes.

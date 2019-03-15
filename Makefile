@@ -1,13 +1,13 @@
 ############################# Makefile ##########################
 CFLAGS= -W -Wall -Wextra -pedantic -g -O2 -ansi `pkg-config --cflags --libs glib-2.0`
 
-FICHEIROS= main.o produtos.o clientes.o vendas.o
+OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
 DOC = docs
 EXECUTAVEL=main.out
 
-$(EXECUTAVEL): $(FICHEIROS)
-	cc $(CFLAGS) -o $(EXECUTAVEL) $(FICHEIROS)
+$(EXECUTAVEL): $(OBJECTS)
+	cc $(CFLAGS) -o $(EXECUTAVEL) $(OBJECTS)
 
 run:
 	./main.out
@@ -23,7 +23,3 @@ doc:
 
 grind:
 	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL)
-
-vendas.o: clientes.h produtos.h
-produtos.o: produtos.h
-clientes.o: clientes.h
