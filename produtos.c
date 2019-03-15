@@ -9,7 +9,7 @@ char* produtos[200000];
 /**
 \brief AVL que contem os produtos.
 */
-GTree* avlP;
+GTree* avlP[26];
 
 /**
 \brief Número de produtos no array produtos.
@@ -44,15 +44,17 @@ int cmp1(const void* a, const void* b, void* c) {
 */
 void verifyProducts() {
     int r, w, id;
+    char c;
     FILE* f = fopen("db/ProdutosOK.txt", "w");
-    avlP = g_tree_new_full(&cmp1, NULL, &free, &free);
+    for(c = 'A'; c <= 'Z'; c++)
+        avlP[c - 'A'] = g_tree_new_full(&cmp1, NULL, &free, &free);
     for(r = w = 0; r < productNumber; r++) {
-        sscanf(produtos[r], "%*2c%4d%*s", &id);
+        sscanf(produtos[r], "%c%*c%4d%*s", &c, &id);
         if(id >= 1000 && id <= 9999) {
             int* content = malloc(sizeof(int));
             fprintf(f, "%s\n", produtos[r]);
             *content = id;
-            g_tree_insert(avlP, produtos[r], content);
+            g_tree_insert(avlP[c - 'A'], produtos[r], content);
             if(w != r) {
                 produtos[w] = malloc(10); 
                 strcpy(produtos[w], produtos[r]); 
@@ -65,7 +67,7 @@ void verifyProducts() {
 }
 
 int* searchProduct(char* id) {
-    return (int*) g_tree_lookup(avlP, id);
+    return (int*) g_tree_lookup(avlP[id[0] - 'A'], id);
 }
 
 int getProductNumber() {
@@ -83,12 +85,7 @@ gboolean productLetter(gpointer key, gpointer value, gpointer data) {
 }
 
 int getProductLetter(char id) {
-    int r = 0;
-    void* cenas[2];
-    cenas[0] = &r; 
-    cenas[1] = &id;
-    g_tree_foreach(avlP, productLetter, &cenas);
-    return r;
+    return g_tree_nnodes(avlP[id - 'A']);
 }
 
 void initProducts(int filter, char * path) {

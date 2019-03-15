@@ -5,11 +5,10 @@
 \brief Array que contem os clientes.
 */
 char* clientes[20000];
-
+GTree* avlC[26];
 /**
 \brief AVL que contem os clientes.
 */
-GTree* avlC;
 
 /**
 \brief Número de clientes no array clientes.
@@ -45,14 +44,15 @@ void verifyClients() {
     int r, w, id;
     char c;
     FILE* f = fopen("db/ClientesOK.txt", "w");
-    avlC = g_tree_new_full(&cmp, NULL, &free, &free);
+    for(c = 'A'; c <= 'Z'; c++)
+        avlC[c - 'A'] = g_tree_new_full(&cmp, NULL, &free, &free);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
         if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
             int* content = malloc(sizeof(int));
             fprintf(f, "%s\n", clientes[r]);
             *content = id;
-            g_tree_insert(avlC, clientes[r], content);
+            g_tree_insert(avlC[c - 'A'], clientes[r], content);
             if(w != r) {
                 clientes[w] = malloc(10);
                 strcpy(clientes[w], clientes[r]);
@@ -65,7 +65,7 @@ void verifyClients() {
 }
 
 int* searchClient(char* id) {
-    return (int*) g_tree_lookup(avlC, id);
+    return (int*) g_tree_lookup(avlC[id[0] - 'A'], id);
 }
 
 int getClientNumber() {
@@ -83,12 +83,7 @@ gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
 }
 
 int getClientLetter(char id) {
-    int r = 0;
-    void* cenas[2];
-    cenas[0] = &r;
-    cenas[1] = &id;
-    g_tree_foreach(avlC, clientLetter, &cenas);
-    return r;
+    return g_tree_nnodes(avlC[id - 'A']);
 }
 
 void initClients(int filter, char * path) {
