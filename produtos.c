@@ -1,4 +1,5 @@
 #include "produtos.h"
+#include "produto.h"
 #include <glib.h>
 
 /**
@@ -54,7 +55,7 @@ void verifyProducts() {
             int* content = malloc(sizeof(int));
             fprintf(f, "%s\n", produtos[r]);
             *content = id;
-            g_tree_insert(avlP[c - 'A'], produtos[r], content);
+            g_tree_insert(avlP[c - 'A'], produtos[r], mkProduct(produtos[r]));
             if(w != r) {
                 free(produtos[w]);
                 produtos[w] = malloc(10); 
