@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "produto.h"
 
 /**
 \brief Verifica se um dado produto existe.

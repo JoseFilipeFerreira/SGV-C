@@ -49,7 +49,7 @@ void verifyClients() {
         avlC[c - 'A'] = g_tree_new_full(&cmp, NULL, &free, &free);
     for(r = w = 0; r < clientNumber; r++) {
         sscanf(clientes[r], "%c%4d%*s", &c, &id);
-        if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
+        if(verifyClient(clientes[r])) { 
             int* content = malloc(sizeof(int));
             fprintf(f, "%s\n", clientes[r]);
             *content = id;

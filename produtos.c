@@ -1,5 +1,4 @@
 #include "produtos.h"
-#include "produto.h"
 #include <glib.h>
 
 /**
@@ -51,11 +50,11 @@ void verifyProducts() {
         avlP[c - 'A'] = g_tree_new_full(&cmp1, NULL, &free, &free);
     for(r = w = 0; r < productNumber; r++) {
         sscanf(produtos[r], "%c%*c%4d%*s", &c, &id);
-        if(id >= 1000 && id <= 9999) {
+        if(verifyProduct(produtos[r])) {
             int* content = malloc(sizeof(int));
             fprintf(f, "%s\n", produtos[r]);
             *content = id;
-            g_tree_insert(avlP[c - 'A'], produtos[r], mkProduct(produtos[r]));
+            g_tree_insert(avlP[c - 'A'], produtos[r], content);
             if(w != r) {
                 free(produtos[w]);
                 produtos[w] = malloc(10); 
