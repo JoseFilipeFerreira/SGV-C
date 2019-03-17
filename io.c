@@ -1,14 +1,22 @@
 #include "io.h"
 
-#define KNRM  "\x1B[0m"
+#define KBLK  "\x1B[30m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
+#define KORG  "\x1B[33m"
 #define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
+#define KROXO "\x1B[35m"
 #define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
+#define KGREY "\x1B[37m"
+#define KWHT  "\x1B[38m"
+#define BOLD  "\033[1m"
+#define UNDER "\033[4m"
+#define BLINK "\033[5m"
+
 #define RESET "\033[0m"
+
+#define HIDE_CURSOR "\e[?25l"
+#define SHOW_CURSOR "\e[?25h"
 
 #define BACK 0
 #define EXIT -1
@@ -66,20 +74,28 @@ void menuInicial(){
     int loop = 1;
     menuLoadFile(&loop);
 
+    system("clear");
+
     clearClients();
     clearProducts();
 }
 
 void menuLoadFile(int * loop){
+    int r;
     while(*loop){
         system("clear");
-        printf(KRED "\t-- Load Files --\n\n" RESET);
+        printf(BOLD KRED "\t-- Load Files --\n\n" RESET);
         printf("1 - Load Default (filtered)\n");
         printf("2 - Load Default (non filtered)\n");
         printf("3 - Load Custom (filtered)\n");
         printf("4 - Load Custom (non filtered)\n");
         printf("e - EXIT\n");
-        switch (menuCheck(4))
+        r = menuCheck(4);
+        system("clear");
+        printf(HIDE_CURSOR);
+        printf(BLINK "LOADING...\n" RESET);
+        fflush(stdout);
+        switch (r)
             {
                 case 1:
                    initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
@@ -114,7 +130,8 @@ void menuLoadFile(int * loop){
 void menuCategories(int * loop){
     while(*loop){
         system("clear");
-        printf(KRED "\t-- Categoria --\n\n" RESET);
+        printf(SHOW_CURSOR);
+        printf(BOLD KRED "\t-- Categoria --\n\n" RESET);
         printf("1 - Clientes\n");
         printf("2 - Produtos\n");
         printf("3 - Vendas\n");
@@ -146,7 +163,7 @@ void menuCategories(int * loop){
 void menuClientes(int * loop){
     while(*loop){
         system("clear");
-        printf(KRED "\t-- Clientes --\n\n" RESET);
+        printf(BOLD KRED "\t-- Clientes --\n\n" RESET);
         printf("1 - Clientes em todas as filiais\n");
         printf("2 - Stats sobre cliente (ano)\n");
         printf("3 - Stats sobre cliente (mes)\n");
@@ -175,7 +192,7 @@ void menuClientes(int * loop){
 void menuProdutos(int * loop){
     while(*loop){
         system("clear");
-        printf(KRED "\t-- Produtos --\n\n" RESET);
+        printf(BOLD KRED "\t-- Produtos --\n\n" RESET);
         printf("1 - Navegar Produtos por Letra\n");
         printf("2 - Informações de Produto por mês\n");
         printf("3 - Stats de compras de um produto numa filial\n");
@@ -207,7 +224,7 @@ void menuProdutos(int * loop){
 void menuVendas(int * loop){
     while(*loop){
         system("clear");
-        printf(KRED "\t-- Vendas --\n\n" RESET);
+        printf(BOLD KRED "\t-- Vendas --\n\n" RESET);
         printf("1 - total faturado em intervalo de tempo\n");
         printf("2 - \n");
         printf("3 - \n");
