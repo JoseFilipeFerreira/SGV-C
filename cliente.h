@@ -3,3 +3,5 @@
 #include <stdlib.h>
 
 int verifyClient(char*);
+
+char* mkClient(char*);
