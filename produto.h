@@ -3,3 +3,5 @@
 #include <stdlib.h>
 
 int verifyProduct(char*);
+
+char* mkProduct(char*);

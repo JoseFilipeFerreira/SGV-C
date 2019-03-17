@@ -16,54 +16,30 @@ GTree* avlP[26];
 */
 int productNumber;
 
-/**
-\brief Lê os produtos de um ficheiro e coloca-os no array produtos.
-
-@param path ficheiro onde estão os produtos
-*/
-void readProducts(char * path) {
-    int i;
-    FILE* f = fopen(path, "r");
-    char* buff = malloc(10);
-    for(i = 0; fgets(buff, 10, f); i++) {
-        produtos[i] = malloc(10);
-        strcpy(produtos[i], strtok(buff, "\n\r"));
-    }
-    free(buff);
-    productNumber = i;
-    fclose(f);
-}
-
 int cmp1(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
 /**
-\brief Filtra os produtos do array de produtos.
+\brief Lê os produtos de um ficheiro e coloca-os no array produtos.
+
+@param path ficheiro onde estão os produtos
 */
-void verifyProducts() {
-    int r, w, id;
-    char c;
-    FILE* f = fopen("db/ProdutosOK.txt", "w");
-    for(c = 'A'; c <= 'Z'; c++)
-        avlP[c - 'A'] = g_tree_new_full(&cmp1, NULL, &free, &free);
-    for(r = w = 0; r < productNumber; r++) {
-        sscanf(produtos[r], "%c%*c%4d%*s", &c, &id);
-        if(verifyProduct(produtos[r])) {
-            int* content = malloc(sizeof(int));
-            fprintf(f, "%s\n", produtos[r]);
-            *content = id;
-            g_tree_insert(avlP[c - 'A'], produtos[r], content);
-            if(w != r) {
-                free(produtos[w]);
-                produtos[w] = malloc(10); 
-                strcpy(produtos[w], produtos[r]); 
-            }
-            w++;
+void readProducts(char * path, int filter) {
+    int i;
+    FILE* f = fopen(path, "r");
+    char* buff = malloc(10);
+    for(i = 'A'; i <= 'Z'; i++)
+        avlP[i - 'A'] = g_tree_new_full(&cmp1, NULL, &free, NULL);
+    for(i = 0; fgets(buff, 10, f);) {
+        if(filter && verifyProduct(strtok(buff, "\n\r"))) {
+            char* product = mkProduct(buff);
+            g_tree_insert(avlP[product[0] - 'A'], product, product);
+            i++;
         }
     }
-    productNumber = w;
+    productNumber = i;
     fclose(f);
 }
 
@@ -90,8 +66,7 @@ int getProductLetter(char id) {
 }
 
 void initProducts(int filter, char * path) {
-    readProducts(path);
-    if(filter) verifyProducts();
+    readProducts(path, filter);
 }
 
 void clearProducts() {
