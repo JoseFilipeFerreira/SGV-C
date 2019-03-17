@@ -8,14 +8,16 @@
 #define KMAG  "\x1B[35m"
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
-
 #define RESET "\033[0m"
 
+#define BACK 0
+#define EXIT -1
 
 static void menuClientes();
 static void menuProdutos();
 static void menuVendas();
-static void menuQueries(int * loop);
+static void menuCategories(int * loop);
+static void menuLoadFile(int * loop);
 
 
 int menuCheck(int size){
@@ -30,24 +32,86 @@ int menuCheck(int size){
     }
     else{
         if(s[0] == 'b' || s[0] == 'B'){
-            return 0;
+            return BACK;
         }
         if(s[0] == 'e' || s[0] == 'E'){
-            return -1;
+            return EXIT;
         }
     }
     return -2;
 }
 
-void menuInicial(){
+int printStrings(char ** s, int ss, int pSize, int pN){
+    int i, r = 0;
+
+    for(i = pSize * pN; i < pSize * (pN + 1) && i < ss; i++){
+        printf("%s\n", s[i]);
+        r++;
+    }
+    return r;
+}
+
+int messageCheck(char * message){
+    int r = 1;
+    char s[10];
+    printf("%s[Y/n]\n", message);
+    fgets(s,10,stdin);
+    if(s[0] == 'n' || s[0] == 'N'){
+        r = 0;
+    }
+    return r;
+}
+
+void menuInicial(){ 
     int loop = 1;
-    initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-    menuQueries(&loop);
+    menuLoadFile(&loop);
+
     clearClients();
     clearProducts();
 }
 
-void menuQueries(int * loop){
+void menuLoadFile(int * loop){
+    while(*loop){
+        system("clear");
+        printf(KRED "\t-- Load Files --\n\n" RESET);
+        printf("1 - Load Default (filtered)\n");
+        printf("2 - Load Default (non filtered)\n");
+        printf("3 - Load Custom (filtered)\n");
+        printf("4 - Load Custom (non filtered)\n");
+        printf("e - EXIT\n");
+        switch (menuCheck(4))
+            {
+                case 1:
+                   initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
+                   menuCategories(loop);
+                   break;
+
+                case 2:
+                    initDB(0, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
+                    menuCategories(loop);
+                    break;
+            
+                case 3:
+                   initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
+                   menuCategories(loop);
+                   break;
+
+                case 4:
+                    initDB(0, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
+                    menuCategories(loop);
+                    break;
+                
+                case EXIT:
+                    *loop = 0;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+}
+
+void menuCategories(int * loop){
     while(*loop){
         system("clear");
         printf(KRED "\t-- Categoria --\n\n" RESET);
@@ -57,10 +121,6 @@ void menuQueries(int * loop){
         printf("e - EXIT\n");
         switch (menuCheck(3))
         {
-            case 0:
-                menuQueries(loop);
-                break;
-
             case 1:
                menuClientes(loop);
                break;
@@ -73,7 +133,7 @@ void menuQueries(int * loop){
                 menuVendas(loop);
                 break;
 
-            case -1:
+            case EXIT:
                 *loop = 0;
                 break;
 
@@ -93,8 +153,8 @@ void menuClientes(int * loop){
         printf("4 - \n");
         switch (menuCheck(3))
         {
-            case 0:
-                menuQueries(loop);
+            case BACK:
+                menuCategories(loop);
                 break;
 
             case 1:
@@ -122,8 +182,8 @@ void menuProdutos(int * loop){
         printf("4 - Produtos mais vendidos\n");
         switch (menuCheck(4))
         {
-            case 0:
-                menuQueries(loop);
+            case BACK:
+                menuCategories(loop);
                 break;
 
             case 1:
@@ -154,8 +214,8 @@ void menuVendas(int * loop){
         printf("4 - \n");
         switch (menuCheck(1))
         {
-            case 0:
-                menuQueries(loop);
+            case BACK:
+                menuCategories(loop);
                 break;
 
             case 1:
@@ -167,23 +227,3 @@ void menuVendas(int * loop){
     }
 }
 
-int printStrings(char ** s, int ss, int pSize, int pN){
-    int i, r = 0;
-
-    for(i = pSize * pN; i < pSize * (pN + 1) && i < ss; i++){
-        printf("%s\n", s[i]);
-        r++;
-    }
-    return r;
-}
-
-int messageCheck(char * message){
-    int r = 1;
-    char s[10];
-    printf("%s[Y/n]\n", message);
-    fgets(s,10,stdin);
-    if(s[0] == 'n' || s[0] == 'N'){
-        r = 0;
-    }
-    return r;
-}

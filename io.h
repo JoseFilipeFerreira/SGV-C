@@ -14,7 +14,7 @@
 #include "vendas.h"
 
 /**
-\brief Imprimir listade strings.
+\brief Imprimir lista de strings.
 
 @param s lista de pointers de Strings
 @param ss tamanho de s
@@ -25,5 +25,8 @@
 */
 int printStrings(char ** s, int ss, int pSize, int pN);
 
+/**
+\brief Cria o menu inicial
+*/
 void menuInicial();
 #endif
