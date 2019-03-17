@@ -21,28 +21,6 @@ int cmp1(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-/**
-\brief Lê os produtos de um ficheiro e coloca-os no array produtos.
-
-@param path ficheiro onde estão os produtos
-*/
-void readProducts(char * path, int filter) {
-    int i;
-    FILE* f = fopen(path, "r");
-    char* buff = malloc(10);
-    for(i = 'A'; i <= 'Z'; i++)
-        avlP[i - 'A'] = g_tree_new_full(&cmp1, NULL, &free, NULL);
-    for(i = 0; fgets(buff, 10, f);) {
-        if(filter && verifyProduct(strtok(buff, "\n\r"))) {
-            char* product = mkProduct(buff);
-            g_tree_insert(avlP[product[0] - 'A'], product, product);
-            i++;
-        }
-    }
-    productNumber = i;
-    fclose(f);
-}
-
 int* searchProduct(char* id) {
     return (int*) g_tree_lookup(avlP[id[0] - 'A'], id);
 }
@@ -66,7 +44,25 @@ int getProductLetter(char id) {
 }
 
 void initProducts(int filter, char * path) {
-    readProducts(path, filter);
+    int i;
+    FILE* f = fopen(path, "r");
+    char* buff = malloc(10);
+    for(i = 'A'; i <= 'Z'; i++)
+        avlP[i - 'A'] = g_tree_new_full(&cmp1, NULL, &free, NULL);
+    for(i = 0; fgets(buff, 10, f);) {
+        if(filter && verifyProduct(strtok(buff, "\n\r"))) {
+            char* product = mkProduct(buff);
+            g_tree_insert(avlP[product[0] - 'A'], product, product);
+            i++;
+        }
+        else {
+            char* product = mkProduct(buff);
+            g_tree_insert(avlP[product[0] - 'A'], product, product);
+            i++;
+        }
+    }
+    productNumber = i;
+    fclose(f);
 }
 
 void clearProducts() {
