@@ -3,6 +3,8 @@ CFLAGS= -W -Wall -Wextra -pedantic -g -O2 -ansi `pkg-config --cflags --libs glib
 
 OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
+BENCH = bench
+IMAGE = $$(date +%F)_memusage.png
 DOC = docs
 EXECUTAVEL=main.out
 
@@ -23,3 +25,6 @@ doc:
 
 grind:
 	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL)
+
+mem:
+	memusage -T -p $(BENCH)/$(IMAGE) ./$(EXECUTAVEL)
