@@ -45,13 +45,8 @@ void initClients(int filter, char * path) {
     for(i = 'A'; i <= 'Z'; i++)
         avlC[i - 'A'] = g_tree_new_full(&cmp, NULL, &free, NULL);
     for(i = 0; fgets(buff, 10, f);) {
-        if(filter && verifyClient(strtok(buff, "\n\r"))) {
+        if(!filter || verifyClient(strtok(buff, "\n\r"))) {
             char* client = mkClient(buff);
-            g_tree_insert(avlC[client[0] - 'A'], client, client);
-            i++;
-        }
-        else {
-            char* client = mkClient(buff); 
             g_tree_insert(avlC[client[0] - 'A'], client, client);
             i++;
         }

@@ -50,12 +50,7 @@ void initProducts(int filter, char * path) {
     for(i = 'A'; i <= 'Z'; i++)
         avlP[i - 'A'] = g_tree_new_full(&cmp1, NULL, &free, NULL);
     for(i = 0; fgets(buff, 10, f);) {
-        if(filter && verifyProduct(strtok(buff, "\n\r"))) {
-            char* product = mkProduct(buff);
-            g_tree_insert(avlP[product[0] - 'A'], product, product);
-            i++;
-        }
-        else {
+        if(!filter || verifyProduct(strtok(buff, "\n\r"))) {
             char* product = mkProduct(buff);
             g_tree_insert(avlP[product[0] - 'A'], product, product);
             i++;
