@@ -2,6 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-int verifyProduct(char*);
+int verifyProduct(const char*);
 
 char* mkProduct(char*);

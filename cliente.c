@@ -1,6 +1,6 @@
 #include "cliente.h"
 
-int verifyClient(char* id) {
+int verifyClient(const char* id) {
     char c;
     int n;
     sscanf(id, "%c%d%*s", &c, &n);

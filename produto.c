@@ -1,6 +1,6 @@
 #include "produto.h"
 
-int verifyProduct(char* id) {
+int verifyProduct(const char* id) {
     char c1, c2;
     int n;
     sscanf(id, "%c%c%d%*s", &c1, &c2, &n);

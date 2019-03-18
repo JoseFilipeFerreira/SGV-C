@@ -13,7 +13,7 @@
 /**
 \brief Verifica se um dado cliente existe.
 */
-void* searchClient(char*);
+void* searchClient(const char*);
 
 /**
 \brief Devolve o número de clientes armazenados.
@@ -23,7 +23,7 @@ int getClientNumber();
 /**
 \brief Devolve o número de clientes cujo ID comece pela letra dada.
 */
-int getClientLetter(char);
+int getClientLetter(const char);
 
 /**
 \brief Inicializa a base de dados de clientes.
@@ -31,7 +31,7 @@ int getClientLetter(char);
 @param filter Indica se é necessário filtrar os clientes lidos.
 @param path ficheiro onde estão os clientes
 */
-void initClients(int filter, char * path);
+void initClients(int filter, const char* path);
 
 void clearClients();
 

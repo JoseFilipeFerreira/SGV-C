@@ -14,14 +14,14 @@
 /**
 \brief Verifica se um dado produto existe.
 */
-void* searchProduct(char*);
+void* searchProduct(const char*);
 
 /**
 \brief Devolve o número de produtos armazenados.
 */
 int getProductNumber();
 
-int getProductLetter(char);
+int getProductLetter(const char);
 
 /**
 \brief Inicializa a base de dados de produtos.
@@ -29,7 +29,7 @@ int getProductLetter(char);
 @param filter Indica se é necessário filtrar os produtos lidos.
 @param path ficheiro onde estão os produtos
 */
-void initProducts(int filter, char * path);
+void initProducts(int filter, const char* path);
 
 void clearProducts();
 

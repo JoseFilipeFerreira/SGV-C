@@ -11,11 +11,7 @@
 #include <string.h>
 #include "produtos.h"
 #include "clientes.h"
-
-/**
-\brief Struct para guardar uma venda
-*/ 
-typedef struct venda * Venda;
+#include "venda.h"
 
 /**
 \brief Devolve o número de vendas armazenadas.

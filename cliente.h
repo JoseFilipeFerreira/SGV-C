@@ -2,6 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-int verifyClient(char*);
+int verifyClient(const char*);
 
 char* mkClient(char*);

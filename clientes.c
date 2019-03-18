@@ -2,16 +2,16 @@
 #include <glib.h>
 
 /**
-\brief AVL que contem os clientes.
-*/
+  \brief AVL que contem os clientes.
+  */
 GTree* avlC[26];
 
-int cmp(const void* a, const void* b, void* c) {
+static int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
-void* searchClient(char* id) {
+void* searchClient(const char* id) {
     return g_tree_lookup(avlC[id[0] - 'A'], id);
 }
 
@@ -22,7 +22,7 @@ int getClientNumber() {
     return res;
 }
 
-gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
+static gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
     char* ree = (char*) key;
     int* r = ((int**) data)[0];
     char* id = (char*) ((int**) data)[1];
@@ -32,13 +32,14 @@ gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-int getClientLetter(char id) {
+int getClientLetter(const char id) {
     return g_tree_nnodes(avlC[id - 'A']);
 }
 
-void initClients(int filter, char * path) {
+void initClients(int filter, const char* path) {
     int i;
     FILE* f = fopen(path, "r");
+    FILE* ff = fopen("db/ClientesOK.txt", "w");
     char* buff = malloc(10);
     for(i = 'A'; i <= 'Z'; i++)
         avlC[i - 'A'] = g_tree_new_full(&cmp, NULL, &free, NULL);
@@ -47,8 +48,10 @@ void initClients(int filter, char * path) {
             char* client = mkClient(buff);
             g_tree_insert(avlC[client[0] - 'A'], client, client);
             i++;
+            fprintf(ff, "%s\n", client);
         }
     }
+    fclose(ff);
     free(buff);
     fclose(f);
 }
