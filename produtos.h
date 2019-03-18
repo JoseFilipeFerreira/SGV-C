@@ -22,7 +22,7 @@ Produto searchProduct(const char*);
 */
 int getProductNumber();
 
-int getProductLetter(const char, char**);
+int getProductLetter(const char, char***);
 
 void updateProduct(const char*, int, int, int);
 

@@ -34,11 +34,11 @@ gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-int getProductLetter(const char id, char** array) {
+int getProductLetter(const char id, char*** array) {
     int size = g_tree_nnodes(avlP[id - 'A']);
     array = malloc(size * sizeof(char*));
-    char** arrayr = array;
-    g_tree_foreach(avlP[id - 'A'], productLetter, &arrayr);
+    char*** arrayr = array;
+    g_tree_foreach(avlP[id - 'A'], productLetter, arrayr);
     return size;
 }
 
