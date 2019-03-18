@@ -57,6 +57,7 @@ void initProducts(int filter, char * path) {
         }
     }
     productNumber = i;
+    free(buff);
     fclose(f);
 }
 

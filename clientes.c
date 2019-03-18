@@ -52,6 +52,7 @@ void initClients(int filter, char * path) {
         }
     }
     clientNumber = i;
+    free(buff);
     fclose(f);
 }
 

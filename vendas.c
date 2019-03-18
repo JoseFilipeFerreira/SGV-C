@@ -39,6 +39,7 @@ void readSalesFile(char* path) {
         strcpy(vendas[i], buff);
     }
     salesNumber = i;
+    free(buff);
     fclose(f); 
 }
 
