@@ -2,11 +2,6 @@
 #include <glib.h>
 
 /**
-\brief Array que contem os clientes.
-*/
-char* clientes[20000];
-
-/**
 \brief AVL que contem os clientes.
 */
 GTree* avlC[26];
@@ -16,54 +11,9 @@ GTree* avlC[26];
 */
 int clientNumber;
 
-/**
-\brief Lê os clientes de um ficheiro e coloca-os no array clientes.
-
-@param path ficheiro onde estão os clientes
-*/
-void readClients(char * path) {
-    int i;
-    FILE* f = fopen(path, "r");
-    char* buff = malloc(10);
-    for(i = 0; fgets(buff, 10, f); i++) {
-        clientes[i] = malloc(strlen(buff)+1);
-        strcpy(clientes[i], strtok(buff, "\n\r"));
-    }
-    clientNumber = i;
-    fclose(f);
-}
-
 int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
-}
-
-/**
-\brief Filtra os clientes do array de clientes.
-*/
-void verifyClients() {
-    int r, w, id;
-    char c;
-    FILE* f = fopen("db/ClientesOK.txt", "w");
-    for(c = 'A'; c <= 'Z'; c++)
-        avlC[c - 'A'] = g_tree_new_full(&cmp, NULL, &free, &free);
-    for(r = w = 0; r < clientNumber; r++) {
-        sscanf(clientes[r], "%c%4d%*s", &c, &id);
-        if(id >= 1000 && id <= 5000 && c <= 'Z' && c >= 'A') { 
-            int* content = malloc(sizeof(int));
-            fprintf(f, "%s\n", clientes[r]);
-            *content = id;
-            g_tree_insert(avlC[c - 'A'], clientes[r], content);
-            if(w != r) {
-                free(clientes[w]);
-                clientes[w] = malloc(10);
-                strcpy(clientes[w], clientes[r]);
-            }
-            w++;
-        }
-    }
-    clientNumber = w;
-    fclose(f);
 }
 
 int* searchClient(char* id) {
@@ -89,8 +39,20 @@ int getClientLetter(char id) {
 }
 
 void initClients(int filter, char * path) {
-    readClients(path);
-    if(filter) verifyClients();
+    int i;
+    FILE* f = fopen(path, "r");
+    char* buff = malloc(10);
+    for(i = 'A'; i <= 'Z'; i++)
+        avlC[i - 'A'] = g_tree_new_full(&cmp, NULL, &free, NULL);
+    for(i = 0; fgets(buff, 10, f);) {
+        if(!filter || verifyClient(strtok(buff, "\n\r"))) {
+            char* client = mkClient(buff);
+            g_tree_insert(avlC[client[0] - 'A'], client, client);
+            i++;
+        }
+    }
+    clientNumber = i;
+    fclose(f);
 }
 
 void clearClients() {

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "cliente.h"
 /**
 \brief Verifica se um dado cliente existe.
 */
