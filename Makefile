@@ -9,7 +9,7 @@ DOC = docs
 EXECUTAVEL=main.out
 
 $(EXECUTAVEL): $(OBJECTS)
-	cc $(CFLAGS) -o $(EXECUTAVEL) $(OBJECTS)
+	cc -o $(EXECUTAVEL) $(OBJECTS) $(CFLAGS)
 
 run:
 	./main.out
