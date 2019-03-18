@@ -19,7 +19,7 @@ int main(int argc, char ** argv) {
         printf("N de vendas: %d\n", getProductNumber());
         printf("N de clientes: %d\n", getClientNumber());
         printf("N de vendas: %d\n", getSalesNumber());
-
+        
         clearClients();
         clearProducts();
         clearSales();
