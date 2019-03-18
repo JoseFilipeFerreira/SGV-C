@@ -4,7 +4,7 @@ CFLAGS= -W -Wall -Wextra -pedantic -g -O2 -ansi `pkg-config --cflags --libs glib
 OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt
 BENCH = bench
-IMAGE = $$(date +%F)_memusage.png
+IMAGE = $$(date +%F-%T)_memusage.png
 DOC = docs
 EXECUTAVEL=main.out
 

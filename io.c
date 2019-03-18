@@ -15,8 +15,8 @@
 
 #define RESET "\033[0m"
 
-#define HIDE_CURSOR "\e[?25l"
-#define SHOW_CURSOR "\e[?25h"
+#define HIDE_CURSOR "\x1B[?25l"
+#define SHOW_CURSOR "\x1B[?25h"
 
 #define BACK 0
 #define EXIT -1
