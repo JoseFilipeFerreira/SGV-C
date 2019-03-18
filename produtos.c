@@ -1,5 +1,4 @@
 #include "produtos.h"
-#include <glib.h>
 
 /**
   \brief AVL que contem os produtos.
@@ -11,8 +10,13 @@ static int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-void* searchProduct(const char* id) {
+Produto searchProduct(const char* id) {
     return g_tree_lookup(avlP[id[0] - 'A'], id);
+}
+
+void updateProduct(const char* id, int quantidade, int mes, int filial) {
+    Produto produto = searchProduct(id);
+    addQuantProduct(produto, filial, mes, quantidade);
 }
 
 int getProductNumber() {
@@ -22,18 +26,23 @@ int getProductNumber() {
     return res;
 }
 
-static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
-    char* ree = (char*) key;
-    int* r = ((int**) data)[0];
-    char* id = (char*) ((int**) data)[1];
+gboolean productLetter(gpointer key, gpointer value, gpointer data) {
+    char** array = *(char***) data;
     (void) value;
-    if(ree[0] > *id) return TRUE;
-    if(ree[0] == *id) (*r)++;
+    *(array++) = (char*) key;
+    *(char***) data = array;
     return FALSE;
 }
 
-int getProductLetter(const char id) {
-    return g_tree_nnodes(avlP[id - 'A']);
+int getProductLetter(const char id, char** array) {
+    int size = g_tree_nnodes(avlP[id - 'A']);
+    array = malloc(size * sizeof(char*));
+    char** arrayr = array;
+    g_tree_foreach(avlP[id - 'A'], productLetter, &arrayr);
+    int i;
+    for(i=0; i < size; i++)
+        printf("%s\n", array[i]);
+    return size;
 }
 
 void initProducts(int filter, const char* path) {
@@ -42,13 +51,13 @@ void initProducts(int filter, const char* path) {
     char* buff = malloc(10);
     FILE* ff = fopen("db/ProdutosOK.txt", "w");
     for(i = 'A'; i <= 'Z'; i++)
-        avlP[i - 'A'] = g_tree_new_full(&cmp, NULL, &free, NULL);
+        avlP[i - 'A'] = g_tree_new_full(&cmp, NULL, NULL, destroyProduct);
     for(i = 0; fgets(buff, 10, f);) {
         if(!filter || verifyProduct(strtok(buff, "\n\r"))) {
-            char* product = mkProduct(buff);
-            g_tree_insert(avlP[product[0] - 'A'], product, product);
+            Produto product = mkProduct(buff);
+            g_tree_insert(avlP[getIdProduct(product)[0] - 'A'], getIdProduct(product), product);
             i++;
-            fprintf(ff, "%s\n", product);
+            fprintf(ff, "%s\n", getIdProduct(product));
         }
     }
     fclose(ff);

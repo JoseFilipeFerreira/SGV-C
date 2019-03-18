@@ -43,6 +43,7 @@ static void verifySales() {
                 free(vendas[w]);
                 vendas[w] = malloc(strlen(vendas[r]) + 1);
                 strcpy(vendas[w], vendas[r]);
+                Venda venda = mkSale(vendas[w]);
             }
             w++;
         }

@@ -9,19 +9,22 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <glib.h>
 #include "produto.h"
 
 /**
 \brief Verifica se um dado produto existe.
 */
-void* searchProduct(const char*);
+Produto searchProduct(const char*);
 
 /**
 \brief Devolve o número de produtos armazenados.
 */
 int getProductNumber();
 
-int getProductLetter(const char);
+int getProductLetter(const char, char**);
+
+void updateProduct(const char*, int, int, int);
 
 /**
 \brief Inicializa a base de dados de produtos.

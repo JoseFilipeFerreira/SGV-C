@@ -16,7 +16,8 @@ int main(int argc, char ** argv) {
     }
     else{
         initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-        
+        char** ree;
+        getProductLetter('A', ree);
         printf("N de vendas: %d\n", getProductNumber());
         printf("N de clientes: %d\n", getClientNumber());
         printf("N de vendas: %d\n", getSalesNumber());
