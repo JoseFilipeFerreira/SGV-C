@@ -3,20 +3,20 @@
 #define CAMPOSVENDA 7
 
 /**
-\brief Array que contem as vendas.
-*/
+  \brief Array que contem as vendas.
+  */
 char* vendas[1000000];
 
 /**
-\brief Número de vendas no array vendas.
-*/
+  \brief Número de vendas no array vendas.
+  */
 int salesNumber;
 
 /**
-\brief Lê os produtos de um ficheiro e coloca-os no array vendas.
+  \brief Lê os produtos de um ficheiro e coloca-os no array vendas.
 
-@param path ficheiro onde estão as vendas
-*/
+  @param path ficheiro onde estão as vendas
+  */
 static void readSalesFile(char* path) {
     int i;
     FILE* f = fopen(path, "r");
@@ -31,8 +31,8 @@ static void readSalesFile(char* path) {
 }
 
 /**
-\brief Filtra as vendas do array de vendas.
-*/
+  \brief Filtra as vendas do array de vendas.
+  */
 static void verifySales() {
     int r, w, i;
     FILE* f = fopen("db/VendasOK.txt", "w");
@@ -67,7 +67,7 @@ void clearSales() {
 void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas){
     initProducts(filter, pathProdutos);
     initClients(filter, pathClientes);
-    
+
     readSalesFile(pathVendas);
     if (filter) verifySales();
 }

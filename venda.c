@@ -64,8 +64,8 @@ Venda mkSale(const char* sale) {
     venda->filial = atoi(fieldOfSales[6]);
     for(i = 0; i < CAMPOSVENDA; i++)
         free(fieldOfSales[i]);
-    
-    updateProduct(venda->codProd, venda->quantidade, venda->mes, venda->filial);
+
+    updateProduct(venda->codProd, venda->quantidade, venda->mes, venda->filial, venda->tipo, venda->precoUnit);
 
     free(fieldOfSales);
 

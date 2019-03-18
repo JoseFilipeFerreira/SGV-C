@@ -24,7 +24,7 @@ int getProductNumber();
 
 int getProductLetter(const char, char***);
 
-void updateProduct(const char*, int, int, int);
+void updateProduct(const char*, int, int, int, char, double);
 
 /**
 \brief Inicializa a base de dados de produtos.

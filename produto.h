@@ -8,9 +8,11 @@ int verifyProduct(const char*);
 
 Produto mkProduct(char*);
 
-void addFactProduct(Produto, int, int, int, char);
+void addFactProduct(Produto, int, int, int, double, char);
 
 void addQuantProduct(Produto, int, int, int);
+
+void addSaleNumber(Produto, int, int);
 
 const char* getIdProduct(Produto);
 

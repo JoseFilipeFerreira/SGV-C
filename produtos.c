@@ -14,9 +14,11 @@ Produto searchProduct(const char* id) {
     return g_tree_lookup(avlP[id[0] - 'A'], id);
 }
 
-void updateProduct(const char* id, int quantidade, int mes, int filial) {
+void updateProduct(const char* id, int quantidade, int mes, int filial, char tipo, double value) {
     Produto produto = searchProduct(id);
     addQuantProduct(produto, filial, mes, quantidade);
+    addFactProduct(produto, quantidade, filial, mes, value, tipo);
+    addSaleNumber(produto, filial, mes);
 }
 
 int getProductNumber() {
