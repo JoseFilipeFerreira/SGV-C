@@ -318,7 +318,7 @@ void prodPages(){
             break;
     }
 
-    sizeProdTab = getProductLetter(search, prodTab);
+    sizeProdTab = getProductLetter(search, &prodTab);
     menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab, 15);
     free(prodTab);
 
