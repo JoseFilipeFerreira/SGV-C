@@ -20,37 +20,40 @@
 
 #define BACK 0
 #define EXIT -1
+#define MAX_FILE_NAME 256
 
 static void menuClientes();
 static void menuProdutos();
 static void menuVendas();
-static void menuCategories(int * loop);
-static void menuLoadFile(int * loop);
-static void menuLoadCustom(int * loop);
+static void menuCategories(int* loop);
+static void menuLoadFile(int* loop);
+static void menuLoadCustom(int* loop);
 
 
 int menuCheck(int size){
     int r;
     char s[10];
     fgets(s,10,stdin);
-    if (s[0] >= '0' && s[0] <= '9'){
-        r = (int)s[0] - (int)'0';
-        if(r > 0 && r <= size){
-            return r;
+    if(strlen(s) == 2){
+        if (s[0] >= '0' && s[0] <= '9'){
+            r = (int)s[0] - (int)'0';
+            if(r > 0 && r <= size){
+                return r;
+            }
         }
-    }
-    else{
-        if(s[0] == 'b' || s[0] == 'B'){
-            return BACK;
-        }
-        if(s[0] == 'e' || s[0] == 'E'){
-            return EXIT;
+        else{
+            if(s[0] == 'b' || s[0] == 'B'){
+                return BACK;
+            }
+            if(s[0] == 'e' || s[0] == 'E'){
+                return EXIT;
+            }
         }
     }
     return -2;
 }
 
-int printStrings(char ** s, int ss, int pSize, int pN){
+int printStrings(char** s, int ss, int pSize, int pN){
     int i, r = 0;
 
     for(i = pSize * pN; i < pSize * (pN + 1) && i < ss; i++){
@@ -60,9 +63,10 @@ int printStrings(char ** s, int ss, int pSize, int pN){
     return r;
 }
 
-int messageCheck(char * message){
+int messageCheck(char* message){
     char s[10];
-    printf("%s[Y/n]\n", message);
+    printf("%s [Y/n]", message);
+    fflush(stdout);
     while(1){
         fgets(s,10,stdin);
         if(s[0] == 'y' || s[0] == 'Y' || s[0] == '\n')
@@ -84,11 +88,11 @@ void menuInicial(){
     clearSales();
 }
 
-void menuLoadFile(int * loop){
+void menuLoadFile(int* loop){
     int r;
     while(*loop){
         system("clear");
-        printf(BOLD KRED "\t-- Load Files --\n\n" RESET);
+        printf(BOLD KRED "\t-- Load Files [1] --\n\n" RESET);
         printf("1 - Load Default (filtered)\n");
         printf("2 - Load Default (non filtered)\n");
         printf("3 - Load Custom\n");
@@ -124,10 +128,10 @@ void menuLoadFile(int * loop){
         }
 }
 
-void menuLoadCustom(int * loop){
-    char * bufCli = malloc(sizeof(char) * 300);
-    char * bufProd = malloc(sizeof(char) * 300);
-    char * bufSales = malloc(sizeof(char) * 300);
+void menuLoadCustom(int* loop){
+    char * bufCli = malloc(sizeof(char) * MAX_FILE_NAME);
+    char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
+    char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
     int filterCli, filterProd, filterSales;
     printf(SHOW_CURSOR);
     while(1){
@@ -135,7 +139,7 @@ void menuLoadCustom(int * loop){
          printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
          printf("Nome ficheiro de Clientes:\n");
          fflush(stdout);
-         fgets(bufCli, 300, stdin);
+         fgets(bufCli, MAX_FILE_NAME, stdin);
          bufCli = strtok(bufCli, "\n");
          if( access(bufCli, R_OK ) != -1 ) {
             filterCli = messageCheck("Filter clientes");
@@ -148,7 +152,7 @@ void menuLoadCustom(int * loop){
          printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
          printf("Nome ficheiro de Produtos:\n");
          fflush(stdout);
-         fgets(bufProd, 300, stdin);
+         fgets(bufProd, MAX_FILE_NAME, stdin);
          bufProd = strtok(bufProd, "\n");
          if( access(bufProd, R_OK ) != -1 ) {
             filterProd = messageCheck("Filter produtos");
@@ -161,7 +165,7 @@ void menuLoadCustom(int * loop){
          printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
          printf("Nome ficheiro de Vendas:\n");
          fflush(stdout);
-         fgets(bufSales, 300, stdin);
+         fgets(bufSales, MAX_FILE_NAME, stdin);
          bufSales = strtok(bufSales, "\n");
          if( access(bufSales, R_OK ) != -1 ) {
             filterSales = messageCheck("Filter vendas");
@@ -185,7 +189,7 @@ void menuLoadCustom(int * loop){
     menuCategories(loop);
 }
 
-void menuCategories(int * loop){
+void menuCategories(int* loop){
     while(*loop){
         system("clear");
         printf(SHOW_CURSOR);
@@ -218,43 +222,14 @@ void menuCategories(int * loop){
     }
 }
 
-void menuClientes(int * loop){
+void menuClientes(int* loop){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Clientes --\n\n" RESET);
-        printf("1 - Clientes em todas as filiais\n");
-        printf("2 - Stats sobre cliente (ano)\n");
-        printf("3 - Stats sobre cliente (mes)\n");
-        printf("4 - \n");
-        switch (menuCheck(3))
-        {
-            case BACK:
-                menuCategories(loop);
-                break;
-
-            case 1:
-                break;
-
-            case 2:
-                break;
-
-            case 3:
-                break;
-
-            default:
-                break;
-        }
-    }
-}
-
-void menuProdutos(int * loop){
-    while(*loop){
-        system("clear");
-        printf(BOLD KRED "\t-- Produtos --\n\n" RESET);
-        printf("1 - Navegar Produtos por Letra\n");
-        printf("2 - Informações de Produto por mês\n");
-        printf("3 - Stats de compras de um produto numa filial\n");
-        printf("4 - Produtos mais vendidos\n");
+        printf("1 - Clientes em todas as filiais [5]\n");
+        printf("2 - Clientes que não compraram   [6]\n");
+        printf("3 - Stats sobre cliente (ano)    [7/12]\n");
+        printf("4 - Stats sobre cliente (mes)    [10]\n");
         switch (menuCheck(4))
         {
             case BACK:
@@ -279,11 +254,47 @@ void menuProdutos(int * loop){
     }
 }
 
-void menuVendas(int * loop){
+void menuProdutos(int* loop){
+    while(*loop){
+        system("clear");
+        printf(BOLD KRED "\t-- Produtos --\n\n" RESET);
+        printf("1 - Navegar Produtos por Letra     [2]\n");
+        printf("2 - Informações de Produto por mês [3]\n");
+        printf("3 - Produtos não comprados         [4]\n");
+        printf("4 - Stats de produto numa filial   [9]\n");
+        printf("5 - Produtos mais vendidos         [11]\n");
+        switch (menuCheck(5))
+        {
+            case BACK:
+                menuCategories(loop);
+                break;
+
+            case 1:
+                break;
+
+            case 2:
+                break;
+
+            case 3:
+                break;
+
+            case 4:
+                break;
+            
+            case 5:
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+void menuVendas(int* loop){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Vendas --\n\n" RESET);
-        printf("1 - total faturado em intervalo de tempo\n");
+        printf("1 - total faturado em intervalo de tempo [8]\n");
         printf("2 - \n");
         printf("3 - \n");
         printf("4 - \n");
