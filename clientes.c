@@ -6,22 +6,20 @@
 */
 GTree* avlC[26];
 
-/**
-\brief Número de clientes no array clientes.
-*/
-int clientNumber;
-
 int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
-int* searchClient(char* id) {
-    return (int*) g_tree_lookup(avlC[id[0] - 'A'], id);
+void* searchClient(char* id) {
+    return g_tree_lookup(avlC[id[0] - 'A'], id);
 }
 
 int getClientNumber() {
-    return clientNumber;
+    int res = 0, i;
+    for(i = 0; i < 26; i++)
+        res += g_tree_nnodes(avlC[i]);
+    return res;
 }
 
 gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
@@ -51,7 +49,6 @@ void initClients(int filter, char * path) {
             i++;
         }
     }
-    clientNumber = i;
     free(buff);
     fclose(f);
 }

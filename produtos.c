@@ -2,31 +2,24 @@
 #include <glib.h>
 
 /**
-\brief Array que contem os produtos.
-*/
-char* produtos[200000];
-
-/**
 \brief AVL que contem os produtos.
 */
 GTree* avlP[26];
-
-/**
-\brief Número de produtos no array produtos.
-*/
-int productNumber;
 
 int cmp1(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
-int* searchProduct(char* id) {
-    return (int*) g_tree_lookup(avlP[id[0] - 'A'], id);
+void* searchProduct(char* id) {
+    return g_tree_lookup(avlP[id[0] - 'A'], id);
 }
 
 int getProductNumber() {
-    return productNumber;
+    int res = 0, i;
+    for(i = 0; i < 26; i++)
+        res += g_tree_nnodes(avlP[i]);
+    return res;
 }
 
 gboolean productLetter(gpointer key, gpointer value, gpointer data) {
@@ -56,7 +49,6 @@ void initProducts(int filter, char * path) {
             i++;
         }
     }
-    productNumber = i;
     free(buff);
     fclose(f);
 }

@@ -13,7 +13,7 @@
 /**
 \brief Verifica se um dado cliente existe.
 */
-int* searchClient(char*);
+void* searchClient(char*);
 
 /**
 \brief Devolve o número de clientes armazenados.
