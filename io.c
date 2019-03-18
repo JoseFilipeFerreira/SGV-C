@@ -74,10 +74,12 @@ void menuInicial(){
     int loop = 1;
     menuLoadFile(&loop);
 
+    printf(SHOW_CURSOR);
     system("clear");
 
     clearClients();
     clearProducts();
+    clearSales();
 }
 
 void menuLoadFile(int * loop){
