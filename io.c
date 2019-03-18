@@ -26,6 +26,7 @@ static void menuProdutos();
 static void menuVendas();
 static void menuCategories(int * loop);
 static void menuLoadFile(int * loop);
+static void menuLoadCustom(int * loop);
 
 
 int menuCheck(int size){
@@ -60,14 +61,15 @@ int printStrings(char ** s, int ss, int pSize, int pN){
 }
 
 int messageCheck(char * message){
-    int r = 1;
     char s[10];
     printf("%s[Y/n]\n", message);
-    fgets(s,10,stdin);
-    if(s[0] == 'n' || s[0] == 'N'){
-        r = 0;
+    while(1){
+        fgets(s,10,stdin);
+        if(s[0] == 'y' || s[0] == 'Y' || s[0] == '\n')
+            return 1;
+        if(s[0] == 'n' || s[0] == 'N')
+            return 0;
     }
-    return r;
 }
 
 void menuInicial(){ 
@@ -89,10 +91,9 @@ void menuLoadFile(int * loop){
         printf(BOLD KRED "\t-- Load Files --\n\n" RESET);
         printf("1 - Load Default (filtered)\n");
         printf("2 - Load Default (non filtered)\n");
-        printf("3 - Load Custom (filtered)\n");
-        printf("4 - Load Custom (non filtered)\n");
+        printf("3 - Load Custom\n");
         printf("e - EXIT\n");
-        r = menuCheck(4);
+        r = menuCheck(3);
         system("clear");
         printf(HIDE_CURSOR);
         printf(BLINK "LOADING...\n" RESET);
@@ -110,14 +111,8 @@ void menuLoadFile(int * loop){
                     break;
             
                 case 3:
-                   initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-                   menuCategories(loop);
+                   menuLoadCustom(loop);
                    break;
-
-                case 4:
-                    initDB(0, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-                    menuCategories(loop);
-                    break;
                 
                 case EXIT:
                     *loop = 0;
@@ -127,6 +122,67 @@ void menuLoadFile(int * loop){
                     break;
             }
         }
+}
+
+void menuLoadCustom(int * loop){
+    char * bufCli = malloc(sizeof(char) * 300);
+    char * bufProd = malloc(sizeof(char) * 300);
+    char * bufSales = malloc(sizeof(char) * 300);
+    int filterCli, filterProd, filterSales;
+    printf(SHOW_CURSOR);
+    while(1){
+         system("clear");
+         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
+         printf("Nome ficheiro de Clientes:\n");
+         fflush(stdout);
+         fgets(bufCli, 300, stdin);
+         bufCli = strtok(bufCli, "\n");
+         if( access(bufCli, R_OK ) != -1 ) {
+            filterCli = messageCheck("Filter clientes");
+            break;
+         }
+    }
+
+    while(1){
+         system("clear");
+         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
+         printf("Nome ficheiro de Produtos:\n");
+         fflush(stdout);
+         fgets(bufProd, 300, stdin);
+         bufProd = strtok(bufProd, "\n");
+         if( access(bufProd, R_OK ) != -1 ) {
+            filterProd = messageCheck("Filter produtos");
+            break;
+         }
+    }
+
+    while(1){
+         system("clear");
+         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
+         printf("Nome ficheiro de Vendas:\n");
+         fflush(stdout);
+         fgets(bufSales, 300, stdin);
+         bufSales = strtok(bufSales, "\n");
+         if( access(bufSales, R_OK ) != -1 ) {
+            filterSales = messageCheck("Filter vendas");
+            break;
+         }
+    }
+
+    system("clear");
+    printf(HIDE_CURSOR);
+    printf(BLINK "LOADING...\n" RESET);
+    fflush(stdout);
+
+    initDB(filterCli || filterProd || filterSales, bufProd, bufCli, bufSales);
+
+    free(bufCli);
+    free(bufProd);
+    free(bufSales);
+
+    printf(SHOW_CURSOR);
+
+    menuCategories(loop);
 }
 
 void menuCategories(int * loop){
@@ -245,4 +301,3 @@ void menuVendas(int * loop){
         }
     }
 }
-
