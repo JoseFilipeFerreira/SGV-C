@@ -39,9 +39,6 @@ int getProductLetter(const char id, char** array) {
     array = malloc(size * sizeof(char*));
     char** arrayr = array;
     g_tree_foreach(avlP[id - 'A'], productLetter, &arrayr);
-    int i;
-    for(i=0; i < size; i++)
-        printf("%s\n", array[i]);
     return size;
 }
 
