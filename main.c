@@ -23,6 +23,7 @@ int main(int argc, char ** argv) {
 
         clearClients();
         clearProducts();
+        clearSales();
     }
     
     return 0;

@@ -22,6 +22,8 @@ typedef struct venda * Venda;
 */
 int getSalesNumber();
 
+void clearSales();
+
 /**
 \brief Inicializa a base de dados de vendas, produtos e clientes.
 

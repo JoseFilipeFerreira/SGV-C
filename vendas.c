@@ -88,7 +88,7 @@ int getSalesNumber() {
     return salesNumber;
 }
 
-void cleanVendas() {
+void clearSales() {
     int i;
     for(i = 0; i < salesNumber; i++)
         free(vendas[i]);
