@@ -29,6 +29,17 @@ static void menuCategories(int* loop);
 static void menuLoadFile(int* loop);
 static void menuLoadCustom(int* loop);
 
+/**
+@brief replicate a given string n times
+
+@param s string to duplicate
+@param n times to duplicate
+ */
+void replicate(char* s, int n){
+    int i;
+    for(i = 0; i < n; i++)
+        printf(s);
+}
 
 int menuCheck(int size){
     int r;
@@ -57,10 +68,44 @@ int printStrings(char** s, int ss, int pSize, int pN){
     int i, r = 0;
 
     for(i = pSize * pN; i < pSize * (pN + 1) && i < ss; i++){
-        printf("%s\n", s[i]);
+        printf("%d.\t%s\n", i + 1, s[i]);
         r++;
     }
     return r;
+}
+
+void menuPaginasDraw(char* header, char** tab, int size, int sizePage){
+    char search;
+    int printed, page = 0;
+    /*calcular número de páginas*/
+    int nPages = (size % sizePage)?(size/sizePage) : size/sizePage - 1;
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- %s--\n\n" RESET, header);
+        printed = printStrings(tab, size, sizePage, page);
+        replicate("\n", sizePage - printed + 1);
+        printf("\t\t%d/%d [n/p/b]\n", page +1 , nPages+1);
+        search = getchar();
+        search = (search >= 'A' && search <= 'Z')?search - 'A':search;
+        switch (search)
+        {
+            case 'n':
+                /*não permite página maior que permitido*/
+                page = (page + 1 <= nPages)?page + 1 : page;
+                break;
+            
+            case 'p':
+                /*não permite páginas negativas*/
+                page = (page - 1 >= 0)?page -1 : page;
+                break;
+            
+            case 'b':
+                return;
+        
+            default:
+                break;
+        }
+    }
 }
 
 int messageCheck(char* message){
@@ -128,50 +173,54 @@ void menuLoadFile(int* loop){
         }
 }
 
+void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
+    int aR, fl = 0;
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Load Custom --\n" RESET);
+
+        switch (fl)
+        {
+            case 1:
+                printf(UNDER "Ficheiro Inválido\n\n" RESET);
+                break;
+            
+            case 2:
+                printf(UNDER "Ficheiro é uma pasta\n\n" RESET);
+                break;
+        
+            default:
+                printf("\n\n");
+                break;
+        }
+
+        printf(fstPrint);
+        fflush(stdout);
+        fgets(buf, MAX_FILE_NAME, stdin);
+        buf = strtok(buf, "\n");
+        aR = access(buf, R_OK);
+        if( aR != -1 ) {
+           *filter = messageCheck(sndPrint);
+           break;
+        }
+        else {
+            fl = 1;   
+        }
+    }
+}
+
 void menuLoadCustom(int* loop){
     char * bufCli = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
     int filterCli, filterProd, filterSales;
     printf(SHOW_CURSOR);
-    while(1){
-         system("clear");
-         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
-         printf("Nome ficheiro de Clientes:\n");
-         fflush(stdout);
-         fgets(bufCli, MAX_FILE_NAME, stdin);
-         bufCli = strtok(bufCli, "\n");
-         if( access(bufCli, R_OK ) != -1 ) {
-            filterCli = messageCheck("Filter clientes");
-            break;
-         }
-    }
 
-    while(1){
-         system("clear");
-         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
-         printf("Nome ficheiro de Produtos:\n");
-         fflush(stdout);
-         fgets(bufProd, MAX_FILE_NAME, stdin);
-         bufProd = strtok(bufProd, "\n");
-         if( access(bufProd, R_OK ) != -1 ) {
-            filterProd = messageCheck("Filter produtos");
-            break;
-         }
-    }
+    lCustomSingle("Nome ficheiro de Clientes:\n", "Filter clientes", bufCli, &filterCli);
 
-    while(1){
-         system("clear");
-         printf(BOLD KRED "\t-- Load Custom --\n\n" RESET);
-         printf("Nome ficheiro de Vendas:\n");
-         fflush(stdout);
-         fgets(bufSales, MAX_FILE_NAME, stdin);
-         bufSales = strtok(bufSales, "\n");
-         if( access(bufSales, R_OK ) != -1 ) {
-            filterSales = messageCheck("Filter vendas");
-            break;
-         }
-    }
+    lCustomSingle("Nome ficheiro de Produtos:\n", "Filter produtos", bufProd, &filterProd);
+
+    lCustomSingle("Nome ficheiro de Vendas:\n", "Filter vendas", bufSales, &filterSales);
 
     system("clear");
     printf(HIDE_CURSOR);
@@ -254,6 +303,27 @@ void menuClientes(int* loop){
     }
 }
 
+/**Query 2*/
+void prodPages(){
+    char search;
+    char** prodTab;
+    int sizeProdTab;
+
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Produtos [2]--\n\n" RESET);
+        printf("Caracter a pesquisar\n");
+        search = getchar();
+        if(search >= 'A' && search <= 'Z')
+            break;
+    }
+
+    sizeProdTab = getProductLetter(search, prodTab);
+    menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab, 15);
+    free(prodTab);
+
+}
+
 void menuProdutos(int* loop){
     while(*loop){
         system("clear");
@@ -270,6 +340,7 @@ void menuProdutos(int* loop){
                 break;
 
             case 1:
+                prodPages();
                 break;
 
             case 2:
