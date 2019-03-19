@@ -2,7 +2,6 @@
 @file io.h
 \brief Módulo de user interface.
 */
-
 #ifndef ___IO_H___
 #define ___IO_H___
 

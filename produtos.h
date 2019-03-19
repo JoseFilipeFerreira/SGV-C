@@ -2,7 +2,6 @@
 @file produtos.h
 \brief Módulo de tratamento de produtos.
 */
-
 #ifndef ___PRODUTOS_H___
 #define ___PRODUTOS_H___
 

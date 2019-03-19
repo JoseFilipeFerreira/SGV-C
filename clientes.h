@@ -2,7 +2,6 @@
 @file clientes.h
 \brief Módulo de tratamento de clientes.
 */
-
 #ifndef ___CLIENTES_H___
 #define ___CLIENTES_H___
 
