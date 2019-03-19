@@ -71,3 +71,9 @@ Venda mkSale(const char* sale) {
 
     return venda;
 }
+
+void destroySale(Venda venda) {
+    free(venda->codCli);
+    free(venda->codProd);
+    free(venda);
+}

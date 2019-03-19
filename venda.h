@@ -10,3 +10,5 @@ typedef struct venda* Venda;
 int verifySale(const char*);
 
 Venda mkSale(const char*);
+
+void destroySale(Venda);
