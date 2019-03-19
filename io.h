@@ -19,11 +19,12 @@
 @param s lista de pointers de Strings
 @param ss tamanho de s
 @param pSize tamanho de cada página
+@param pSize tamanho de cada página
 @param pN qual é o número da página a desenhar
-
+@param nCols número de colunas
 @return Número de strings escritas
 */
-int printStrings(char ** s, int ss, int pSize, int pN);
+int printStrings(char ** s, int ss, int pSize, int nCols, int pN);
 
 /**
 \brief Cria o menu inicial

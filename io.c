@@ -39,7 +39,17 @@ void replicate(char* s, int n){
     int i;
     for(i = 0; i < n; i++)
         printf("%s", s);
+    fflush(stdout);
 }
+
+int sizeInt(int n) {
+    int i = 0;
+    while(n != 0) {
+        n /= 10;
+        i++;
+    }
+    return i;
+} 
 
 int menuCheck(int size){
     int r;
@@ -65,30 +75,35 @@ int menuCheck(int size){
 }
 
 
+int printStrings(char** s, int ss, int pSize, int nCols, int pN){
+    int i, j, pos, r = 0;
 
-
-
-int printStrings(char** s, int ss, int pSize, int pN){
-    int i, r = 0;
-
-    for(i = pSize * pN; i < pSize * (pN + 1) && i < ss; i++){
-        printf("%d.\t%s\n", i + 1, s[i]);
+    for(i = pSize * pN; i < pSize * (pN + 1); i++){
+        for(j = 0; j < nCols && j + i * nCols < ss; j++){
+            pos = j + i * nCols;
+            printf("%d.", pos + 1);
+            replicate(" ", sizeInt(ss) + 1 - sizeInt(pos + 1));
+            printf("%s      ", s[pos]);
+        }
         r++;
+        printf("\n");
     }
     return r;
 }
 
-void menuPaginasDraw(char* header, char** tab, int size, int sizePage){
+void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols){
     char search;
-    int printed, page = 0;
+    int lPrinted, page = 0;
     /*calcular número de páginas*/
-    int nPages = (size % sizePage)?(size/sizePage) : size/sizePage - 1;
+    int nPages = (size % (sizePage * nCols))?(size/(sizePage*nCols)) : size/(sizePage*nCols) - 1;
     while(1){
         system("clear");
         printf(BOLD KRED "\t-- %s--\n\n" RESET, header);
-        printed = printStrings(tab, size, sizePage, page);
-        replicate("\n", sizePage - printed + 1);
-        printf("\t\t%d/%d [n/p/b]\n", page +1 , nPages+1);
+
+        lPrinted = printStrings(tab, size, sizePage, nCols, page);
+
+        replicate("\n", sizePage - lPrinted  + 2);
+        printf("\t\t%d/%d [n/p/b]\n", page + 1 , nPages+1);
         search = getchar();
         search = (search >= 'A' && search <= 'Z')?search - 'A':search;
         switch (search)
@@ -383,14 +398,14 @@ void prodPages(){
     while(1){
         system("clear");
         printf(BOLD KRED "\t-- Produtos [2]--\n\n" RESET);
-        printf("Caracter a pesquisar\n");
+        printf("Caracter a pesquisar:\n");
         search = getchar();
         if(search >= 'A' && search <= 'Z')
             break;
     }
 
     sizeProdTab = getProductLetter(search, &prodTab);
-    menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab, 15);
+    menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab,15 , 6);
     free(prodTab);
 
 }
