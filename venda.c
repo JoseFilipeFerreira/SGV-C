@@ -31,7 +31,7 @@ static char** saleFields(const char* sale) {
     return fieldOfSales;
 }
 
-int verifySale(const char* sale) {
+int verifySale(const char* sale, const Produtos p, const Clientes c) {
     int r = 0, i;
     char** fieldOfSales = saleFields(sale);
     if(atoi(fieldOfSales[6]) > 3 || atoi(fieldOfSales[6]) < 1);
@@ -39,8 +39,8 @@ int verifySale(const char* sale) {
     else if(fieldOfSales[3][0] != 'P' && fieldOfSales[3][0] != 'N');
     else if(atoi(fieldOfSales[2]) > 250 || atoi(fieldOfSales[2]) < 0);
     else if(atof(fieldOfSales[1]) > 999.99 && atof(fieldOfSales[1]) < 0);
-    else if(!searchClient(fieldOfSales[4]));
-    else if(!searchProduct(fieldOfSales[0]));
+    else if(!searchClient(c, fieldOfSales[4]));
+    else if(!searchProduct(p, fieldOfSales[0]));
     else r = 1;
     for(i = 0; i < CAMPOSVENDA; i++)
         free(fieldOfSales[i]);
@@ -64,8 +64,6 @@ Venda mkSale(const char* sale) {
     venda->filial = atoi(fieldOfSales[6]);
     for(i = 0; i < CAMPOSVENDA; i++)
         free(fieldOfSales[i]);
-
-    updateProduct(venda->codProd, venda->quantidade, venda->mes, venda->filial, venda->tipo, venda->precoUnit);
 
     free(fieldOfSales);
 

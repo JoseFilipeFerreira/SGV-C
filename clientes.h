@@ -5,33 +5,27 @@
 #ifndef ___CLIENTES_H___
 #define ___CLIENTES_H___
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <glib.h>
 #include "cliente.h"
+
+typedef struct clientes* Clientes;
+
 /**
 \brief Verifica se um dado cliente existe.
 */
-void* searchClient(const char*);
+int searchClient(const Clientes, const char*);
 
 /**
 \brief Devolve o número de clientes armazenados.
 */
-int getClientNumber();
+int getClientNumber(const Clientes);
 
-/**
-\brief Devolve o número de clientes cujo ID comece pela letra dada.
-*/
-int getClientLetter(const char);
+int getClientLetter(const Clientes, const char, char***);
 
-/**
-\brief Inicializa a base de dados de clientes.
+void updateClient(const char*, int, int, int, char, double);
 
-@param filter Indica se é necessário filtrar os clientes lidos.
-@param path ficheiro onde estão os clientes
-*/
-void initClients(int filter, const char* path);
+Clientes initClients();
 
-void clearClients();
+void clearClients(Clientes);
 
 #endif

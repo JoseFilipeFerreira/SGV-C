@@ -33,11 +33,11 @@ static void readSalesFile(char* path) {
 /**
   \brief Filtra as vendas do array de vendas.
   */
-static void verifySales() {
+static void verifySales(const Produtos p, const Clientes c) {
     int r, w, i;
     FILE* f = fopen("db/VendasOK.txt", "w");
     for(r = w = 0; r < salesNumber; r++) {
-        if(verifySale(vendas[r])){
+        if(verifySale(vendas[r], p, c)){
             fprintf(f, "%s", vendas[r]);
             if(w != r) {
                 free(vendas[w]);
@@ -65,11 +65,8 @@ void clearSales() {
         free(vendas[i]);
 }
 
-void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas){
-    initProducts(filter, pathProdutos);
-    initClients(filter, pathClientes);
-
+void initDB(int filter, char* pathVendas, const Produtos p, const Clientes c){
     readSalesFile(pathVendas);
-    if (filter) verifySales();
+    if (filter) verifySales(p, c);
 }
 

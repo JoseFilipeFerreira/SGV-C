@@ -2,28 +2,22 @@
 @file main.c
 \brief Ficheiro principal.
 */
-#include "produtos.h"
-#include "clientes.h"
-#include "vendas.h"
-#include "io.h"
+#include "init.h"
 
 /**
 \brief Função principal.
 */
-int main(int argc, char ** argv) {
-    if (argc > 1){
-        menuInicial();
+int main(int argc, char** argv) {
+    if (argc > 1) {
     }
-    else{
-        initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-        printf("N de vendas: %d\n", getProductNumber());
-        printf("N de clientes: %d\n", getClientNumber());
-        printf("N de vendas: %d\n", getSalesNumber());
-        
-        clearClients();
-        clearProducts();
-        clearSales();
+    else {
+        Tudo tudo = tudoInicializado("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt", 1);
+        Produtos produtos = getProdutosTodos(tudo);
+        Clientes clientes = getClientesTodos(tudo);
+        printf("N de produtos: %d\n", getProductNumber(produtos));
+        printf("N de Clientes: %d\n", getClientNumber(clientes));
+        printf("N de Vendas: %d\n", getSalesNumber());
+        destroyTudo(tudo);    
     }
-    
     return 0;
 }

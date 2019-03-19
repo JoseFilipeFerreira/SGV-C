@@ -1,34 +1,30 @@
 #include "produtos.h"
 
+#define LETTERS 26
+#define IND(x) ((x) - 'A')
+
 /**
   \brief AVL que contem os produtos.
   */
-GTree* avlP[26];
+struct produtos {
+    int totalProds;
+    GTree* avlP[LETTERS];
+};
 
 static int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
 }
 
-Produto searchProduct(const char* id) {
-    return g_tree_lookup(avlP[id[0] - 'A'], id);
+int searchProduct(const Produtos p, const char* id) {
+    return g_tree_lookup(p->avlP[IND(id[0])], id);
 }
 
-void updateProduct(const char* id, int quantidade, int mes, int filial, char tipo, double value) {
-    Produto produto = searchProduct(id);
-    addQuantProduct(produto, filial, mes, quantidade);
-    addFactProduct(produto, quantidade, filial, mes, value, tipo);
-    addSaleNumber(produto, filial, mes);
+int getProductNumber(const Produtos p) {
+    return p->totalProds;
 }
 
-int getProductNumber() {
-    int res = 0, i;
-    for(i = 0; i < 26; i++)
-        res += g_tree_nnodes(avlP[i]);
-    return res;
-}
-
-gboolean productLetter(gpointer key, gpointer value, gpointer data) {
+static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     char** array = *(char***) data;
     (void) value;
     *(array++) = (char*) key;
@@ -36,15 +32,31 @@ gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-int getProductLetter(const char id, char*** array) {
-    int size = g_tree_nnodes(avlP[id - 'A']);
+int getProductLetter(const Produtos p, const char id, char*** array) {
+    int size = g_tree_nnodes(p->avlP[IND(id)]);
     *array = malloc(size * sizeof(char*));
     char** arrayr = *array;
-    g_tree_foreach(avlP[id - 'A'], productLetter, &arrayr);
+    g_tree_foreach(p->avlP[IND(id)], productLetter, &arrayr);
     return size;
 }
 
-void initProducts(int filter, const char* path) {
+Produtos initProducts() {
+    int i;
+    Produtos p = malloc(sizeof(struct produtos));
+    for(i = 0; i < LETTERS; i++)
+        p->avlP[i] = g_tree_new_full(&cmp, NULL, NULL, destroyProduct);
+    p->totalProds = 0;
+    return p;
+}
+
+Produtos addProduct(Produto p, Produtos l) {
+    const char* id = getIdProduct(p);
+    l->totalProds++;
+    g_tree_insert(l->avlP[id[0] - 'A'], id, p);
+    return l;
+}
+/*
+static void init(int filter, const char* path) {
     int i;
     FILE* f = fopen(path, "r");
     char* buff = malloc(10);
@@ -63,9 +75,10 @@ void initProducts(int filter, const char* path) {
     free(buff);
     fclose(f);
 }
-
-void clearProducts() {
+*/
+void clearProducts(Produtos p) {
     int i;
     for(i = 0; i < 26; i++)
-        g_tree_destroy(avlP[i]);
+        g_tree_destroy(p->avlP[i]);
+    free(p);
 }

@@ -9,8 +9,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+typedef struct cliente* Cliente;
+
 int verifyClient(const char*);
 
-char* mkClient(char*);
+Cliente mkClient(char*);
+
+const char* getIdClient(Cliente);
+
+void destroyClient(Cliente);
 
 #endif

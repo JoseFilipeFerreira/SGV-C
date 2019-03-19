@@ -6,11 +6,6 @@
 #ifndef ___VENDAS_H___
 #define ___VENDAS_H___
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "produtos.h"
-#include "clientes.h"
 #include "venda.h"
 
 /**
@@ -28,6 +23,6 @@ void clearSales();
 @param pathClientes ficheiro onde estão os clientes
 @param pathVendas ficheiro onde estão as vendas
 */
-void initDB(int filter, char * pathProdutos, char * pathClientes, char * pathVendas);
+void initDB(int, char*, const Produtos, const Clientes);
 
 #endif

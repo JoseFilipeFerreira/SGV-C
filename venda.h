@@ -5,16 +5,12 @@
 #ifndef ___VENDA_H___
 #define ___VENDA_H___
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "produtos.h"
 #include "clientes.h"
-#include <glib.h>
 
 typedef struct venda* Venda;
 
-int verifySale(const char*);
+int verifySale(const char*, const Produtos, const Clientes);
 
 Venda mkSale(const char*);
 
