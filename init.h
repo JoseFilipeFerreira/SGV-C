@@ -1,3 +1,7 @@
+/**
+@file init.h
+@brief Módulo de inicialização de struct
+*/
 #ifndef ___INIT_H___
 #define ___INIT_H___
 

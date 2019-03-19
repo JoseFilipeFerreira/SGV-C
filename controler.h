@@ -1,15 +1,16 @@
 /**
-@file io.h
-\brief Módulo de user interface.
+@file controler.h
+\brief Módulo de controlo.
 */
-#ifndef ___IO_H___
-#define ___IO_H___
+#ifndef ___CONTROLER_H___
+#define ___CONTROLER_H___
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "view.h"
+#include "init.h"
 #include "produtos.h"
 #include "clientes.h"
 #include "vendas.h"

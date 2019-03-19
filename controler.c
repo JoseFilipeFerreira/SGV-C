@@ -1,4 +1,4 @@
-#include "io.h"
+#include "controler.h"
 
 #define KBLK  "\x1B[30m"
 #define KRED  "\x1B[31m"
@@ -25,9 +25,9 @@
 static void menuClientes();
 static void menuProdutos();
 static void menuVendas();
-static void menuCategories(int* loop);
-static void menuLoadFile(int* loop);
-static void menuLoadCustom(int* loop);
+static void menuCategories(int* loop, Tudo tudo);
+static void menuLoadFile(int* loop, Tudo* tudo);
+static void menuLoadCustom(int* loop, Tudo* tudo);
 
 void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols){
     char search;
@@ -67,17 +67,16 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
 
 void menuInicial(){ 
     int loop = 1;
-    menuLoadFile(&loop);
+    Tudo tudo;
+    menuLoadFile(&loop, &tudo);
 
     printf(SHOW_CURSOR);
     system("clear");
 
-    clearClients();
-    clearProducts();
-    clearSales();
+    destroyTudo(tudo);
 }
 
-void menuLoadFile(int* loop){
+void menuLoadFile(int* loop, Tudo* tudo){
     int r;
     while(*loop){
         system("clear");
@@ -94,17 +93,17 @@ void menuLoadFile(int* loop){
         switch (r)
             {
                 case 1:
-                   initDB(1, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-                   menuCategories(loop);
+                   *tudo = tudoInicializado("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt", 1);
+                   menuCategories(loop, *tudo);
                    break;
 
                 case 2:
-                    initDB(0, "db/Produtos.txt", "db/Clientes.txt", "db/Vendas_1M.txt");
-                    menuCategories(loop);
+                    *tudo = tudoInicializado("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt", 0);
+                    menuCategories(loop, *tudo);
                     break;
             
                 case 3:
-                   menuLoadCustom(loop);
+                   menuLoadCustom(loop, *tudo);
                    break;
                 
                 case EXIT:
@@ -153,7 +152,7 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
     }
 }
 
-void menuLoadCustom(int* loop){
+void menuLoadCustom(int* loop, Tudo* tudo){
     char * bufCli = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
@@ -171,7 +170,7 @@ void menuLoadCustom(int* loop){
     printf(BLINK "LOADING...\n" RESET);
     fflush(stdout);
 
-    initDB(filterCli || filterProd || filterSales, bufProd, bufCli, bufSales);
+    *tudo = tudoInicializado(bufProd, bufCli, bufSales, filterCli || filterProd || filterSales);
 
     free(bufCli);
     free(bufProd);
@@ -179,10 +178,10 @@ void menuLoadCustom(int* loop){
 
     printf(SHOW_CURSOR);
 
-    menuCategories(loop);
+    menuCategories(loop, *tudo);
 }
 
-void menuCategories(int* loop){
+void menuCategories(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
         printf(SHOW_CURSOR);
@@ -194,15 +193,15 @@ void menuCategories(int* loop){
         switch (menuCheck(3))
         {
             case 1:
-               menuClientes(loop);
+               menuClientes(loop, tudo);
                break;
 
             case 2:
-                menuProdutos(loop);
+                menuProdutos(loop, tudo);
                 break;
 
             case 3:
-                menuVendas(loop);
+                menuVendas(loop, tudo);
                 break;
 
             case EXIT:
@@ -218,7 +217,7 @@ void menuCategories(int* loop){
 /**
 @brief Query 7
 */
-void tabClientAno(){
+void tabClientAno(Tudo tudo){
     int i, j;
     system("clear");
     printf(BOLD KRED "\t\t-- Clientes [7/12]--\n\n" RESET);
@@ -250,7 +249,7 @@ void tabClientAno(){
     getchar();
 }
 
-void menuClientes(int* loop){
+void menuClientes(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Clientes --\n\n" RESET);
@@ -261,7 +260,7 @@ void menuClientes(int* loop){
         switch (menuCheck(4))
         {
             case BACK:
-                menuCategories(loop);
+                menuCategories(loop, tudo);
                 break;
 
             case 1:
@@ -271,7 +270,7 @@ void menuClientes(int* loop){
                 break;
 
             case 3:
-                tabClientAno();
+                tabClientAno(tudo);
                 break;
 
             case 4:
@@ -286,7 +285,7 @@ void menuClientes(int* loop){
 /**
 @brief Query 2
 */
-void prodPages(){
+void prodPages(Tudo tudo){
     char search;
     char** prodTab;
     int sizeProdTab;
@@ -300,13 +299,13 @@ void prodPages(){
             break;
     }
 
-    sizeProdTab = getProductLetter(search, &prodTab);
+    sizeProdTab = getProductLetter(getProdutosTodos(tudo), search, &prodTab);
     menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab,15 , 6);
-    free(prodTab);
 
+    free(prodTab);
 }
 
-void menuProdutos(int* loop){
+void menuProdutos(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Produtos --\n\n" RESET);
@@ -318,11 +317,11 @@ void menuProdutos(int* loop){
         switch (menuCheck(5))
         {
             case BACK:
-                menuCategories(loop);
+                menuCategories(loop, tudo);
                 break;
 
             case 1:
-                prodPages();
+                prodPages(tudo);
                 break;
 
             case 2:
@@ -343,7 +342,7 @@ void menuProdutos(int* loop){
     }
 }
 
-void menuVendas(int* loop){
+void menuVendas(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Vendas --\n\n" RESET);
@@ -354,7 +353,7 @@ void menuVendas(int* loop){
         switch (menuCheck(1))
         {
             case BACK:
-                menuCategories(loop);
+                menuCategories(loop, tudo);
                 break;
 
             case 1:
