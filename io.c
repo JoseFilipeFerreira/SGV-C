@@ -38,7 +38,7 @@ static void menuLoadCustom(int* loop);
 void replicate(char* s, int n){
     int i;
     for(i = 0; i < n; i++)
-        printf(s);
+        printf("%s", s);
 }
 
 int menuCheck(int size){
@@ -63,6 +63,10 @@ int menuCheck(int size){
     }
     return -2;
 }
+
+
+
+
 
 int printStrings(char** s, int ss, int pSize, int pN){
     int i, r = 0;
@@ -271,6 +275,70 @@ void menuCategories(int* loop){
     }
 }
 
+void printTabela(const char* linLabl[], const char* colLabl[], int** iT, int lin, int col){
+    int i, j;
+    printf("+");
+    replicate("-", strlen(linLabl[0]) + 2);
+    for(j=0; j < col; j++)
+        printf("+-----");
+    printf("+\n");
+    printf("|");
+    replicate(" ", strlen(linLabl[0]) + 2);
+    for(j = 0; j < col; j++)
+        printf("| %s ", colLabl[j]);
+    printf("|\n+");
+    replicate("-", strlen(linLabl[1]) + 2);
+    for(j=0; j < col; j++)
+        printf("+-----");
+    printf("+\n");
+    
+    for(i = 0; i < lin; i++){
+        printf("| %s ", linLabl[i]);
+        for(j = 0; j < col; j++)
+            printf("|%4d ", iT[i][j]);
+    printf("|\n+");
+    replicate("-", strlen(linLabl[i]) + 2);
+    for(j=0; j < col; j++)
+        printf("+-----");
+    printf("+\n");
+    }
+}
+
+/**
+@brief Query 7
+*/
+void tabClientAno(){
+    int i, j;
+    system("clear");
+    printf(BOLD KRED "\t\t-- Clientes [7/12]--\n\n" RESET);
+
+    int** iT = malloc(sizeof(int*) * 3);
+    for (i=0; i<3; i++) {
+        iT[i] = malloc(sizeof(int) * 12);
+        for (j=0; j<12; j++)
+            iT[i][j] = i;
+    }
+
+    printTabela(
+        (const char *[]){ "Filial 1", "Filial 2", "Filial 3" },
+        (const char *[]){ "JAN",
+                          "FEV",
+                          "MAR",
+                          "ABR",
+                          "MAI",
+                          "JUN",
+                          "JUL",
+                          "AGO",
+                          "SET",
+                          "OUT",
+                          "NOV",
+                          "DEZ" },
+        iT,
+        3,
+        12);
+    getchar();
+}
+
 void menuClientes(int* loop){
     while(*loop){
         system("clear");
@@ -292,6 +360,7 @@ void menuClientes(int* loop){
                 break;
 
             case 3:
+                tabClientAno();
                 break;
 
             case 4:
@@ -303,7 +372,9 @@ void menuClientes(int* loop){
     }
 }
 
-/**Query 2*/
+/**
+@brief Query 2
+*/
 void prodPages(){
     char search;
     char** prodTab;
