@@ -9,7 +9,9 @@
 
 typedef struct tudo* Tudo;
 
-Tudo tudoInicializado(const char*, const char*, const char*, int);
+Tudo tudoInicializadoFilter(const char* pathC, const char* pathP, const char* pathV);
+
+Tudo tudoInicializadoNoFilter(const char* pathC, const char* pathP, const char* pathV);
 
 Produtos getProdutosTodos(const Tudo);
 

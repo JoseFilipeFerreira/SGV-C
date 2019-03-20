@@ -5,23 +5,29 @@ struct tudo {
     Clientes clientes;
 };
 
-Tudo tudoInicializado(const char* pathC, const char* pathP, const char* pathV, int filter) {
+static Tudo tudoInicializado(const char* pathC, const char* pathP, const char* pathV, int filter) {
     Tudo tudo = malloc(sizeof(struct tudo));
     FILE* f = fopen(pathP, "r");
     char* buff = malloc(10);
-    
+
     Produtos produtos = initProducts(); 
     while(fgets(buff, 10, f)) {
         Produto product = mkProduct(buff);
-        addProduct(product, produtos);
+        if(!filter || verifyProduct(getIdProduct(product)))
+            addProduct(product, produtos);
+        else
+            destroyProduct(product);
     }
     fclose(f);
-    
+
     f = fopen(pathC, "r");
     Clientes clientes = initClients(); 
     while(fgets(buff, 10, f)) { 
         Cliente client = mkClient(buff);
-        addClient(client, clientes);
+        if(!filter || verifyClient(getIdClient(client)))
+            addClient(client, clientes);
+        else
+            destroyClient(client);
     }
     fclose(f);
     free(buff);
@@ -30,6 +36,15 @@ Tudo tudoInicializado(const char* pathC, const char* pathP, const char* pathV, i
     tudo->clientes = clientes;
     return tudo;
 }
+
+Tudo tudoInicializadoFilter(const char* pathC, const char* pathP, const char* pathV) {
+    return tudoInicializado(pathC, pathP, pathV, 1);
+}
+
+Tudo tudoInicializadoNoFilter(const char* pathC, const char* pathP, const char* pathV) {
+    return tudoInicializado(pathC, pathP, pathV, 0);
+}
+
 
 Produtos getProdutosTodos(const Tudo tudo) {
     return tudo->produtos;

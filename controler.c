@@ -93,12 +93,12 @@ void menuLoadFile(int* loop, Tudo* tudo){
         switch (r)
             {
                 case 1:
-                   *tudo = tudoInicializado("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt", 1);
+                   *tudo = tudoInicializadoFilter("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt");
                    menuCategories(loop, *tudo);
                    break;
 
                 case 2:
-                    *tudo = tudoInicializado("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt", 0);
+                    *tudo = tudoInicializadoNoFilter("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt");
                     menuCategories(loop, *tudo);
                     break;
             
@@ -170,7 +170,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(BLINK "LOADING...\n" RESET);
     fflush(stdout);
 
-    *tudo = tudoInicializado(bufProd, bufCli, bufSales, filterCli || filterProd || filterSales);
+    *tudo = filterCli || filterProd || filterSales ? tudoInicializadoFilter(bufProd, bufCli, bufSales) : tudoInicializadoNoFilter(bufProd, bufCli, bufSales);
 
     free(bufCli);
     free(bufProd);
