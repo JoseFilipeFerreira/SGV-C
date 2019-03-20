@@ -219,7 +219,9 @@ void menuCategories(int* loop, Tudo tudo){
 */
 void tabClientAno(Tudo tudo){
     int i, j, r = 0;
+    char* initBuf;
     char* buf = malloc(sizeof(char) * 10);
+    initBuf = buf;
     while(1){
         system("clear");
         printf(BOLD KRED "\t\t-- Clientes [7/12]--\n" RESET);
@@ -231,10 +233,9 @@ void tabClientAno(Tudo tudo){
 
         printf("Inserir Cliente a pesquisar:\n");
 
-        fgets(buf, 10, stdin);
-        buf = strtok(buf, "\n");
+        fgets(initBuf, 10, stdin);
 
-        if(searchClient(getClientesTodos(tudo), buf))
+        if(searchClient(getClientesTodos(tudo), strtok(buf, "\n")))
             break;
         else
             r = 1;
@@ -250,8 +251,6 @@ void tabClientAno(Tudo tudo){
         for (j=0; j<12; j++)
             iT[i][j] = i;
     }
-
-
 
     printf("Produtos Comprados [7]:\n");
 
