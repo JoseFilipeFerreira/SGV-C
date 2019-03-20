@@ -7,8 +7,11 @@ struct cliente {
 int verifyClient(const char* id) {
     char c;
     int n;
-    sscanf(id, "%c%d%*s", &c, &n);
-    return strlen(id) == 5 && c <= 'Z' && c >='A'&& n >= 1000 && n <= 5000;
+    if(strlen(id) == 5) {
+        sscanf(id, "%c%d%*s", &c, &n);
+        return c <= 'Z' && c >='A'&& n >= 1000 && n <= 5000;
+    }
+    return 0;
 }
 
 Cliente mkClient(char* id) {

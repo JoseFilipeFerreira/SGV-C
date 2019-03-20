@@ -17,7 +17,9 @@ static int cmp(const void* a, const void* b, void* c) {
 }
 
 int searchClient(const Clientes p, const char* id) {
-    return g_tree_lookup(p->avlC[IND(id[0])], id);
+    if(verifyClient(id))
+        return g_tree_lookup(p->avlC[IND(id[0])], id);
+    return 0;
 }
 
 int getClientNumber(const Clientes p) {

@@ -17,7 +17,9 @@ static int cmp(const void* a, const void* b, void* c) {
 }
 
 int searchProduct(const Produtos p, const char* id) {
-    return g_tree_lookup(p->avlP[IND(id[0])][IND(id[1])], id);
+    if(verifyProduct(id)) 
+        return (g_tree_lookup(p->avlP[IND(id[0])][IND(id[1])], id) != NULL);
+    return 0;
 }
 
 int getProductNumber(const Produtos p) {
