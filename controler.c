@@ -76,6 +76,24 @@ void menuInicial(){
     destroyTudo(tudo);
 }
 
+void menuShowLoad(Tudo tudo, Inicializador i){
+    system("clear");
+    printf(BOLD KRED "\t-- Load Info [1] --\n\n" RESET);
+    printf("Clientes Path:    %s\n", getClientPath(i));
+    printf("Clientes Lidos:   %d\n", getLinesClients(i));
+    printf("Clientes Válidos: %d\n\n", getNumberClients(i));
+
+    printf("Produtos Path:    %s\n", getProductPath(i));
+    printf("Produtos Lidos:   %d\n", getLinesProducts(i));
+    printf("Produtos Válidos: %d\n\n", getNumberProducts(i));
+
+    printf("Vendas Path:      %s\n", getSalePath(i));
+    printf("Vendas Lidos:     %d\n", getLinesSales(i));
+    printf("Vendas Válidos:   %d\n", getNumberSales(i));
+    getchar();
+
+}
+
 void menuLoadFile(int* loop, Tudo* tudo){
     int r;
     while(*loop){
@@ -99,15 +117,19 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 setProductPath(i, "db/Produtos.txt", 1);
                 setSalePath(i, "db/Vendas_1M.txt", 1);
                 *tudo = tudoInicializado(i);
+
+                menuShowLoad(tudo, i);
                 menuCategories(loop, *tudo);
                 break;
 
             case 2:
                 i = initInicial();
-                setClientPath(i, "db/Clientes.txt", 1);
-                setProductPath(i, "db/Produtos.txt", 1);
-                setSalePath(i, "db/Vendas_1M.txt", 1);
+                setClientPath(i, "db/Clientes.txt", 0);
+                setProductPath(i, "db/Produtos.txt", 0);
+                setSalePath(i, "db/Vendas_1M.txt", 0);
+                *tudo = tudoInicializado(i);
 
+                menuShowLoad(tudo, i);
                 menuCategories(loop, *tudo);
                 break;
 
@@ -190,6 +212,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
 
     printf(SHOW_CURSOR);
 
+    menuShowLoad(tudo, i);
     menuCategories(loop, *tudo);
 }
 
