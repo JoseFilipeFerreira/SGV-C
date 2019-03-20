@@ -41,7 +41,7 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
         lPrinted = printStrings(tab, size, sizePage, nCols, page);
 
         replicate("\n", sizePage - lPrinted  + 2);
-        printf("\t\t%d/%d [n/p/b]\n", page + 1 , nPages+1);
+        printf("\t%d/%d [n/p/b]\n", page + 1 , nPages+1);
         search = getchar();
         search = (search >= 'A' && search <= 'Z')?search - 'A':search;
         switch (search)
@@ -224,7 +224,7 @@ void tabClientAno(Tudo tudo){
     initBuf = buf;
     while(1){
         system("clear");
-        printf(BOLD KRED "\t\t-- Clientes [7/12]--\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Clientes/[7/12]--\n" RESET);
 
         if(r)
             printf(UNDER "Cliente não existe\n\n" RESET);
@@ -242,7 +242,7 @@ void tabClientAno(Tudo tudo){
     }
 
     system("clear");
-    printf(BOLD KRED "\t\t-- Clientes [7/12]--\n\n" RESET);
+    printf(BOLD KRED "\t-- Categoria/Clientes/[7/12]--\n\n" RESET);
     printf("Cliente: %s\n\n", buf);
 
     int** iT = malloc(sizeof(int*) * 3);
@@ -278,7 +278,7 @@ void tabClientAno(Tudo tudo){
 void menuClientes(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
-        printf(BOLD KRED "\t-- Clientes --\n\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Clientes --\n\n" RESET);
         printf("1 - Clientes em todas as filiais [5]\n");
         printf("2 - Clientes que não compraram   [6]\n");
         printf("3 - Stats sobre cliente (ano)    [7/12]\n");
@@ -318,7 +318,7 @@ void prodPages(Tudo tudo){
 
     while(1){
         system("clear");
-        printf(BOLD KRED "\t-- Produtos [2]--\n\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Produtos/[2]--\n\n" RESET);
         printf("Caracter a pesquisar:\n");
         search = getchar();
         if(search >= 'A' && search <= 'Z')
@@ -326,7 +326,7 @@ void prodPages(Tudo tudo){
     }
 
     sizeProdTab = getProductLetter(getProdutosTodos(tudo), search, &prodTab);
-    menuPaginasDraw("Produtos [2]", prodTab, sizeProdTab,15 , 6);
+    menuPaginasDraw("Categoria/Produtos/[2]", prodTab, sizeProdTab,15 , 6);
 
     free(prodTab);
 }
@@ -334,7 +334,7 @@ void prodPages(Tudo tudo){
 void menuProdutos(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
-        printf(BOLD KRED "\t-- Produtos --\n\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Produtos --\n\n" RESET);
         printf("1 - Navegar Produtos por Letra     [2]\n");
         printf("2 - Informações de Produto por mês [3]\n");
         printf("3 - Produtos não comprados         [4]\n");
@@ -371,7 +371,7 @@ void menuProdutos(int* loop, Tudo tudo){
 void menuVendas(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
-        printf(BOLD KRED "\t-- Vendas --\n\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Vendas --\n\n" RESET);
         printf("1 - total faturado em intervalo de tempo [8]\n");
         printf("2 - \n");
         printf("3 - \n");
