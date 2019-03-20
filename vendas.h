@@ -23,6 +23,6 @@ void clearSales();
 @param pathClientes ficheiro onde estão os clientes
 @param pathVendas ficheiro onde estão as vendas
 */
-void initDB(int, char*, const Produtos, const Clientes);
+int initDB(int, char*, const Produtos, const Clientes);
 
 #endif

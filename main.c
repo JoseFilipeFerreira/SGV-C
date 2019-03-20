@@ -13,7 +13,11 @@ int main(int argc, char** argv) {
         menuInicial();
     }
     else {
-        Tudo tudo = tudoInicializadoFilter("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt");
+        Inicializador i = initInicial();
+        setClientPath(i, "db/Clientes.txt", 1);
+        setProductPath(i, "db/Produtos.txt", 1);
+        setSalePath(i, "db/Vendas_1M.txt", 1);
+        Tudo tudo = tudoInicializado(i);
         Produtos produtos = getProdutosTodos(tudo);
         Clientes clientes = getClientesTodos(tudo);
         printf("N de produtos: %d\n", getProductNumber(produtos));

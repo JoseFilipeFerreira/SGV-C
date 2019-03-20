@@ -9,9 +9,9 @@
 
 typedef struct tudo* Tudo;
 
-Tudo tudoInicializadoFilter(const char* pathC, const char* pathP, const char* pathV);
+typedef struct inicializador* Inicializador;
 
-Tudo tudoInicializadoNoFilter(const char* pathC, const char* pathP, const char* pathV);
+Tudo tudoInicializado(Inicializador);
 
 Produtos getProdutosTodos(const Tudo);
 
@@ -22,5 +22,21 @@ void setProdutos(Tudo, const Produtos);
 void setClientes(Tudo, const Clientes);
 
 void destroyTudo(Tudo);
+
+Inicializador initInicial();
+
+int getLinesProducts(const Inicializador i);
+
+int getLinesSales(const Inicializador i);
+
+int getLinesClients(const Inicializador i);
+
+void setClientPath(Inicializador i, const char* p, int f);
+
+void setProductPath(Inicializador i, const char* p, int f);
+
+void setSalePath(Inicializador i, const char* p, int f);
+
+void destroyInit(Inicializador inicial);
 
 #endif

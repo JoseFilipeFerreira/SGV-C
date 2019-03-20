@@ -17,7 +17,7 @@ int salesNumber;
 
   @param path ficheiro onde estão as vendas
   */
-static void readSalesFile(char* path) {
+static int readSalesFile(char* path) {
     int i;
     FILE* f = fopen(path, "r");
     char* buff = malloc(35);
@@ -27,7 +27,8 @@ static void readSalesFile(char* path) {
     }
     salesNumber = i;
     free(buff);
-    fclose(f); 
+    fclose(f);
+   return i; 
 }
 
 /**
@@ -65,8 +66,9 @@ void clearSales() {
         free(vendas[i]);
 }
 
-void initDB(int filter, char* pathVendas, const Produtos p, const Clientes c){
-    readSalesFile(pathVendas);
+int initDB(int filter, char* pathVendas, const Produtos p, const Clientes c){
+    int r = readSalesFile(pathVendas);
     if (filter) verifySales(p, c);
+    return r;
 }
 

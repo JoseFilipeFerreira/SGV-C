@@ -5,46 +5,52 @@ struct tudo {
     Clientes clientes;
 };
 
-static Tudo tudoInicializado(const char* pathC, const char* pathP, const char* pathV, int filter) {
+struct inicializador {
+    
+    char* pathC;
+    int clientLines;
+    int filterClients;
+    
+    char* pathP;
+    int productLines;
+    int filterProducts;
+    
+    char* pathV;
+    int salesLines;
+    int filterSales;
+};
+
+Tudo tudoInicializado(Inicializador i) {
     Tudo tudo = malloc(sizeof(struct tudo));
-    FILE* f = fopen(pathP, "r");
+    FILE* f = fopen(i->pathP, "r");
     char* buff = malloc(10);
 
     Produtos produtos = initProducts(); 
-    while(fgets(buff, 10, f)) {
+    for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
         Produto product = mkProduct(buff);
-        if(!filter || verifyProduct(getIdProduct(product)))
+        if(!i->filterProducts || verifyProduct(getIdProduct(product)))
             addProduct(product, produtos);
         else
             destroyProduct(product);
     }
     fclose(f);
 
-    f = fopen(pathC, "r");
+    f = fopen(i->pathC, "r");
     Clientes clientes = initClients(); 
-    while(fgets(buff, 10, f)) { 
+    for(i->clientLines = 0; fgets(buff, 10, f); i->clientLines++) {
         Cliente client = mkClient(buff);
-        if(!filter || verifyClient(getIdClient(client)))
+        if(!i->filterClients || verifyClient(getIdClient(client)))
             addClient(client, clientes);
         else
             destroyClient(client);
     }
     fclose(f);
     free(buff);
-    initDB(filter, pathV, produtos, clientes);
+    i->salesLines = initDB(i->filterSales, i->pathV, produtos, clientes);
     tudo->produtos = produtos;
     tudo->clientes = clientes;
     return tudo;
 }
-
-Tudo tudoInicializadoFilter(const char* pathC, const char* pathP, const char* pathV) {
-    return tudoInicializado(pathC, pathP, pathV, 1);
-}
-
-Tudo tudoInicializadoNoFilter(const char* pathC, const char* pathP, const char* pathV) {
-    return tudoInicializado(pathC, pathP, pathV, 0);
-}
-
 
 Produtos getProdutosTodos(const Tudo tudo) {
     return tudo->produtos;
@@ -67,4 +73,43 @@ void destroyTudo(Tudo tudo) {
     clearClients(tudo->clientes);
     clearSales();
     free(tudo);
+}
+
+int getLinesClients(const Inicializador i) {
+    return i->clientLines;
+}
+
+int getLinesProducts(const Inicializador i) {
+    return i->productLines;
+}
+
+int getLinesSales(const Inicializador i) {
+    return i->salesLines;
+}
+
+void setClientPath(Inicializador i, const char* p, int f) {
+    i->pathC = p;
+    i->filterClients = f;
+}
+
+void setProductPath(Inicializador i, const char* p, int f) {
+    i->pathP = p;
+    i->filterProducts = f;
+}
+
+void setSalePath(Inicializador i, const char* p, int f) {
+    i->pathV = p;
+    i->filterSales = f;
+}
+
+Inicializador initInicial() {
+    Inicializador init = malloc(sizeof(struct inicializador));
+    return init;
+}
+
+void destroyInit(Inicializador inicial) {
+    free(inicial->pathC);
+    free(inicial->pathP);
+    free(inicial->pathV);
+    free(inicial);
 }
