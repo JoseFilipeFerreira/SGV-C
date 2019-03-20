@@ -17,6 +17,10 @@ Produtos getProdutosTodos(const Tudo);
 
 Clientes getClientesTodos(const Tudo);
 
+void setProdutos(Tudo, const Produtos);
+
+void setClientes(Tudo, const Clientes);
+
 void destroyTudo(Tudo);
 
 #endif

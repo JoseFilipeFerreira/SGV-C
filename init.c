@@ -54,6 +54,14 @@ Clientes getClientesTodos(const Tudo tudo) {
     return tudo->clientes;
 }
 
+void setProduto(Tudo tudo, const Produtos p) {
+    tudo->produtos = p;
+}
+
+void setCliente(Tudo tudo, const Clientes p) {
+    tudo->clientes = p;
+}
+
 void destroyTudo(Tudo tudo) {
     clearProducts(tudo->produtos);
     clearClients(tudo->clientes);
