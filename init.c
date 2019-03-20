@@ -88,17 +88,20 @@ int getLinesSales(const Inicializador i) {
 }
 
 void setClientPath(Inicializador i, const char* p, int f) {
-    i->pathC = p;
+    i->pathC = malloc(strlen(p) + 1);
+    strcpy(i->pathC, p);
     i->filterClients = f;
 }
 
 void setProductPath(Inicializador i, const char* p, int f) {
-    i->pathP = p;
+    i->pathP = malloc(strlen(p) + 1);
+    strcpy(i->pathP, p);
     i->filterProducts = f;
 }
 
 void setSalePath(Inicializador i, const char* p, int f) {
-    i->pathV = p;
+    i->pathV = malloc(strlen(p) + 1);
+    strcpy(i->pathV, p);
     i->filterSales = f;
 }
 
