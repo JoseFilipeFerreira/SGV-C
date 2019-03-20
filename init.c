@@ -6,17 +6,20 @@ struct tudo {
 };
 
 struct inicializador {
-    
+
     char* pathC;
     int clientLines;
+    int clientNumber;
     int filterClients;
-    
+
     char* pathP;
     int productLines;
+    int productNumber;
     int filterProducts;
-    
+
     char* pathV;
     int salesLines;
+    int salesNumber;
     int filterSales;
 };
 
@@ -47,6 +50,9 @@ Tudo tudoInicializado(Inicializador i) {
     fclose(f);
     free(buff);
     i->salesLines = initDB(i->filterSales, i->pathV, produtos, clientes);
+    i->salesNumber = getSalesNumber();
+    i->productNumber = getProductNumber(produtos);
+    i->clientNumber = getClientNumber(clientes);
     tudo->produtos = produtos;
     tudo->clientes = clientes;
     return tudo;
@@ -85,6 +91,18 @@ int getLinesProducts(const Inicializador i) {
 
 int getLinesSales(const Inicializador i) {
     return i->salesLines;
+}
+
+int getNumberClients(const Inicializador i) {
+    return i->clientNumber;
+}
+
+int getNumberProducts(const Inicializador i) {
+    return i->productNumber;
+}
+
+int getNumberSales(const Inicializador i) {
+    return i->salesNumber;
 }
 
 void setClientPath(Inicializador i, const char* p, int f) {
