@@ -128,6 +128,24 @@ Inicializador initInicial() {
     return init;
 }
 
+char* getSalePath(const Inicializador i) {
+    char* r = malloc(strlen(i->pathV) + 1);
+    strcpy(r, i->pathV);
+    return r;
+}
+
+char* getProductPath(const Inicializador i) {
+    char* r = malloc(strlen(i->pathP) + 1);
+    strcpy(r, i->pathP);
+    return r;
+}
+
+char* getClientPath(const Inicializador i) {
+    char* r = malloc(strlen(i->pathC) + 1);
+    strcpy(r, i->pathC);
+    return r;
+}
+
 void destroyInit(Inicializador inicial) {
     free(inicial->pathC);
     free(inicial->pathP);

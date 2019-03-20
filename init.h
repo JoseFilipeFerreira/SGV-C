@@ -43,6 +43,12 @@ int getNumberProducts(const Inicializador i);
 
 int getNumberSales(const Inicializador i);
 
+char* getSalePath(const Inicializador i);
+
+char* getProductPath(const Inicializador i);
+
+char* getClientPath(const Inicializador i);
+
 void destroyInit(Inicializador inicial);
 
 #endif
