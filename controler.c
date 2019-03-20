@@ -170,7 +170,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(BLINK "LOADING...\n" RESET);
     fflush(stdout);
 
-    *tudo = filterCli || filterProd || filterSales ? tudoInicializadoFilter(bufProd, bufCli, bufSales) : tudoInicializadoNoFilter(bufProd, bufCli, bufSales);
+    *tudo = (filterCli || filterProd || filterSales) ? tudoInicializadoFilter(bufCli, bufProd, bufSales) : tudoInicializadoNoFilter(bufCli, bufProd, bufSales);
 
     free(bufCli);
     free(bufProd);
@@ -218,9 +218,31 @@ void menuCategories(int* loop, Tudo tudo){
 @brief Query 7
 */
 void tabClientAno(Tudo tudo){
-    int i, j;
+    int i, j, r = 0;
+    char* buf = malloc(sizeof(char) * 10);
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t\t-- Clientes [7/12]--\n" RESET);
+
+        if(r)
+            printf(UNDER "Cliente não existe\n\n" RESET);
+        else
+            printf("\n\n");
+
+        printf("Inserir Cliente a pesquisar:\n");
+
+        fgets(buf, 10, stdin);
+        buf = strtok(buf, "\n");
+
+        if(searchClient(getClientesTodos(tudo), buf))
+            break;
+        else
+            r = 1;
+    }
+
     system("clear");
     printf(BOLD KRED "\t\t-- Clientes [7/12]--\n\n" RESET);
+    printf("Cliente: %s\n\n", buf);
 
     int** iT = malloc(sizeof(int*) * 3);
     for (i=0; i<3; i++) {
@@ -228,6 +250,10 @@ void tabClientAno(Tudo tudo){
         for (j=0; j<12; j++)
             iT[i][j] = i;
     }
+
+
+
+    printf("Produtos Comprados [7]:\n");
 
     printTabela(
         (const char *[]){ "Filial 1", "Filial 2", "Filial 3" },
@@ -247,6 +273,7 @@ void tabClientAno(Tudo tudo){
         3,
         12);
     getchar();
+    free(buf);
 }
 
 void menuClientes(int* loop, Tudo tudo){
