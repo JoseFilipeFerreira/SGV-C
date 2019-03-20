@@ -37,6 +37,12 @@ void setProductPath(Inicializador i, const char* p, int f);
 
 void setSalePath(Inicializador i, const char* p, int f);
 
+int getNumberClients(const Inicializador i);
+
+int getNumberProducts(const Inicializador i);
+
+int getNumberSales(const Inicializador i);
+
 void destroyInit(Inicializador inicial);
 
 #endif
