@@ -90,30 +90,39 @@ void menuLoadFile(int* loop, Tudo* tudo){
         printf(HIDE_CURSOR);
         printf(BLINK "LOADING...\n" RESET);
         fflush(stdout);
+        Inicializador i;
         switch (r)
-            {
-                case 1:
-                   *tudo = tudoInicializadoFilter("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt");
-                   menuCategories(loop, *tudo);
-                   break;
+        {
+            case 1:
+                i = initInicial();
+                setClientPath(i, "db/Clientes.txt", 1);
+                setProductPath(i, "db/Produtos.txt", 1);
+                setSalePath(i, "db/Vendas_1M.txt", 1);
+                *tudo = tudoInicializado(i);
+                menuCategories(loop, *tudo);
+                break;
 
-                case 2:
-                    *tudo = tudoInicializadoNoFilter("db/Clientes.txt", "db/Produtos.txt", "db/Vendas_1M.txt");
-                    menuCategories(loop, *tudo);
-                    break;
-            
-                case 3:
-                   menuLoadCustom(loop, *tudo);
-                   break;
-                
-                case EXIT:
-                    *loop = 0;
-                    break;
+            case 2:
+                i = initInicial();
+                setClientPath(i, "db/Clientes.txt", 1);
+                setProductPath(i, "db/Produtos.txt", 1);
+                setSalePath(i, "db/Vendas_1M.txt", 1);
 
-                default:
-                    break;
-            }
+                menuCategories(loop, *tudo);
+                break;
+
+            case 3:
+                menuLoadCustom(loop, tudo);
+                break;
+
+            case EXIT:
+                *loop = 0;
+                break;
+
+            default:
+                break;
         }
+    }
 }
 
 void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
@@ -127,11 +136,11 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
             case 1:
                 printf(UNDER "Ficheiro Inválido\n\n" RESET);
                 break;
-            
+
             case 2:
                 printf(UNDER "Ficheiro é uma pasta\n\n" RESET);
                 break;
-        
+
             default:
                 printf("\n\n");
                 break;
@@ -143,8 +152,8 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
         buf = strtok(buf, "\n");
         aR = access(buf, R_OK);
         if( aR != -1 ) {
-           *filter = messageCheck(sndPrint);
-           break;
+            *filter = messageCheck(sndPrint);
+            break;
         }
         else {
             fl = 1;   
@@ -170,8 +179,11 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(BLINK "LOADING...\n" RESET);
     fflush(stdout);
 
-    *tudo = (filterCli || filterProd || filterSales) ? tudoInicializadoFilter(bufCli, bufProd, bufSales) : tudoInicializadoNoFilter(bufCli, bufProd, bufSales);
-
+    Inicializador i = initInicial();
+    setClientPath(i, bufCli, filterCli);
+    setProductPath(i, bufProd, filterProd);
+    setSalePath(i, bufSales, filterSales);
+    *tudo = tudoInicializado(i);
     free(bufCli);
     free(bufProd);
     free(bufSales);
@@ -193,8 +205,8 @@ void menuCategories(int* loop, Tudo tudo){
         switch (menuCheck(3))
         {
             case 1:
-               menuClientes(loop, tudo);
-               break;
+                menuClientes(loop, tudo);
+                break;
 
             case 2:
                 menuProdutos(loop, tudo);
@@ -215,8 +227,8 @@ void menuCategories(int* loop, Tudo tudo){
 }
 
 /**
-@brief Query 7
-*/
+  @brief Query 7
+  */
 void tabClientAno(Tudo tudo){
     int i, j, r = 0;
     char* initBuf;
@@ -255,22 +267,22 @@ void tabClientAno(Tudo tudo){
     printf("Produtos Comprados [7]:\n");
 
     printTabela(
-        (const char *[]){ "Filial 1", "Filial 2", "Filial 3" },
-        (const char *[]){ "JAN",
-                          "FEV",
-                          "MAR",
-                          "ABR",
-                          "MAI",
-                          "JUN",
-                          "JUL",
-                          "AGO",
-                          "SET",
-                          "OUT",
-                          "NOV",
-                          "DEZ" },
-        iT,
-        3,
-        12);
+            (const char *[]){ "Filial 1", "Filial 2", "Filial 3" },
+            (const char *[]){ "JAN",
+            "FEV",
+            "MAR",
+            "ABR",
+            "MAI",
+            "JUN",
+            "JUL",
+            "AGO",
+            "SET",
+            "OUT",
+            "NOV",
+            "DEZ" },
+            iT,
+            3,
+            12);
     getchar();
     free(buf);
 }
@@ -309,8 +321,8 @@ void menuClientes(int* loop, Tudo tudo){
 }
 
 /**
-@brief Query 2
-*/
+  @brief Query 2
+  */
 void prodPages(Tudo tudo){
     char search;
     char** prodTab;
@@ -358,7 +370,7 @@ void menuProdutos(int* loop, Tudo tudo){
 
             case 4:
                 break;
-            
+
             case 5:
                 break;
 
