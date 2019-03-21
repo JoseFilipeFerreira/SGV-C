@@ -88,8 +88,8 @@ void menuShowLoad(Inicializador i){
     printf("Produtos Válidos: %d\n\n", getNumberProducts(i));
 
     printf("Vendas Path:      %s\n", getSalePath(i));
-    printf("Vendas Lidos:     %d\n", getLinesSales(i));
-    printf("Vendas Válidos:   %d\n", getNumberSales(i));
+    printf("Vendas Lidas:     %d\n", getLinesSales(i));
+    printf("Vendas Válidas:   %d\n", getNumberSales(i));
     getchar();
 
 }
@@ -149,9 +149,10 @@ void menuLoadFile(int* loop, Tudo* tudo){
 
 void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
     int aR, fl = 0;
+    struct stat sb;
     while(1){
         system("clear");
-        printf(BOLD KRED "\t-- Load Custom --\n" RESET);
+        printf(BOLD KRED "\t-- Load Custom [1]--\n" RESET);
 
         switch (fl)
         {
@@ -173,12 +174,19 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
         fgets(buf, MAX_FILE_NAME, stdin);
         buf = strtok(buf, "\n");
         aR = access(buf, R_OK);
-        if( aR != -1 ) {
-            *filter = messageCheck(sndPrint);
-            break;
+
+        if (stat(buf, &sb) == 0 && S_ISDIR(sb.st_mode))
+        {
+            fl = 2;
         }
-        else {
-            fl = 1;   
+        else{
+            if( aR != -1 ) {
+                *filter = messageCheck(sndPrint);
+                break;
+            }
+            else {
+                fl = 1;   
+            }
         }
     }
 }
