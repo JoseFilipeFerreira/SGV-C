@@ -36,7 +36,7 @@ Cliente mkClient(char* id);
 @param cliente cientes a procurar
 @return const char* id do cliente 
 */
-const char* getIdClient(Cliente cliente);
+char* getIdClient(Cliente cliente);
 
 /**
 @brief Free de um cliente
