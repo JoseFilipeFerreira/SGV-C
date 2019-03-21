@@ -15,8 +15,8 @@ int verifyProduct(const char*);
 
 Produto mkProduct(char*);
 
-const char* getIdProduct(Produto);
+char* getIdProduct(Produto);
 
-void destroyProduct(Produto);
+void destroyProduct(void*);
 
 #endif

@@ -67,16 +67,16 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
 
 void menuInicial(){ 
     int loop = 1;
-    Tudo tudo;
+    Tudo tudo = NULL;
     menuLoadFile(&loop, &tudo);
 
     printf(SHOW_CURSOR);
     system("clear");
 
-    destroyTudo(tudo);
+    if(tudo) destroyTudo(tudo);
 }
 
-void menuShowLoad(Tudo tudo, Inicializador i){
+void menuShowLoad(Inicializador i){
     system("clear");
     printf(BOLD KRED "\t-- Load Info [1] --\n\n" RESET);
     printf("Clientes Path:    %s\n", getClientPath(i));
@@ -97,6 +97,7 @@ void menuShowLoad(Tudo tudo, Inicializador i){
 void menuLoadFile(int* loop, Tudo* tudo){
     int r;
     while(*loop){
+        Inicializador i;
         system("clear");
         printf(BOLD KRED "\t-- Load Files [1] --\n\n" RESET);
         printf("1 - Load Default (filtered)\n");
@@ -108,7 +109,6 @@ void menuLoadFile(int* loop, Tudo* tudo){
         printf(HIDE_CURSOR);
         printf(BLINK "LOADING...\n" RESET);
         fflush(stdout);
-        Inicializador i;
         switch (r)
         {
             case 1:
@@ -118,7 +118,7 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 setSalePath(i, "db/Vendas_1M.txt", 1);
                 *tudo = tudoInicializado(i);
 
-                menuShowLoad(tudo, i);
+                menuShowLoad(i);
                 menuCategories(loop, *tudo);
                 break;
 
@@ -129,7 +129,7 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 setSalePath(i, "db/Vendas_1M.txt", 0);
                 *tudo = tudoInicializado(i);
 
-                menuShowLoad(tudo, i);
+                menuShowLoad(i);
                 menuCategories(loop, *tudo);
                 break;
 
@@ -188,6 +188,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
     int filterCli, filterProd, filterSales;
+    Inicializador i; 
     printf(SHOW_CURSOR);
 
     lCustomSingle("Nome ficheiro de Clientes:\n", "Filter clientes", bufCli, &filterCli);
@@ -201,7 +202,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(BLINK "LOADING...\n" RESET);
     fflush(stdout);
 
-    Inicializador i = initInicial();
+    i = initInicial();
     setClientPath(i, bufCli, filterCli);
     setProductPath(i, bufProd, filterProd);
     setSalePath(i, bufSales, filterSales);
@@ -212,7 +213,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
 
     printf(SHOW_CURSOR);
 
-    menuShowLoad(tudo, i);
+    menuShowLoad(i);
     menuCategories(loop, *tudo);
 }
 
@@ -254,6 +255,7 @@ void menuCategories(int* loop, Tudo tudo){
   */
 void tabClientAno(Tudo tudo){
     int i, j, r = 0;
+    int** iT;
     char* initBuf;
     char* buf = malloc(sizeof(char) * 10);
     initBuf = buf;
@@ -280,7 +282,7 @@ void tabClientAno(Tudo tudo){
     printf(BOLD KRED "\t-- Categoria/Clientes/[7/12]--\n\n" RESET);
     printf("Cliente: %s\n\n", buf);
 
-    int** iT = malloc(sizeof(int*) * 3);
+    iT = malloc(sizeof(int*) * 3);
     for (i=0; i<3; i++) {
         iT[i] = malloc(sizeof(int) * 12);
         for (j=0; j<12; j++)

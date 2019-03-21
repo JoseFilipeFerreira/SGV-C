@@ -15,8 +15,8 @@ int verifyClient(const char*);
 
 Cliente mkClient(char*);
 
-const char* getIdClient(Cliente);
+char* getIdClient(Cliente);
 
-void destroyClient(Cliente);
+void destroyClient(void*);
 
 #endif

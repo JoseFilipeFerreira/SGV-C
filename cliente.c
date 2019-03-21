@@ -22,11 +22,14 @@ Cliente mkClient(char* id) {
     return cliente;
 }
 
-const char* getIdClient(Cliente cliente) {
-    return cliente->id;
+char* getIdClient(Cliente cliente) {
+    char* r = malloc(strlen(cliente->id) + 1);
+    strcpy(r, cliente->id);
+    return r;
 }
 
-void destroyClient(Cliente cliente) {
+void destroyClient(void* cl) {
+    Cliente cliente = (Cliente) cl;
     free(cliente->id);
     free(cliente);
 }

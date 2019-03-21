@@ -41,10 +41,11 @@ static void verifySales(const Produtos p, const Clientes c) {
         if(verifySale(vendas[r], p, c)){
             fprintf(f, "%s", vendas[r]);
             if(w != r) {
+                Venda venda; 
                 free(vendas[w]);
                 vendas[w] = malloc(strlen(vendas[r]) + 1);
                 strcpy(vendas[w], vendas[r]);
-                Venda venda = mkSale(vendas[w]);
+                venda = mkSale(vendas[w]);
                 destroySale(venda);
             }
             w++;

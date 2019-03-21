@@ -5,7 +5,7 @@
 #ifndef ___CLIENTES_H___
 #define ___CLIENTES_H___
 
-#include <glib.h>
+#include "glibW.h"
 #include "cliente.h"
 
 typedef struct clientes* Clientes;
@@ -25,6 +25,8 @@ int getClientLetter(const Clientes, const char, char***);
 void updateClient(const char*, int, int, int, char, double);
 
 Clientes initClients();
+
+Clientes addClient(const Cliente, Clientes);
 
 void clearClients(Clientes);
 

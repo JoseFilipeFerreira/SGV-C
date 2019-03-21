@@ -36,10 +36,11 @@ static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
 
 int getProductLetter(const Produtos p, const char id, char*** array) {
     int i, size = 0;
+    char** arrayr;
     for(i = 0; i < LETTERS; i++) 
         size += g_tree_nnodes(p->avlP[IND(id)][i]);
     *array = malloc(size * sizeof(char*));
-    char** arrayr = *array;
+    arrayr = *array;
     for(i = 0; i < LETTERS; i++)
         g_tree_foreach(p->avlP[IND(id)][i], productLetter, &arrayr);
     return size;
@@ -55,8 +56,8 @@ Produtos initProducts() {
     return p;
 }
 
-Produtos addProduct(Produto p, Produtos l) {
-    const char* id = getIdProduct(p);
+Produtos addProduct(const Produto p, Produtos l) {
+    char* id = getIdProduct(p);
     l->totalProds++;
     g_tree_insert(l->avlP[IND(id[0])][IND(id[1])], id, p);
     return l;

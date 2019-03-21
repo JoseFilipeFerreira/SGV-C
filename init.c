@@ -27,6 +27,7 @@ Tudo tudoInicializado(Inicializador i) {
     Tudo tudo = malloc(sizeof(struct tudo));
     FILE* f = fopen(i->pathP, "r");
     char* buff = malloc(10);
+    Clientes clientes = initClients(); 
 
     Produtos produtos = initProducts(); 
     for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
@@ -39,7 +40,7 @@ Tudo tudoInicializado(Inicializador i) {
     fclose(f);
 
     f = fopen(i->pathC, "r");
-    Clientes clientes = initClients(); 
+
     for(i->clientLines = 0; fgets(buff, 10, f); i->clientLines++) {
         Cliente client = mkClient(buff);
         if(!i->filterClients || verifyClient(getIdClient(client)))

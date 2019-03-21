@@ -22,11 +22,14 @@ Produto mkProduct(char* id) {
     return produto;
 }
 
-const char* getIdProduct(Produto produto) {
-    return produto->id;
+char* getIdProduct(Produto produto) {
+    char* r = malloc(strlen(produto->id) + 1);
+    strcpy(r, produto->id);
+    return r;
 }
 
-void destroyProduct(Produto produto) {
+void destroyProduct(void* pr) {
+    Produto produto = (Produto) pr;
     free(produto->id);
     free(produto);
 }
