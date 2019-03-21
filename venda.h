@@ -8,12 +8,34 @@
 #include "produtos.h"
 #include "clientes.h"
 
+/**
+\brief Estrutura para guardar uma venda.
+*/
 typedef struct venda* Venda;
 
-int verifySale(const char*, const Produtos, const Clientes);
+/**
+@brief Verifica se uma dada String representa uma Venda Válida
 
-Venda mkSale(const char*);
+@param sale String a avaliar
+@param p Produtos todos
+@param c Clientes todos
+@return int Se é válida ou não
+*/
+int verifySale(const char* sale, const Produtos p, const Clientes c);
 
-void destroySale(Venda);
+/**
+@brief Gera uma Venda com base numa string
+
+@param sale String a converter
+@return Venda Struct que representa a venda dada
+*/
+Venda mkSale(const char* sale);
+
+/**
+@brief Liberta uma Venda 
+
+@param venda Venda a Libertar
+*/
+void destroySale(Venda venda);
 
 #endif

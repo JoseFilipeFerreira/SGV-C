@@ -3,8 +3,8 @@
 #define CAMPOSVENDA 7
 
 /**
-  \brief Estrutura para guardar uma venda.
-  */
+\brief Estrutura para guardar uma venda.
+*/
 struct venda {
     char* codProd;    /**< código de produto */
     char* codCli;     /**< código de clientes */

@@ -1,26 +1,32 @@
 #include "init.h"
 
+/**
+@brief Guardar a base de dados 
+*/
 struct tudo {
-    Produtos produtos;
-    Clientes clientes;
+    Produtos produtos; /**< Todos os produtos lidos */
+    Clientes clientes; /**< Todos os clientes lidos */
 };
 
+/**
+@brief Indica como inicializar a base de dados
+*/
 struct inicializador {
 
-    char* pathC;
-    int clientLines;
-    int clientNumber;
-    int filterClients;
+    char* pathC; /**< Caminho para o ficheiro de Clientes */
+    int clientLines; /**< Número de linhas no ficheiro de Clientes */
+    int clientNumber; /**< Número de linhas válidas no ficheiro de Clientes */
+    int filterClients; /**< Indica se é para filtar o ficheiro de Clientes */
 
-    char* pathP;
-    int productLines;
-    int productNumber;
-    int filterProducts;
+    char* pathP; /**< Caminho para o ficheiro de Produtos */
+    int productLines; /**< Número de linhas no ficheiro de Produtos */
+    int productNumber; /**< Número de linhas válidas no ficheiro de Produtos */
+    int filterProducts; /**< Indica se é para filtar o ficheiro de Produtos */
 
-    char* pathV;
-    int salesLines;
-    int salesNumber;
-    int filterSales;
+    char* pathV; /**< Caminho para o ficheiro de Vendas */
+    int salesLines; /**< Número de linhas no ficheiro de Vendas */
+    int salesNumber; /**< Número de linhas válidas no ficheiro de Vendas */
+    int filterSales; /**< Indica se é para filtar o ficheiro de Vendas */
 };
 
 Tudo tudoInicializado(Inicializador i) {

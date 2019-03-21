@@ -8,26 +8,53 @@
 #include "glibW.h"
 #include "cliente.h"
 
+/**
+\brief Clientes Lidos.
+*/
 typedef struct clientes* Clientes;
 
 /**
-\brief Verifica se um dado cliente existe.
+@brief Verifica se um dado cliente existe.
+
+@param p Todos os clientes
+@param id String a procurar
+@return int Devolve se existe
 */
-int searchClient(const Clientes, const char*);
+int searchClient(const Clientes p, const char* id);
 
 /**
-\brief Devolve o número de clientes armazenados.
+ * @brief Devolve o número de clientes armazenados.
+ * 
+ * @param p Todos os clientes
+ * @return int Devolve o número de clientes
+ */
+int getClientNumber(const Clientes p);
+
+
+/**
+@brief Obter o array de strings de Cliente começadas por uma letra
+
+@param p Todos os clientes
+@param id O primeiro caracter
+@param array Onde vão ser guardadas as strings
+@return int Número de clientes com o caracter
 */
-int getClientNumber(const Clientes);
+int getClientLetter(const Clientes p, const char id, char*** array);
 
-int getClientLetter(const Clientes, const char, char***);
+/**
+@brief Inicializar os clientes todos
 
-void updateClient(const char*, int, int, int, char, double);
-
+@return Clientes Struct com memória alocada
+*/
 Clientes initClients();
 
 Clientes addClient(const Cliente, Clientes);
 
-void clearClients(Clientes);
+/**
+@brief Libertar uma struct de clientes
+
+@param p struct a libertar
+*/
+void clearClients(Clientes p);
 
 #endif

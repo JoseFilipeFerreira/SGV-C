@@ -1,7 +1,10 @@
 #include "produto.h"
 
+/**
+@brief Struct para representar a informação de um produto
+*/
 struct produto {
-    char* id;
+    char* id; /**< ID do Produto*/
 };
 
 int verifyProduct(const char* id) {

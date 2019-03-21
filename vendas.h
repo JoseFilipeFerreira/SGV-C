@@ -13,6 +13,9 @@
 */
 int getSalesNumber();
 
+/**
+@brief Liberta memória alocada para vendas 
+*/
 void clearSales();
 
 /**
@@ -23,6 +26,6 @@ void clearSales();
 @param pathClientes ficheiro onde estão os clientes
 @param pathVendas ficheiro onde estão as vendas
 */
-int initDB(int, char*, const Produtos, const Clientes);
+int initDB(int filter, char* pathVendas, const Produtos p, const Clientes c)
 
 #endif

@@ -1,7 +1,10 @@
 #include "cliente.h"
 
+/**
+@brief Struct para representar a informação de um cliente
+*/
 struct cliente {
-    char* id;
+    char* id; /**< ID do Cliente*/
 };
 
 int verifyClient(const char* id) {
@@ -33,3 +36,4 @@ void destroyClient(void* cl) {
     free(cliente->id);
     free(cliente);
 }
+

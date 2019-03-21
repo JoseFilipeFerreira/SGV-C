@@ -4,11 +4,11 @@
 #define IND(x) ((x) - 'A')
 
 /**
-  \brief AVL que contem os clientes.
-  */
+\brief AVL que contem os clientes.
+*/
 struct clientes {
-    int totalProds;
-    GTree* avlC[LETTERS];
+    int totalProds; /**< Número de clientes lidos */
+    GTree* avlC[LETTERS]; /**< Array de AVL para guardar os clientes lidos */
 };
 
 static int cmp(const void* a, const void* b, void* c) {
@@ -33,6 +33,7 @@ static gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
     *(char***) data = array;
     return FALSE;
 }
+
 
 int getClientLetter(const Clientes p, const char id, char*** array) {
     int size = g_tree_nnodes(p->avlC[IND(id)]);

@@ -1,14 +1,21 @@
 #include "produtos.h"
 
+/**
+@brief Número de Letras no alfabeto
+*/
 #define LETTERS 26
+
+/**
+@brief Converter uma Letra no seu indice
+*/
 #define IND(x) ((x) - 'A')
 
 /**
-  \brief AVL que contem os produtos.
-  */
+\brief Produtos Lidos.
+*/
 struct produtos {
-    int totalProds;
-    GTree* avlP[LETTERS][LETTERS];
+    int totalProds; /**< Número de produtos lidos */
+    GTree* avlP[LETTERS][LETTERS]; /**< Matriz de AVL para guardar os produtos */
 };
 
 static int cmp(const void* a, const void* b, void* c) {

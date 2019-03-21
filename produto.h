@@ -9,14 +9,40 @@
 #include <string.h>
 #include <stdlib.h>
 
+/**
+@brief Struct para representar a informação de um produto
+*/
 typedef struct produto* Produto;
 
-int verifyProduct(const char*);
+/**
+@brief Verifica se uma string representa um Produto
 
-Produto mkProduct(char*);
+@param id String a verificar
+@return int Se representa ou não um produto
+*/
+int verifyProduct(const char* id);
 
-char* getIdProduct(Produto);
+/**
+@brief Criar uma struct de produto com base numa string 
 
-void destroyProduct(void*);
+@param id string a converter
+@return Produto struct que representa o produto dado
+*/
+Produto mkProduct(char* id);
+
+/**
+@brief Obter ID de produto
+
+@param produto produto a procurar
+@return const char* id do produto
+*/
+char* getIdProduct(Produto produto);
+
+/**
+@brief Free de um Produto
+
+@param produto Produto a libertar
+*/
+void destroyProduct(void* produto);
 
 #endif
