@@ -48,7 +48,7 @@ Clientes initClients() {
     int i;
     Clientes p = malloc(sizeof(struct clientes));
     for(i = 0; i < LETTERS; i++)
-        p->avlC[i] = g_tree_new_full(&cmp, NULL, NULL, destroyClient);
+        p->avlC[i] = g_tree_new_full(&cmp, NULL, free, destroyClient);
     p->totalProds = 0;
     return p;
 }

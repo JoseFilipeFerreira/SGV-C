@@ -58,7 +58,7 @@ Produtos initProducts() {
     Produtos p = malloc(sizeof(struct produtos));
     for(i = 0; i < LETTERS; i++)
         for(j = 0; j < LETTERS; j++)
-            p->avlP[i][j] = g_tree_new_full(&cmp, NULL, NULL, destroyProduct);
+            p->avlP[i][j] = g_tree_new_full(&cmp, NULL, free, destroyProduct);
     p->totalProds = 0;
     return p;
 }

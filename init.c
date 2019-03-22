@@ -38,10 +38,12 @@ Tudo tudoInicializado(Inicializador i) {
     Produtos produtos = initProducts(); 
     for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
         Produto product = mkProduct(buff);
-        if(!i->filterProducts || verifyProduct(getIdProduct(product)))
+        char* id = getIdProduct(product);
+        if(!i->filterProducts || verifyProduct(id))
             addProduct(product, produtos);
         else
             destroyProduct(product);
+        free(id);
     }
     fclose(f);
 
@@ -49,10 +51,12 @@ Tudo tudoInicializado(Inicializador i) {
 
     for(i->clientLines = 0; fgets(buff, 10, f); i->clientLines++) {
         Cliente client = mkClient(buff);
-        if(!i->filterClients || verifyClient(getIdClient(client)))
+        char* id = getIdClient(client);
+        if(!i->filterClients || verifyClient(id))
             addClient(client, clientes);
         else
             destroyClient(client);
+        free(id);
     }
     fclose(f);
     free(buff);
