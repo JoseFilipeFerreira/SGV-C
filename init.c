@@ -6,6 +6,7 @@
 struct tudo {
     Produtos produtos; /**< Todos os produtos lidos */
     Clientes clientes; /**< Todos os clientes lidos */
+    Faturas faturas;
 };
 
 /**
@@ -32,7 +33,7 @@ struct inicializador {
 Tudo tudoInicializado(Inicializador i) {
     Tudo tudo = malloc(sizeof(struct tudo));
     FILE* f = fopen(i->pathP, "r");
-    char* buff = malloc(10);
+    char* buff = malloc(35);
     Clientes clientes = initClients(); 
 
     Produtos produtos = initProducts(); 
@@ -59,13 +60,24 @@ Tudo tudoInicializado(Inicializador i) {
         free(id);
     }
     fclose(f);
+    
+    Faturas faturas = initFaturas();
+    f = fopen(i->pathV, "r");
+    for(i->salesLines = i->salesNumber = 0; fgets(buff, 35, f); i->salesLines++) {
+        if(!i->filterSales || verifySale(buff, produtos, clientes)) {
+                Venda venda = mkSale(buff);
+                addFatura(venda, faturas);
+                i->salesNumber++;
+                destroySale(venda);
+        }
+    }
+    fclose(f);
     free(buff);
-    i->salesLines = initDB(i->filterSales, i->pathV, produtos, clientes);
-    i->salesNumber = getSalesNumber();
     i->productNumber = getProductNumber(produtos);
     i->clientNumber = getClientNumber(clientes);
     tudo->produtos = produtos;
     tudo->clientes = clientes;
+    tudo->faturas = faturas;
     return tudo;
 }
 
@@ -88,7 +100,7 @@ void setCliente(Tudo tudo, const Clientes p) {
 void destroyTudo(Tudo tudo) {
     clearProducts(tudo->produtos);
     clearClients(tudo->clientes);
-    clearSales();
+    clearFaturas(tudo->faturas);
     free(tudo);
 }
 
@@ -157,6 +169,25 @@ char* getClientPath(const Inicializador i) {
     return r;
 }
 
+int getNSalesMes(const Tudo tudo, int inicio, int fim) {
+    int r;
+    Faturas f = tudo->faturas;
+    for(r = 0; inicio < fim; inicio++)
+        r += getQuantTotal(f, inicio);
+    return r;
+}
+
+int getTFactMes(const Tudo tudo, int inicio, int fim) {
+    int r;
+    Faturas f = tudo->faturas;
+    for(r = 0; inicio < fim; inicio++)
+        r += getFatTotal(f, inicio);
+    return r;
+}
+
+int getProdNComprados(const Tudo tudo) {
+    return getProductNumber(tudo->produtos) - getProdsVendidos(tudo->faturas); 
+}
 void destroyInit(Inicializador inicial) {
     free(inicial->pathC);
     free(inicial->pathP);

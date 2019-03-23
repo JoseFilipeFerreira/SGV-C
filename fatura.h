@@ -1,30 +1,28 @@
 /**
-@file produto.h
-\brief Módulo de tratamento de produto individual.
+@file fatura.h
+\brief Módulo de tratamento de fatura individual.
 */
-#ifndef ___PRODUTO_H___
-#define ___PRODUTO_H___
+#ifndef ___FATURA_H___
+#define ___FATURA_H___
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "venda.h"
 
-typedef struct produto* Produto;
+typedef struct faturacaoProd* FatP;
 
-int verifyProduct(const char*);
+FatP initFatP(Venda v);
 
-Produto mkProduct(char*);
+void mkFatura(FatP fat, Venda v);
 
-void addFactProduct(Produto, int, int, int, double, char);
+char* getProdFact(FatP f);
 
-void addQuantProduct(Produto, int, int, int);
+char getTipoFact(FatP f);
 
-void addSaleNumber(Produto, int, int);
+double getPUnitFact(FatP f);
 
-const char* getIdProduct(Produto);
+int getQuantFact(FatP f);
 
-void destroyProduct(Produto);
+int getTotalFact(FatP f);
 
-void printProduct(Produto);
+void destroyFact(void* f);
 
 #endif

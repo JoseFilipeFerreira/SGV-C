@@ -23,10 +23,10 @@ static int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-int searchProduct(const Produtos p, const char* id) {
+bool searchProduct(const Produtos p, const char* id) {
     if(verifyProduct(id)) 
         return (g_tree_lookup(p->avlP[IND(id[0])][IND(id[1])], id) != NULL);
-    return 0;
+    return false;
 }
 
 int getProductNumber(const Produtos p) {

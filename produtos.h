@@ -20,7 +20,7 @@ typedef struct produtos* Produtos;
 @param id Id a aferir a existência
 @return int Se existe ou não 
 */
-int searchProduct(const Produtos p, const char* id);
+bool searchProduct(const Produtos p, const char* id);
 
 /**
 @brief Devolve o número de produtos armazenados

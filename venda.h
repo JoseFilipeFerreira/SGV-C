@@ -13,6 +13,7 @@
 */
 typedef struct venda* Venda;
 
+enum Tipo {N, P};
 /**
 @brief Verifica se uma dada String representa uma Venda Válida
 
@@ -30,6 +31,22 @@ int verifySale(const char* sale, const Produtos p, const Clientes c);
 @return Venda Struct que representa a venda dada
 */
 Venda mkSale(const char* sale);
+
+char* getClientSale(Venda v); 
+
+char* getProductSale(Venda v); 
+
+int getFilialSale(Venda v); 
+
+enum Tipo getTipoSale(Venda v); 
+
+double getPUnitSale(Venda v); 
+
+int getQuantSale(Venda v); 
+
+int getMesSale(Venda v);
+
+double getTotalSale(Venda v);
 
 /**
 @brief Liberta uma Venda 

@@ -7,14 +7,14 @@ struct produto {
     char* id; /**< ID do Produto*/
 };
 
-int verifyProduct(const char* id) {
+bool verifyProduct(const char* id) {
     char c1, c2;
     int n;
     if(id && strlen(id) == 6) {
         sscanf(id, "%c%c%d%*s", &c1, &c2, &n);
-        return strlen(id) == 6 && c1 <= 'Z' && c1 >='A' && c2 <= 'Z' && c2 >='A' && n >= 1000 && n <= 9999;
+        return c1 <= 'Z' && c1 >='A' && c2 <= 'Z' && c2 >='A' && n >= 1000 && n <= 9999;
     }
-    return 0;
+    return false;
 }
 
 Produto mkProduct(char* id) {

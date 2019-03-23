@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /**
 @brief Struct para representar a informação de um produto
@@ -20,7 +21,7 @@ typedef struct produto* Produto;
 @param id String a verificar
 @return int Se representa ou não um produto
 */
-int verifyProduct(const char* id);
+bool verifyProduct(const char* id);
 
 /**
 @brief Criar uma struct de produto com base numa string 

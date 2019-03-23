@@ -55,6 +55,7 @@ Venda mkSale(const char* sale) {
     fieldOfSales = saleFields(sale);
     venda->codProd = malloc(strlen(fieldOfSales[0]) + 1);
     strcpy(venda->codProd, fieldOfSales[0]);
+
     venda->precoUnit = atof(fieldOfSales[1]);
     venda->quantidade = atoi(fieldOfSales[2]);
     venda->tipo = fieldOfSales[3][0];
@@ -68,6 +69,43 @@ Venda mkSale(const char* sale) {
     free(fieldOfSales);
 
     return venda;
+}
+
+char* getClientSale(Venda v) {
+    char* r = malloc(strlen(v->codCli) + 1);
+    strcpy(r, v->codCli);
+    return r;
+}
+
+char* getProductSale(Venda v) {
+    char* r = malloc(strlen(v->codProd) + 1);
+    strcpy(r, v->codProd);
+    return r;
+}
+
+int getFilialSale(Venda v) {
+    return v->filial;
+}
+
+enum Tipo getTipoSale(Venda v) {
+    if(v->tipo == 'N') return 0;
+    if(v->tipo == 'P') return 1;
+    return -1;
+}
+
+double getPUnitSale(Venda v) {
+    return v->precoUnit;
+}
+
+int getQuantSale(Venda v) {
+    return v->quantidade;
+}
+
+int getMesSale(Venda v) {
+    return v->mes;
+}
+double getTotalSale(Venda v) {
+    return v->quantidade * v->precoUnit;
 }
 
 void destroySale(Venda venda) {

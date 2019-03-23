@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /**
 @brief Struct para representar a informação de um cliente
@@ -20,7 +21,7 @@ typedef struct cliente* Cliente;
 @param id string a verificar
 @return int se é válido ou não
 */
-int verifyClient(const char* id);
+bool verifyClient(const char* id);
 
 /**
 @brief Criar uma struct de cliente com base numa string 
