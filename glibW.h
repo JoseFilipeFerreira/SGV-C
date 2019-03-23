@@ -1,3 +1,7 @@
+/**
+@file glibW.h
+\brief Módulo de tratamento do carregamento da glib.
+*/
 #ifndef ___GLIBW_H___
 #define ___GLIBW_H___
 

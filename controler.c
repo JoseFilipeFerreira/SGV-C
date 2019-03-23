@@ -413,6 +413,68 @@ void menuProdutos(int* loop, Tudo tudo){
     }
 }
 
+
+
+/**
+@brief Query 8
+*/
+void tabVendasIntervalo(Tudo tudo){
+    int r = 0;
+    int p1, p2;
+    char* initBuf;
+    char* buf = malloc(sizeof(char) * 10);
+    initBuf = buf;
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Categoria/Vendas/[8]--\n" RESET);
+
+        if(r)
+            printf(UNDER "Intervalo Inválido\n\n" RESET);
+        else
+            printf("\n\n");
+
+        printf("Inserir Inicio do intervalo:\n");
+
+        fgets(initBuf, 10, stdin);
+        if(strlen(buf) == 0)
+            p1 = -1;
+        else{
+            strtok(buf, "\n");
+            p1 = atoi(buf);
+        }
+
+        printf("Inserir Fim do intervalo:\n");
+
+        fgets(initBuf, 10, stdin);
+        if(strlen(buf) == 0)
+            p2 = -1;
+        else{
+            strtok(buf, "\n");
+            p2 = atoi(buf);
+        }
+
+        if(p1 > 0 && p1 < 13 && p2 > 0 && p2 < 13 && p1 < p2)
+            break;
+        else
+            r = 1;
+    }
+
+    system("clear");
+    printf(BOLD KRED "\t-- Categoria/Vendas/[8]--\n\n" RESET);
+    printf("Intervalo: %d -> %d\n\n", p1, p2);
+
+    printf("Faturação Total [7]:\n");
+
+    printf("Numero de Vendas: %d\n", getNSalesMes(tudo, p1, p2) );
+    printf("Total Faturado: %.2f\n", getTFactMes(tudo, p1, p2) );
+
+    printf(HIDE_CURSOR);
+    getchar();
+    free(buf);
+    printf(SHOW_CURSOR);
+}
+
+
 void menuVendas(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
@@ -428,6 +490,7 @@ void menuVendas(int* loop, Tudo tudo){
                 break;
 
             case 1:
+                tabVendasIntervalo(tudo);
                 break;
 
             default:

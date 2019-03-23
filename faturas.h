@@ -1,6 +1,6 @@
 /**
-@file produtos.h
-\brief Módulo de tratamento de produtos.
+@file faturas.h
+\brief Módulo de tratamento de faturas.
 */
 #ifndef ___FATURAS_H___
 #define ___FATURAS_H___

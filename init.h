@@ -172,8 +172,11 @@ char* getProductPath(const Inicializador i);
 char* getClientPath(const Inicializador i);
 
 int getNSalesMes(const Tudo tudo, int inicio, int fim);
-int getTFacMes(const Tudo tudo, int inicio, int fim);
+
+int getTFactMes(const Tudo tudo, int inicio, int fim);
+
 int getProdNComprados(const Tudo tudo);
+
 /**
 @brief Libertar um inicializador
 
