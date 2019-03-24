@@ -51,12 +51,12 @@ static gboolean naoComprados(gpointer key, gpointer value, gpointer data) {
 }
 
 int getNaoComprados(const Faturas p, const Filial filial, char*** array) {
-    int i, size;
+    int size;
     char** arrayr;
     size = g_tree_nnodes(p->naoComprados[filial]);
     *array = malloc(size * sizeof(char*));
     arrayr = *array;
-    g_tree_foreach(p->naoComprados[filial], faturaLetter, &arrayr);
+    g_tree_foreach(p->naoComprados[filial], naoComprados, &arrayr);
     return size;
 }
 

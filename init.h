@@ -174,7 +174,7 @@ char* getClientPath(const Inicializador i);
 
 int getNSalesMes(const Tudo tudo, int inicio, int fim);
 
-int getTFactMes(const Tudo tudo, int inicio, int fim);
+double getTFactMes(const Tudo tudo, int inicio, int fim);
 
 int getProdNComprados(const Tudo tudo);
 
