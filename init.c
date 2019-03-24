@@ -34,17 +34,19 @@ Tudo tudoInicializado(Inicializador i) {
     Tudo tudo = malloc(sizeof(struct tudo));
     FILE* f = fopen(i->pathP, "r");
     char* buff = malloc(35);
+    Faturas faturas = initFaturas();
     Clientes clientes = initClients(); 
 
     Produtos produtos = initProducts(); 
     for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
         Produto product = mkProduct(buff);
-        char* id = getIdProduct(product);
-        if(!i->filterProducts || verifyProduct(id))
+        char* id = getIdEnd(product);
+        if(!i->filterProducts || verifyProduct(id)) {
+            addNaoComprados(id, faturas);
             addProduct(product, produtos);
+        }
         else
             destroyProduct(product);
-        free(id);
     }
     fclose(f);
 
@@ -61,7 +63,6 @@ Tudo tudoInicializado(Inicializador i) {
     }
     fclose(f);
     
-    Faturas faturas = initFaturas();
     f = fopen(i->pathV, "r");
     for(i->salesLines = i->salesNumber = 0; fgets(buff, 35, f); i->salesLines++) {
         if(!i->filterSales || verifySale(buff, produtos, clientes)) {
@@ -177,8 +178,8 @@ int getNSalesMes(const Tudo tudo, int inicio, int fim) {
     return r;
 }
 
-int getTFactMes(const Tudo tudo, int inicio, int fim) {
-    int r;
+double getTFactMes(const Tudo tudo, int inicio, int fim) {
+    double r;
     Faturas f = tudo->faturas;
     for(r = 0; inicio < fim; inicio++)
         r += getFatTotal(f, inicio);
@@ -188,6 +189,11 @@ int getTFactMes(const Tudo tudo, int inicio, int fim) {
 int getProdNComprados(const Tudo tudo) {
     return getProductNumber(tudo->produtos) - getProdsVendidos(tudo->faturas); 
 }
+
+int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array) {
+    return getNaoComprados(tudo->faturas, filial, array);
+}
+
 void destroyInit(Inicializador inicial) {
     free(inicial->pathC);
     free(inicial->pathP);

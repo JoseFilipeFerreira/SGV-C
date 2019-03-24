@@ -39,6 +39,8 @@ Produto mkProduct(char* id);
 */
 char* getIdProduct(Produto produto);
 
+char* getIdEnd(Produto produto);
+
 /**
 @brief Free de um Produto
 

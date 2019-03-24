@@ -18,18 +18,28 @@ FatP initFatP(Venda p) {
 }
 
 void mkFatura(FatP fat, Venda v) { 
-    int mes, quant, filial;
+    int mes, quant;
+    Filial filial;
     double pTotal;
-    enum Tipo tipo;
+    Tipo tipo;
     mes = getMesSale(v);
     quant = getQuantSale(v);
     pTotal = quant * getPUnitSale(v);
     tipo = getTipoSale(v);
     filial = getFilialSale(v);
-    fat->nVendas[tipo][mes - 1][filial - 1]++;
-    fat->total[tipo][mes - 1][filial - 1] += pTotal;
-    fat->quant[tipo][mes - 1][filial - 1] += quant;
+    fat->nVendas[tipo][mes - 1][filial]++;
+    fat->total[tipo][mes - 1][filial] += pTotal;
+    fat->quant[tipo][mes - 1][filial] += quant;
 }
+
+int getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+    return f->total[tipo][filial][mes-1];
+}
+
+int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+    return f->quant[tipo][filial][mes-1];
+}
+
 
 void destroyFact(void* f) {
     FatP fa = (FatP) f;

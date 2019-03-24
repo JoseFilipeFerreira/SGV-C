@@ -12,7 +12,7 @@ struct venda {
     int quantidade;   /**< quantidade comprada */
     char tipo;       /**< tipo de compra (N/P) */
     int mes;          /**< mês da compra */
-    int filial;       /**< filial */
+    Filial filial;       /**< filial */
 };
 
 static char** saleFields(const char* sale) {
@@ -62,7 +62,7 @@ Venda mkSale(const char* sale) {
     venda->codCli = malloc(strlen(fieldOfSales[4]) + 1);
     strcpy(venda->codCli, fieldOfSales[4]);
     venda->mes = atoi(fieldOfSales[5]);
-    venda->filial = atoi(fieldOfSales[6]);
+    venda->filial = atoi(fieldOfSales[6]) - 1;
     for(i = 0; i < CAMPOSVENDA; i++)
         free(fieldOfSales[i]);
 
@@ -87,7 +87,7 @@ int getFilialSale(Venda v) {
     return v->filial;
 }
 
-enum Tipo getTipoSale(Venda v) {
+Tipo getTipoSale(Venda v) {
     if(v->tipo == 'N') return 0;
     if(v->tipo == 'P') return 1;
     return -1;

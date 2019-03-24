@@ -13,15 +13,9 @@ FatP initFatP(Venda v);
 
 void mkFatura(FatP fat, Venda v);
 
-char* getProdFact(FatP f);
+int getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
-char getTipoFact(FatP f);
-
-double getPUnitFact(FatP f);
-
-int getQuantFact(FatP f);
-
-int getTotalFact(FatP f);
+int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
 void destroyFact(void* f);
 

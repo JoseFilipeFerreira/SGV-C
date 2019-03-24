@@ -31,6 +31,10 @@ char* getIdProduct(Produto produto) {
     return r;
 }
 
+char* getIdEnd(Produto produto) {
+    return produto->id;
+}
+
 void destroyProduct(void* pr) {
     Produto produto = (Produto) pr;
     free(produto->id);

@@ -13,7 +13,9 @@
 */
 typedef struct venda* Venda;
 
-enum Tipo {N, P};
+typedef enum filial {A, B, C, ALL} Filial;
+
+typedef enum tipo {N, P} Tipo;
 /**
 @brief Verifica se uma dada String representa uma Venda Válida
 
@@ -38,7 +40,7 @@ char* getProductSale(Venda v);
 
 int getFilialSale(Venda v); 
 
-enum Tipo getTipoSale(Venda v); 
+Tipo getTipoSale(Venda v); 
 
 double getPUnitSale(Venda v); 
 
