@@ -19,7 +19,7 @@ char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){
 
         fgets(initBuf, 10, stdin);
 
-        if(searchClient(getClientesTodos(tudo), strtok(buf, "\n")))
+        if(searchTudoClient(tudo, strtok(buf, "\n")))
             break;
         else
             r = 1;
@@ -46,7 +46,7 @@ char* getValidProductInput(char* header, char* message, char* error, Tudo tudo){
 
         fgets(initBuf, 10, stdin);
 
-        if(searchProduct(getProdutosTodos(tudo), strtok(buf, "\n")))
+        if(searchTudoProduct(tudo, strtok(buf, "\n")))
             break;
         else
             r = 1;
@@ -140,7 +140,7 @@ void prodPages(Tudo tudo){
             break;
     }
 
-    sizeProdTab = getProductLetter(getProdutosTodos(tudo), search, &prodTab);
+    sizeProdTab = getTudoProductLetter(tudo, search, &prodTab);
     menuPaginasDraw("Categoria/Produtos/[2]", prodTab, sizeProdTab,15 , 6);
 
     free(prodTab);
@@ -179,13 +179,13 @@ void clientesFieis(Tudo tudo){
     int sizeCliTab;
     char** cliTab;
 
-    sizeCliTab = getProductLetter(getProdutosTodos(tudo), 'A', &cliTab);
+    sizeCliTab = getTudoProductLetter(tudo, 'A', &cliTab);
     menuPaginasDraw("Categoria/Clientes/[5]", cliTab, sizeCliTab,15 , 6);
 }
 
 /**
-  @brief TODO : Query 7
-  */
+@brief TODO : Query 7
+*/
 void tabClientAno(Tudo tudo){
     int i, j;
     int** iT;
@@ -277,33 +277,15 @@ void tabVendasIntervalo(Tudo tudo){
     system("clear");
     printf(BOLD KRED "\t-- Categoria/Vendas/[8] --\n\n" RESET);
 
-    char** colLabl = malloc(sizeof(int*));
-    colLabl[0] = malloc(sizeof(char) * 40);
-    sprintf(colLabl[0], "Intervalo: %d -> %d", p1, p2);
+    printf("Intervalo: %d -> %d\n\n", p1, p2);
 
-    int** iT = malloc(sizeof(int*) * 2);
-    iT[0] = malloc(sizeof(int));
-    iT[1] = malloc(sizeof(int));
-    iT[0][0] = getNSalesMes(tudo, p1, p2);
-    iT[1][0] = getTFactMes(tudo, p1, p2);
-
-    printTabela(
-            (const char *[]){ "Numero de Vendas", "Total Faturado"},
-            colLabl,
-            iT,
-            2,
-            1);
+    printf("Numero de Vendas %d\n", getNSalesMes(tudo, p1, p2));
+    printf("Total Faturado: %d\n",  getTFactMes(tudo, p1, p2));
 
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
-    
     free(buf);
-    free(colLabl[0]);
-    free(colLabl);
-    free(iT[0]);
-    free(iT[1]);
-    free(iT);
 }
 
 /**
@@ -350,9 +332,8 @@ void prodMaisCompradoCli(Tudo tudo){
             r = 1;
     }
 
-    sizeProdTab = getProductLetter(getProdutosTodos(tudo), 'A', &prodTab);
+    sizeProdTab = getTudoProductLetter(tudo, 'A', &prodTab);
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab,15 , 6);
 
     free(cliente);
 }
-

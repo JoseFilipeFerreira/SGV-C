@@ -178,6 +178,12 @@ int getTFactMes(const Tudo tudo, int inicio, int fim);
 
 int getProdNComprados(const Tudo tudo);
 
+int getTudoProductLetter(const Tudo tudo, const char id, char*** array);
+
+int searchTudoProduct(Tudo tudo, char* produto);
+
+int searchTudoClient(Tudo tudo, char* cliente);
+
 /**
 @brief Libertar um inicializador
 

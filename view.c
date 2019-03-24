@@ -1,8 +1,5 @@
 #include "view.h"
 
-#define BACK 0
-#define EXIT -1
-
 int sizeInt(int n){
     int i;
     i = (n > 0)?0:1;

@@ -40,7 +40,14 @@ int getProductNumber(const Produtos p);
 */
 int getProductLetter(const Produtos p, const char id, char*** array);
 
-Produtos addProduct(const Produto, Produtos);
+/**
+@brief Adicionar um produto
+
+@param p produto a adicionar
+@param l onde adicionar
+@return Produtos produto adicionado
+*/
+Produtos addProduct(const Produto p, Produtos l);
 
 /**
 @brief Alocar espaço para os produtos

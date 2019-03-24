@@ -194,3 +194,15 @@ void destroyInit(Inicializador inicial) {
     free(inicial->pathV);
     free(inicial);
 }
+
+int getTudoProductLetter(const Tudo tudo, const char id, char*** array){
+    return getProductLetter(getProdutosTodos(tudo),  id, array);
+}
+
+int searchTudoProduct(Tudo tudo, char* produto){
+    return searchProduct(getProdutosTodos(tudo), produto);
+}
+
+int searchTudoClient(Tudo tudo, char* cliente){
+    return searchClient(getClientesTodos(tudo), cliente);
+}

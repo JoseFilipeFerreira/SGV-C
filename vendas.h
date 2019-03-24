@@ -22,9 +22,9 @@ void clearSales();
 \brief Inicializa a base de dados de vendas, produtos e clientes.
 
 @param filter Indica se é necessário filtrar as vendas, os produtos e os clientes lidos.
-@param pathProdutos ficheiro onde estão os produtos
-@param pathClientes ficheiro onde estão os clientes
 @param pathVendas ficheiro onde estão as vendas
+@param p produtos todos
+@param c clientes todos
 */
 int initDB(int filter, char* pathVendas, const Produtos p, const Clientes c);
 

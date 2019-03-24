@@ -8,9 +8,6 @@
 #include "formating.h"
 #include "view.h"
 #include "init.h"
-#include "produtos.h"
-#include "clientes.h"
-#include "vendas.h"
 
 /**
 @brief Query 2
