@@ -24,7 +24,7 @@ doc:
 	doxygen Doxygen
 
 grind:
-	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL)
+	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL) 1
 
 mem:
-	memusage -T -p $(BENCH)/$(IMAGE) ./$(EXECUTAVEL)
+	memusage -T -p $(BENCH)/$(IMAGE) ./$(EXECUTAVEL) 13
