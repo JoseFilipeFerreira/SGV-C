@@ -48,7 +48,14 @@ int getClientLetter(const Clientes p, const char id, char*** array);
 */
 Clientes initClients();
 
-Clientes addClient(const Cliente, Clientes);
+/**
+@brief Adicionar um cliente
+
+@param p cliente a adicionar
+@param l onde adicionar
+@return Clientes Clientes editados
+*/
+Clientes addClient(const Cliente p, Clientes l);
 
 /**
 @brief Libertar uma struct de clientes

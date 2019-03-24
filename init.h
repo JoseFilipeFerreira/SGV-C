@@ -7,6 +7,7 @@
 
 #include "vendas.h"
 #include "faturas.h"
+
 /**
 @brief Guardar a base de dados 
 */

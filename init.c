@@ -6,7 +6,7 @@
 struct tudo {
     Produtos produtos; /**< Todos os produtos lidos */
     Clientes clientes; /**< Todos os clientes lidos */
-    Faturas faturas;
+    Faturas faturas;   /**< Todas as faturas lidas */
 };
 
 /**
