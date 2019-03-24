@@ -10,11 +10,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "view.h"
+#include "queryUI.h"
+#include "formating.h"
 #include "init.h"
-#include "produtos.h"
-#include "clientes.h"
-#include "vendas.h"
 
 /**
 \brief Cria o menu inicial

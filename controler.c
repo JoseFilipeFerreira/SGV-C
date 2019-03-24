@@ -1,69 +1,11 @@
 #include "controler.h"
 
-#define KBLK  "\x1B[30m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KORG  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KROXO "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KGREY "\x1B[37m"
-#define KWHT  "\x1B[38m"
-#define BOLD  "\033[1m"
-#define UNDER "\033[4m"
-#define BLINK "\033[5m"
-
-#define RESET "\033[0m"
-
-#define HIDE_CURSOR "\x1B[?25l"
-#define SHOW_CURSOR "\x1B[?25h"
-
-#define BACK 0
-#define EXIT -1
-#define MAX_FILE_NAME 256
-
 static void menuClientes();
 static void menuProdutos();
 static void menuVendas();
 static void menuCategories(int* loop, Tudo tudo);
 static void menuLoadFile(int* loop, Tudo* tudo);
 static void menuLoadCustom(int* loop, Tudo* tudo);
-
-void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols){
-    char search;
-    int lPrinted, page = 0;
-    /*calcular número de páginas*/
-    int nPages = (size % (sizePage * nCols))?(size/(sizePage*nCols)) : size/(sizePage*nCols) - 1;
-    while(1){
-        system("clear");
-        printf(BOLD KRED "\t-- %s--\n\n" RESET, header);
-
-        lPrinted = printStrings(tab, size, sizePage, nCols, page);
-
-        replicate("\n", sizePage - lPrinted  + 2);
-        printf("\t%d/%d [n/p/b]\n", page + 1 , nPages+1);
-        search = getchar();
-        search = (search >= 'A' && search <= 'Z')?search - 'A':search;
-        switch (search)
-        {
-            case 'n':
-                /*não permite página maior que permitido*/
-                page = (page + 1 <= nPages)?page + 1 : page;
-                break;
-            
-            case 'p':
-                /*não permite páginas negativas*/
-                page = (page - 1 >= 0)?page -1 : page;
-                break;
-            
-            case 'b':
-                return;
-        
-            default:
-                break;
-        }
-    }
-}
 
 void menuInicial(){ 
     int loop = 1;
@@ -258,68 +200,6 @@ void menuCategories(int* loop, Tudo tudo){
     }
 }
 
-/**
-  @brief Query 7
-  */
-void tabClientAno(Tudo tudo){
-    int i, j, r = 0;
-    int** iT;
-    char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
-    initBuf = buf;
-    while(1){
-        system("clear");
-        printf(BOLD KRED "\t-- Categoria/Clientes/[7/12]--\n" RESET);
-
-        if(r)
-            printf(UNDER "Cliente não existe\n\n" RESET);
-        else
-            printf("\n\n");
-
-        printf("Inserir Cliente a pesquisar:\n");
-
-        fgets(initBuf, 10, stdin);
-
-        if(searchClient(getClientesTodos(tudo), strtok(buf, "\n")))
-            break;
-        else
-            r = 1;
-    }
-
-    system("clear");
-    printf(BOLD KRED "\t-- Categoria/Clientes/[7/12]--\n\n" RESET);
-    printf("Cliente: %s\n\n", buf);
-
-    iT = malloc(sizeof(int*) * 3);
-    for (i=0; i<3; i++) {
-        iT[i] = malloc(sizeof(int) * 12);
-        for (j=0; j<12; j++)
-            iT[i][j] = i;
-    }
-
-    printf("Produtos Comprados [7]:\n");
-
-    printTabela(
-            (const char *[]){ "Filial 1", "Filial 2", "Filial 3" },
-            (const char *[]){ "JAN",
-            "FEV",
-            "MAR",
-            "ABR",
-            "MAI",
-            "JUN",
-            "JUL",
-            "AGO",
-            "SET",
-            "OUT",
-            "NOV",
-            "DEZ" },
-            iT,
-            3,
-            12);
-    getchar();
-    free(buf);
-}
-
 void menuClientes(int* loop, Tudo tudo){
     while(*loop){
         system("clear");
@@ -335,6 +215,7 @@ void menuClientes(int* loop, Tudo tudo){
                 break;
 
             case 1:
+                clientesFieis(tudo);
                 break;
 
             case 2:
@@ -345,35 +226,13 @@ void menuClientes(int* loop, Tudo tudo){
                 break;
 
             case 4:
+                prodMaisCompradoCli(tudo);
                 break;
 
             default:
                 break;
         }
     }
-}
-
-/**
-  @brief Query 2
-  */
-void prodPages(Tudo tudo){
-    char search;
-    char** prodTab;
-    int sizeProdTab;
-
-    while(1){
-        system("clear");
-        printf(BOLD KRED "\t-- Categoria/Produtos/[2]--\n\n" RESET);
-        printf("Caracter a pesquisar:\n");
-        search = getchar();
-        if(search >= 'A' && search <= 'Z')
-            break;
-    }
-
-    sizeProdTab = getProductLetter(getProdutosTodos(tudo), search, &prodTab);
-    menuPaginasDraw("Categoria/Produtos/[2]", prodTab, sizeProdTab,15 , 6);
-
-    free(prodTab);
 }
 
 void menuProdutos(int* loop, Tudo tudo){
@@ -396,6 +255,7 @@ void menuProdutos(int* loop, Tudo tudo){
                 break;
 
             case 2:
+                prodStatsMes(tudo);
                 break;
 
             case 3:
@@ -412,68 +272,6 @@ void menuProdutos(int* loop, Tudo tudo){
         }
     }
 }
-
-
-
-/**
-@brief Query 8
-*/
-void tabVendasIntervalo(Tudo tudo){
-    int r = 0;
-    int p1, p2;
-    char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
-    initBuf = buf;
-    while(1){
-        system("clear");
-        printf(BOLD KRED "\t-- Categoria/Vendas/[8]--\n" RESET);
-
-        if(r)
-            printf(UNDER "Intervalo Inválido\n\n" RESET);
-        else
-            printf("\n\n");
-
-        printf("Inserir Inicio do intervalo:\n");
-
-        fgets(initBuf, 10, stdin);
-        if(strlen(buf) == 0)
-            p1 = -1;
-        else{
-            strtok(buf, "\n");
-            p1 = atoi(buf);
-        }
-
-        printf("Inserir Fim do intervalo:\n");
-
-        fgets(initBuf, 10, stdin);
-        if(strlen(buf) == 0)
-            p2 = -1;
-        else{
-            strtok(buf, "\n");
-            p2 = atoi(buf);
-        }
-
-        if(p1 > 0 && p1 < 13 && p2 > 0 && p2 < 13 && p1 < p2)
-            break;
-        else
-            r = 1;
-    }
-
-    system("clear");
-    printf(BOLD KRED "\t-- Categoria/Vendas/[8]--\n\n" RESET);
-    printf("Intervalo: %d -> %d\n\n", p1, p2);
-
-    printf("Faturação Total [7]:\n");
-
-    printf("Numero de Vendas: %d\n", getNSalesMes(tudo, p1, p2) );
-    printf("Total Faturado: %.2f\n", getTFactMes(tudo, p1, p2) );
-
-    printf(HIDE_CURSOR);
-    getchar();
-    free(buf);
-    printf(SHOW_CURSOR);
-}
-
 
 void menuVendas(int* loop, Tudo tudo){
     while(*loop){

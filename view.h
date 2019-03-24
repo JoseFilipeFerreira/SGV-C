@@ -11,14 +11,6 @@
 #include <unistd.h>
 
 /**
-@brief Número de caractéres necessários para representar um int
-
-@param n int a analisar
-@return int Número de caractéres necessários para o representar
- */
-int sizeInt(int n);
-
-/**
 @brief Ler input de utilizador
 
 @param size número de itens no menu (máximo de 9)
@@ -33,14 +25,6 @@ int menuCheck(int size);
 @return int returns if True or False depending on input
  */
 int messageCheck(char* message);
-
-/**
-@brief replicate a given string n times
-
-@param s string to duplicate
-@param n times to duplicate
- */
-void replicate(char* s, int n);
 
 /**
 \brief Imprimir lista de strings.
