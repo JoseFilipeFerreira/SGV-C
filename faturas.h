@@ -26,6 +26,8 @@ Faturas addFatura(const Venda v, Faturas l);
 
 Faturas initFaturas();
 
+FatP searchFatura(const Faturas f, const char* id);
+
 void clearFaturas(Faturas f);
 
 #endif

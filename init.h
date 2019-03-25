@@ -185,6 +185,9 @@ int searchTudoProduct(Tudo tudo, char* produto);
 
 int searchTudoClient(Tudo tudo, char* cliente);
 
+double getFatMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
+
+double getQuantMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
 
 /**
 @brief Libertar um inicializador

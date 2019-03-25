@@ -32,11 +32,15 @@ void mkFatura(FatP fat, Venda v) {
     fat->quant[tipo][mes - 1][filial] += quant;
 }
 
-int getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+double getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+    if(tipo == AL) 
+        return f->total[N][filial][mes-1] + f->total[P][filial][mes-1];
     return f->total[tipo][filial][mes-1];
 }
 
 int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+    if(tipo == AL) 
+        return f->quant[N][filial][mes-1] + f->quant[P][filial][mes-1];
     return f->quant[tipo][filial][mes-1];
 }
 

@@ -26,7 +26,7 @@ static int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-static FatP searchFatura(const Faturas p, const char* id) {
+FatP searchFatura(const Faturas p, const char* id) {
     return g_tree_lookup(p->avlF[IND(id[0])][IND(id[1])], id);
 }
 

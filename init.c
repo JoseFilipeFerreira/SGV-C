@@ -214,3 +214,17 @@ int searchTudoProduct(Tudo tudo, char* produto){
 int searchTudoClient(Tudo tudo, char* cliente){
     return searchClient(getClientesTodos(tudo), cliente);
 }
+
+double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
+    FatP t = searchFatura(tudo->faturas, id);
+    if(t) 
+        return getFatMesFilial(t, tipo, filial, mes);
+   return 0;
+} 
+
+double getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
+    FatP t = searchFatura(tudo->faturas, id);
+    if(t) 
+        return getQuantMesFilial(t, tipo, filial, mes);
+   return 0;
+} 

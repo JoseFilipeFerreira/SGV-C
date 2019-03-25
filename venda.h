@@ -15,7 +15,7 @@ typedef struct venda* Venda;
 
 typedef enum filial {A, B, C, ALL} Filial;
 
-typedef enum tipo {N, P} Tipo;
+typedef enum tipo {N, P, AL} Tipo;
 /**
 @brief Verifica se uma dada String representa uma Venda Válida
 

@@ -13,7 +13,7 @@ FatP initFatP(Venda v);
 
 void mkFatura(FatP fat, Venda v);
 
-int getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
+double getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
 int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
