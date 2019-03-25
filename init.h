@@ -5,7 +5,6 @@
 #ifndef ___INIT_H___
 #define ___INIT_H___
 
-#include "vendas.h"
 #include "faturas.h"
 
 /**
