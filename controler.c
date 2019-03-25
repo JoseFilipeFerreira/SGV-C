@@ -1,21 +1,21 @@
 #include "controler.h"
-
-
 #include "formating.h"
+
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
 
-static void menuClientes();
-static void menuProdutos();
-static void menuVendas();
-static void menuCategories(int* loop, Tudo tudo);
-static void menuLoadFile(int* loop, Tudo* tudo);
-static void menuLoadCustom(int* loop, Tudo* tudo);
+static void menuClientes   (int* loop, Tudo* tudo);
+static void menuProdutos   (int* loop, Tudo* tudo);
+static void menuVendas     (int* loop, Tudo* tudo);
+static void menuCategories (int* loop, Tudo* tudo);
+static void menuLoadFile   (int* loop, Tudo* tudo);
+static void menuLoadCustom (int* loop, Tudo* tudo);
 
 void menuInicial(){ 
     int loop = 1;
     Tudo tudo = NULL;
+    
     menuLoadFile(&loop, &tudo);
 
     printf(SHOW_CURSOR);
@@ -44,6 +44,7 @@ void menuShowLoad(Inicializador i){
 
 void menuLoadFile(int* loop, Tudo* tudo){
     int r;
+    if(*tudo) destroyTudo(*tudo);
     while(*loop){
         Inicializador i;
         system("clear");
@@ -51,6 +52,7 @@ void menuLoadFile(int* loop, Tudo* tudo){
         printf("1 - Load Default (filtered)\n");
         printf("2 - Load Default (non filtered)\n");
         printf("3 - Load Custom\n");
+        printf("b - BACK\n");
         printf("e - EXIT\n");
         r = menuCheck(3);
         system("clear");
@@ -67,7 +69,7 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 *tudo = tudoInicializado(i);
 
                 menuShowLoad(i);
-                menuCategories(loop, *tudo);
+                menuCategories(loop, tudo);
                 break;
 
             case 2:
@@ -78,7 +80,7 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 *tudo = tudoInicializado(i);
 
                 menuShowLoad(i);
-                menuCategories(loop, *tudo);
+                menuCategories(loop, tudo);
                 break;
 
             case 3:
@@ -170,10 +172,10 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(SHOW_CURSOR);
 
     menuShowLoad(i);
-    menuCategories(loop, *tudo);
+    menuCategories(loop, tudo);
 }
 
-void menuCategories(int* loop, Tudo tudo){
+void menuCategories(int* loop, Tudo* tudo){
     while(*loop){
         system("clear");
         printf(SHOW_CURSOR);
@@ -181,6 +183,7 @@ void menuCategories(int* loop, Tudo tudo){
         printf("1 - Clientes\n");
         printf("2 - Produtos\n");
         printf("3 - Vendas\n");
+        printf("b - BACK\n");
         printf("e - EXIT\n");
         switch (menuCheck(3))
         {
@@ -195,6 +198,10 @@ void menuCategories(int* loop, Tudo tudo){
             case 3:
                 menuVendas(loop, tudo);
                 break;
+            
+            case BACK:
+                menuLoadFile(loop, tudo);
+                break;
 
             case EXIT:
                 *loop = 0;
@@ -206,7 +213,7 @@ void menuCategories(int* loop, Tudo tudo){
     }
 }
 
-void menuClientes(int* loop, Tudo tudo){
+void menuClientes(int* loop, Tudo* tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Clientes --\n\n" RESET);
@@ -214,6 +221,7 @@ void menuClientes(int* loop, Tudo tudo){
         printf("2 - Clientes que não compraram   [6]\n");
         printf("3 - Stats sobre cliente (ano)    [7/12]\n");
         printf("4 - Stats sobre cliente (mes)    [10]\n");
+        printf("b - BACK\n");
         switch (menuCheck(4))
         {
             case BACK:
@@ -221,18 +229,18 @@ void menuClientes(int* loop, Tudo tudo){
                 break;
 
             case 1:
-                clientesFieis(tudo);
+                clientesFieis(*tudo);
                 break;
 
             case 2:
                 break;
 
             case 3:
-                tabClientAno(tudo);
+                tabClientAno(*tudo);
                 break;
 
             case 4:
-                prodMaisCompradoCli(tudo);
+                prodMaisCompradoCli(*tudo);
                 break;
 
             default:
@@ -241,7 +249,7 @@ void menuClientes(int* loop, Tudo tudo){
     }
 }
 
-void menuProdutos(int* loop, Tudo tudo){
+void menuProdutos(int* loop, Tudo* tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Produtos --\n\n" RESET);
@@ -250,6 +258,7 @@ void menuProdutos(int* loop, Tudo tudo){
         printf("3 - Produtos não comprados         [4]\n");
         printf("4 - Stats de produto numa filial   [9]\n");
         printf("5 - Produtos mais vendidos         [11]\n");
+        printf("b - BACK\n");
         switch (menuCheck(5))
         {
             case BACK:
@@ -257,15 +266,15 @@ void menuProdutos(int* loop, Tudo tudo){
                 break;
 
             case 1:
-                prodPages(tudo);
+                prodPages(*tudo);
                 break;
 
             case 2:
-                prodStatsMes(tudo);
+                prodStatsMes(*tudo);
                 break;
 
             case 3:
-                prodsNCompradosUI(tudo);
+                prodsNCompradosUI(*tudo);
                 break;
 
             case 4:
@@ -280,14 +289,14 @@ void menuProdutos(int* loop, Tudo tudo){
     }
 }
 
-void menuVendas(int* loop, Tudo tudo){
+void menuVendas(int* loop, Tudo* tudo){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Vendas --\n\n" RESET);
         printf("1 - total faturado em intervalo de tempo [8]\n");
         printf("2 - \n");
         printf("3 - \n");
-        printf("4 - \n");
+        printf("b - BACK\n");
         switch (menuCheck(1))
         {
             case BACK:
@@ -295,7 +304,7 @@ void menuVendas(int* loop, Tudo tudo){
                 break;
 
             case 1:
-                tabVendasIntervalo(tudo);
+                tabVendasIntervalo(*tudo);
                 break;
 
             default:

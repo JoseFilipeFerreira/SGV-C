@@ -2,7 +2,6 @@
 @file main.c
 \brief Ficheiro principal.
 */
-
 #include "controler.h"
 #include "argv.h"
 

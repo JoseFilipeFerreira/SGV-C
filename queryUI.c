@@ -1,6 +1,6 @@
 #include "queryUI.h"
-
 #include "formating.h"
+
 #include <stdio.h>
 
 char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){

@@ -11,8 +11,8 @@
 #define IND(x) ((x) - 'A')
 
 /**
-  \brief Faturas Lidos.
-  */
+\brief Faturas Lidas.
+*/
 struct faturas {
     int produtos;
     GTree* naoComprados[4];
