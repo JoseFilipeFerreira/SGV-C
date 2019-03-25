@@ -1,5 +1,10 @@
 #include "controler.h"
 
+
+#include <unistd.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 static void menuClientes();
 static void menuProdutos();
 static void menuVendas();
@@ -259,6 +264,7 @@ void menuProdutos(int* loop, Tudo tudo){
                 break;
 
             case 3:
+                prodsNCompradosUI(tudo);
                 break;
 
             case 4:

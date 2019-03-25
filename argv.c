@@ -1,5 +1,6 @@
 #include "argv.h"
 
+#include <time.h>
 
 void argvParser(int argc, char** argv){
     clock_t start, end;
@@ -22,7 +23,14 @@ void argvParser(int argc, char** argv){
     start = clock();
     switch(atoi(argv[1])){
         case 1: /* Answer all querys */
+            /*1*/
             getTudoProductLetter( tudo, 'A', &bloatTab);
+            /*4*/
+            prodsNaoComprados(tudo, 3, &bloatTab);
+            /*8*/
+            getNSalesMes(tudo, 1, 12);
+            getTFactMes(tudo, 1, 12);
+
             free(bloatTab);
             break;
 
@@ -37,6 +45,11 @@ void argvParser(int argc, char** argv){
         case 3:
             break;
         case 4:
+            prodsNaoComprados(
+                tudo,
+                (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 3,
+                &bloatTab);
+            free(bloatTab);
             break;
         case 5:
             break;
@@ -45,7 +58,10 @@ void argvParser(int argc, char** argv){
         case 7:
             break;
         case 8:
+            getNSalesMes(tudo, 1, 12);
+            getTFactMes(tudo, 1, 12);
             break;
+
         case 9:
             break;
         case 10:

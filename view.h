@@ -5,11 +5,7 @@
 #ifndef ___VIEW_H___
 #define ___VIEW_H___
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "formating.h"
+#include "formating.h" 
 
 /**
 @brief Ler input de utilizador

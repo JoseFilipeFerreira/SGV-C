@@ -1,5 +1,9 @@
 #include "produto.h"
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 /**
 @brief Struct para representar a informação de um produto
 */

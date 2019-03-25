@@ -167,9 +167,44 @@ void prodStatsMes(Tudo tudo){
 
     printf("%s : %d\n", produto, mes);
 
-    getchar();
-
     free(produto);
+}
+
+/**
+@brief DONE : Query 4
+*/
+void prodsNCompradosUI(Tudo tudo){
+    char** prodTab;
+    int sizeProdTab;
+    char* initBuf;
+    char* buf = malloc(sizeof(char) * 10);
+    initBuf = buf;
+
+    int f;
+
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Categoria/Produtos/[4] --\n" RESET);
+        printf(BOLD "Produtos não comprados:\n" RESET);
+        printf("1 - Filial 1\n");
+        printf("2 - Filial 2\n");
+        printf("3 - Filial 3\n");
+        printf("4 - Todas as Filiais\n");
+
+        fgets(initBuf, 10, stdin);
+
+        f = atoi(strtok(buf, "\n"));
+
+        if(f>0 && f<13)
+            break;
+    }
+
+    sizeProdTab = prodsNaoComprados(tudo, f-1, &prodTab);
+    menuPaginasDraw("Categoria/Produtos/[4]", prodTab, sizeProdTab,15 , 6);
+
+    free(prodTab);
+    free(initBuf);
+
 }
 
 /**
@@ -231,7 +266,7 @@ void tabClientAno(Tudo tudo){
 }
 
 /**
-@brief MOSTLY_DONE (fix final printf) : Query 8
+@brief DONE : Query 8
 */
 void tabVendasIntervalo(Tudo tudo){
     int r = 0;
@@ -280,7 +315,7 @@ void tabVendasIntervalo(Tudo tudo){
     printf("Intervalo: %d -> %d\n\n", p1, p2);
 
     printf("Numero de Vendas %d\n", getNSalesMes(tudo, p1, p2));
-    printf("Total Faturado: %d\n",  getTFactMes(tudo, p1, p2));
+    printf("Total Faturado: %.2f\n",  getTFactMes(tudo, p1, p2));
 
     printf(HIDE_CURSOR);
     getchar();

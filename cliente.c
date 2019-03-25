@@ -1,5 +1,9 @@
 #include "cliente.h"
 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 /**
 @brief Struct para representar a informação de um cliente
 */

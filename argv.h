@@ -7,7 +7,6 @@
 #define ___ARGV_H___
 
 #include "init.h"
-#include <time.h>
 
 /**
 @brief Parse the command line arguments

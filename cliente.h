@@ -5,9 +5,6 @@
 #ifndef ___CLIENTE_H___
 #define ___CLIENTE_H___
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 /**

@@ -5,9 +5,6 @@
 #ifndef ___PRODUTO_H___
 #define ___PRODUTO_H___
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 /**

@@ -180,9 +180,12 @@ int getProdNComprados(const Tudo tudo);
 
 int getTudoProductLetter(const Tudo tudo, const char id, char*** array);
 
+int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array);
+
 int searchTudoProduct(Tudo tudo, char* produto);
 
 int searchTudoClient(Tudo tudo, char* cliente);
+
 
 /**
 @brief Libertar um inicializador

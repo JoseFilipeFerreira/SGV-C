@@ -20,6 +20,11 @@ void prodPages(Tudo tudo);
 void prodStatsMes(Tudo tudo);
 
 /**
+@brief Query 4
+*/
+void prodsNCompradosUI(Tudo tudo);
+
+/**
 @brief Query 5
 */
 void clientesFieis(Tudo tudo);
