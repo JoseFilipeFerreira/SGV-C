@@ -7,6 +7,7 @@ void argvParser(int argc, char** argv){
     clock_t start, end;
     double cpu_time_used;
     char** bloatTab;
+    int v1, v2;
     Tudo tudo;
     Inicializador i;
 
@@ -59,8 +60,10 @@ void argvParser(int argc, char** argv){
         case 7:
             break;
         case 8:
-            getNSalesMes(tudo, 1, 12);
-            getTFactMes(tudo, 1, 12);
+            v1 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;
+            v2 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 12;
+            getNSalesMes(tudo, v1, v2);
+            getTFactMes(tudo, v1, v2);
             break;
 
         case 9:

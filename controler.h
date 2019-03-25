@@ -6,7 +6,6 @@
 #define ___CONTROLER_H___
 
 #include "queryUI.h"
-#include "formating.h"
 #include "init.h"
 
 /**

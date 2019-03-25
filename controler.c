@@ -1,6 +1,7 @@
 #include "controler.h"
 
 
+#include "formating.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>

@@ -5,7 +5,6 @@
 #ifndef ___QUERYUI_H___
 #define ___QUERYUI_H___
 
-#include "formating.h"
 #include "view.h"
 #include "init.h"
 
