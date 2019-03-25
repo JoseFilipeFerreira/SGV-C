@@ -22,6 +22,7 @@ void menuInicial(){
     system("clear");
 
     if(tudo) destroyTudo(tudo);
+
 }
 
 void menuShowLoad(Inicializador i){
@@ -45,6 +46,7 @@ void menuShowLoad(Inicializador i){
 void menuLoadFile(int* loop, Tudo* tudo){
     int r;
     if(*tudo) destroyTudo(*tudo);
+    *tudo = NULL;
     while(*loop){
         Inicializador i;
         system("clear");
