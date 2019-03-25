@@ -81,6 +81,7 @@ Tudo tudoInicializado(Inicializador i) {
     tudo->produtos = produtos;
     tudo->clientes = clientes;
     tudo->faturas = faturas;
+
     return tudo;
 }
 
@@ -219,7 +220,7 @@ double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, 
     FatP t = searchFatura(tudo->faturas, id);
     if(t) 
         return getFatMesFilial(t, tipo, filial, mes);
-   return 0;
+    return 0;
 } 
 
 int getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
