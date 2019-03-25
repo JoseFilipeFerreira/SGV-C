@@ -1,6 +1,7 @@
 #include "argv.h"
 
 #include <time.h>
+#include <stdio.h>
 
 void argvParser(int argc, char** argv){
     clock_t start, end;

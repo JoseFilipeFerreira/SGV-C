@@ -1,5 +1,7 @@
 #include "vendas.h"
 
+#include <stdio.h>
+
 #define CAMPOSVENDA 7
 
 /**

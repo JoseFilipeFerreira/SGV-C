@@ -1,4 +1,5 @@
 #include "init.h"
+#include <stdio.h>
 
 /**
 @brief Guardar a base de dados 

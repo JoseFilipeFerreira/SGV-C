@@ -3,7 +3,7 @@
 
 #include <unistd.h>
 #include <sys/stat.h>
-#include <unistd.h>
+#include <stdio.h>
 
 static void menuClientes();
 static void menuProdutos();

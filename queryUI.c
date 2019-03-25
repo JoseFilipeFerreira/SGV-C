@@ -1,5 +1,7 @@
 #include "queryUI.h"
 
+#include <stdio.h>
+
 char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){
     int r = 0;
     char* initBuf;
