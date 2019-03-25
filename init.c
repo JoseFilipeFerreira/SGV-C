@@ -222,7 +222,7 @@ double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, 
    return 0;
 } 
 
-double getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
+int getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
     FatP t = searchFatura(tudo->faturas, id);
     if(t) 
         return getQuantMesFilial(t, tipo, filial, mes);

@@ -52,7 +52,6 @@ void menuLoadFile(int* loop, Tudo* tudo){
         printf("1 - Load Default (filtered)\n");
         printf("2 - Load Default (non filtered)\n");
         printf("3 - Load Custom\n");
-        printf("b - BACK\n");
         printf("e - EXIT\n");
         r = menuCheck(3);
         system("clear");

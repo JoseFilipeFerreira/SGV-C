@@ -100,6 +100,8 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
         system("clear");
         printf(BOLD KRED "\t-- %s --\n\n" RESET, header);
 
+        printf("Total: %d\n", size);
+
         printStrings(tab, size, sizePage, nCols, page);
 
         printf("\t%d/%d [n/p/b]\n", page + 1 , nPages+1);
@@ -153,6 +155,7 @@ void prodPages(Tudo tudo){
 @brief TODO : Query 3
 */
 void prodStatsMes(Tudo tudo){
+    int fil, loop = 1;
     char* produto = getValidProductInput(
         "Categoria/Produtos/[3]",
         "Inserir Produto a pesquisar",
@@ -165,11 +168,56 @@ void prodStatsMes(Tudo tudo){
         "Mês inválido"
     );
 
-    system("clear");
-    printf(BOLD KRED "\t-- Categoria/Produtos/[3] --\n\n" RESET);
+    while(loop){
+        system("clear");
+        printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+        printf("1 - Filial a Filial\n");
+        printf("2 - Total\n");
 
-    printf("%s : %d\n", produto, mes);
+        switch (menuCheck(2))
+        {
+            case 1:
+                system("clear");
+                printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+                printf("Produto: %s\n\n", produto);
 
+                for(fil = 0; fil < 3; fil++){
+                    printf("Total faturado no mês %d na filial %d\n", mes, fil);
+                    printf("N: %.2f\n", getFatMesTudo(tudo, produto, N, fil, mes));
+                    printf("P: %.2f\n\n", getFatMesTudo(tudo, produto, P, fil, mes));
+                
+                    printf("Total comprado no mês %d na filial %d\n", mes, fil);
+                    printf("N: %d\n", getQuantMesTudo(tudo, produto, N, fil, mes));
+                    printf("P: %d\n\n", getQuantMesTudo(tudo, produto, P, fil, mes));
+                }
+
+                loop = 0;
+                break;
+            
+            case 2:
+                system("clear");
+                printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+                printf("Produto: %s\n\n", produto);
+
+                printf("Total faturado no mês %d\n", mes);
+                printf("N: %.2f\n", getFatMesTudo(tudo, produto, N, ALL, mes));
+                printf("P: %.2f\n\n", getFatMesTudo(tudo, produto, P, ALL, mes));
+                
+                printf("Total comprado no mês %d\n", mes);
+                printf("N: %d\n", getQuantMesTudo(tudo, produto, N, ALL, mes));
+                printf("P: %d\n", getQuantMesTudo(tudo, produto, P, ALL, mes));
+                
+                loop = 0;
+                break;
+    
+            default:
+                break;
+        }
+    }
+
+    printf(HIDE_CURSOR);
+    getchar();
+    printf(SHOW_CURSOR);
     free(produto);
 }
 
@@ -242,7 +290,7 @@ void tabClientAno(Tudo tudo){
     for (i=0; i<3; i++) {
         iT[i] = malloc(sizeof(int) * 12);
         for (j=0; j<12; j++)
-            iT[i][j] = i * 10000;
+            iT[i][j] = j*j*j*j*j*j;
     }
 
     printf("Produtos Comprados [7]:\n");
