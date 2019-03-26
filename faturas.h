@@ -14,10 +14,6 @@ typedef struct faturas* Faturas;
 
 double getFatTotal(const Faturas p, int mes);
 
-int getNaoComprados(const Faturas p, const Filial filial, char*** array);
-
-void addNaoComprados(char* id, Faturas f);
-
 int getQuantTotal(const Faturas p, int mes);
 
 int getProdsVendidos(const Faturas f);

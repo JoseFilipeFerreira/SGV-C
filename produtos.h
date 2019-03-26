@@ -56,6 +56,9 @@ Produtos addProduct(const Produto p, Produtos l);
 */
 Produtos initProducts();
 
+int getNaoComprados(const Produtos p, int filial, char*** array);
+
+void produtosUpdateCompra(const char* id, int filial, Produtos r);
 /**
 @brief Libertar espaço alocado para Produtos
 

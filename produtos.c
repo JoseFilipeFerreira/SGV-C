@@ -63,11 +63,38 @@ Produtos initProducts() {
     return p;
 }
 
+static gboolean naoComprados(gpointer key, gpointer value, gpointer data) {
+    char** array = *(char***) data;
+    Produto r = (Produto) value;
+    if(!foiCompradoOnde(0, r) && !foiCompradoOnde(1, r) && !foiCompradoOnde(2, r)) {
+        *(array++) = (char*) key;
+        *(char***) data = array;
+    }
+    return FALSE;
+}
+
+int getNaoComprados(const Produtos p, const int filial, char*** array) {
+    int size, i, j;
+    char** arrayr;
+    size = getProductNumber(p);
+    *array = malloc(size * sizeof(char*));
+    arrayr = *array;
+    for(i = 0; i < LETTERS; i++)
+        for(j = 0; j < LETTERS; j++)
+            g_tree_foreach(p->avlP[i][j], naoComprados, &arrayr);
+    return arrayr - *array;
+}
+
 Produtos addProduct(const Produto p, Produtos l) {
     char* id = getIdProduct(p);
     l->totalProds++;
     g_tree_insert(l->avlP[IND(id[0])][IND(id[1])], id, p);
     return l;
+}
+
+void produtosUpdateCompra(const char* id, int filial, Produtos r) {
+    Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
+    updateCompra(p, filial);
 }
 
 void clearProducts(Produtos p) {

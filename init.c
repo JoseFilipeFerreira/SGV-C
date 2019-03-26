@@ -42,9 +42,8 @@ Tudo tudoInicializado(Inicializador i) {
     Produtos produtos = initProducts(); 
     for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
         Produto product = mkProduct(buff);
-        char* id = getIdEnd(product);
+        char* id = getIdProduct(product);
         if(!i->filterProducts || verifyProduct(id)) {
-            addNaoComprados(id, faturas);
             addProduct(product, produtos);
         }
         else
@@ -69,9 +68,12 @@ Tudo tudoInicializado(Inicializador i) {
     for(i->salesLines = i->salesNumber = 0; fgets(buff, 35, f); i->salesLines++) {
         if(!i->filterSales || verifySale(buff, produtos, clientes)) {
                 Venda venda = mkSale(buff);
+                char* id = getProductSale(venda); 
                 addFatura(venda, faturas);
                 i->salesNumber++;
+                produtosUpdateCompra(id, getFilialSale(venda), produtos); 
                 destroySale(venda);
+                free(id);
         }
     }
     fclose(f);
@@ -194,7 +196,7 @@ int getProdNComprados(const Tudo tudo) {
 }
 
 int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array) {
-    return getNaoComprados(tudo->faturas, filial, array);
+    return getNaoComprados(tudo->produtos, filial, array);
 }
 
 void destroyInit(Inicializador inicial) {

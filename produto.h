@@ -36,8 +36,9 @@ Produto mkProduct(char* id);
 */
 char* getIdProduct(Produto produto);
 
-char* getIdEnd(Produto produto);
+void updateCompra(Produto p, int filial);
 
+bool foiCompradoOnde(int filial, Produto p);
 /**
 @brief Free de um Produto
 

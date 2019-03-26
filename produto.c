@@ -9,6 +9,7 @@
 */
 struct produto {
     char* id; /**< ID do Produto*/
+    bool comprou[3];
 };
 
 bool verifyProduct(const char* id) {
@@ -24,6 +25,7 @@ bool verifyProduct(const char* id) {
 Produto mkProduct(char* id) {
     char* product = malloc(strlen(id) + 1);
     Produto produto = malloc(sizeof(struct produto));
+    memset(produto->comprou, 0, sizeof(bool) * 3);
     strcpy(product, strtok(id, "\n\r"));
     produto->id = product;
     return produto;
@@ -35,8 +37,12 @@ char* getIdProduct(Produto produto) {
     return r;
 }
 
-char* getIdEnd(Produto produto) {
-    return produto->id;
+void updateCompra(Produto p, int filial) {
+    p->comprou[filial] = 1;
+}
+
+bool foiCompradoOnde(int filial, Produto p) {
+    return p->comprou[filial];
 }
 
 void destroyProduct(void* pr) {
