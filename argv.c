@@ -29,6 +29,13 @@ void argvParser(int argc, char** argv){
             getTudoProductLetter( tudo, 'A', &bloatTab);
             /*4*/
             prodsNaoComprados(tudo, 3, &bloatTab);
+            /*3*/
+            for(v1 = 0; v1 < 3; v1++){
+                getFatMesTudo  (tudo, "ZZ1999", N, v1, 1);
+                getFatMesTudo  (tudo, "ZZ1999", P, v1, 1);
+                getQuantMesTudo(tudo, "ZZ1999", N, v1, 1);
+                getQuantMesTudo(tudo, "ZZ1999", P, v1, 1);
+            }
             /*8*/
             getNSalesMes(tudo, 1, 12);
             getTFactMes(tudo, 1, 12);
@@ -45,6 +52,12 @@ void argvParser(int argc, char** argv){
             break;
 
         case 3:
+            for(v1 = 0; v1 < 3; v1++){
+                getFatMesTudo  (tudo, "ZZ1999", N, v1, 1);
+                getFatMesTudo  (tudo, "ZZ1999", P, v1, 1);
+                getQuantMesTudo(tudo, "ZZ1999", N, v1, 1);
+                getQuantMesTudo(tudo, "ZZ1999", P, v1, 1);
+            }
             break;
         case 4:
             prodsNaoComprados(

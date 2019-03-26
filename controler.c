@@ -39,7 +39,9 @@ void menuShowLoad(Inicializador i){
     printf("Vendas Path:      %s\n", getSalePath(i));
     printf("Vendas Lidas:     %d\n", getLinesSales(i));
     printf("Vendas Válidas:   %d\n", getNumberSales(i));
+    printf(HIDE_CURSOR);
     getchar();
+    printf(SHOW_CURSOR);
 
 }
 
