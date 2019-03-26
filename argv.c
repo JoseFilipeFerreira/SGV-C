@@ -25,10 +25,8 @@ void argvParser(int argc, char** argv){
     start = clock();
     switch(atoi(argv[1])){
         case 1: /* Answer all querys */
-            /*1*/
+            /*2*/
             getTudoProductLetter( tudo, 'A', &bloatTab);
-            /*4*/
-            prodsNaoComprados(tudo, 3, &bloatTab);
             /*3*/
             for(v1 = 0; v1 < 3; v1++){
                 getFatMesTudo  (tudo, "ZZ1999", N, v1, 1);
@@ -36,6 +34,8 @@ void argvParser(int argc, char** argv){
                 getQuantMesTudo(tudo, "ZZ1999", N, v1, 1);
                 getQuantMesTudo(tudo, "ZZ1999", P, v1, 1);
             }
+            /*4*/
+            prodsNaoComprados(tudo, 3, &bloatTab);
             /*8*/
             getNSalesMes(tudo, 1, 12);
             getTFactMes(tudo, 1, 12);

@@ -11,6 +11,6 @@
 /**
 \brief Cria o menu inicial
 */
-void menuInicial();
+void startControler();
 
 #endif

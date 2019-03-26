@@ -270,21 +270,26 @@ void clientesFieis(Tudo tudo){
 }
 
 /**
+@brief TODO (Prints the result of [2] for testing purposes) : Query 6
+*/
+void clientesInfieis(Tudo tudo){
+    system("clear");
+    printf(BOLD KRED"-- Categoria/Clientes/[6] --\n\n"RESET);
+    printf("Clientes que não compraram: \n");
+    printf("Produtos não comprados:     %d\n", getProdNComprados(tudo));
+
+    printf(HIDE_CURSOR);
+    getchar();
+    printf(SHOW_CURSOR);
+}
+
+
+/**
 @brief TODO : Query 7
 */
-void tabClientAno(Tudo tudo){
+void tabClientAno(Tudo tudo, char* cliente){
     int i, j;
     int** iT;
-    
-    char* cliente = getValidClientInput(
-        "Categoria/Clientes/[7/12]",
-        "Inserir Cliente a pesquisar",
-        "Cliente não existe",
-        tudo);
-
-    system("clear");
-    printf(BOLD KRED "\t-- Categoria/Clientes/[7/12] --\n\n" RESET);
-    printf("Cliente: %s\n\n", cliente);
 
     iT = malloc(sizeof(int*) * 3);
     for (i=0; i<3; i++) {
@@ -312,8 +317,6 @@ void tabClientAno(Tudo tudo){
             iT,
             3,
             12);
-    getchar();
-    free(cliente);
 }
 
 /**
@@ -374,6 +377,7 @@ void tabVendasIntervalo(Tudo tudo){
     free(buf);
 }
 
+
 /**
 @brief TODO (Prints the result of [2] for testing purposes) : Query 10
 */
@@ -395,7 +399,7 @@ void prodMaisCompradoCli(Tudo tudo){
     r = 0;
     while(1){
         system("clear");
-        printf(BOLD KRED "\t-- Categoria/Produtos/[3] --\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Clientes/[10] --\n" RESET);
 
         if(r)
             printf(UNDER "Mês inválido\n\n" RESET);
@@ -422,4 +426,44 @@ void prodMaisCompradoCli(Tudo tudo){
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab,15 , 6);
 
     free(cliente);
+}
+
+/**
+@brief TODO : Query 11
+*/
+void nMaisComprados(Tudo tudo){
+
+}
+
+/**
+@brief TODO : Query 12
+*/
+void clienteMaisComprados(Tudo tudo, char* cliente){
+
+    printf("\nMais comprados [12]\n");
+}
+
+/**
+@brief TODO : Query 7 & 12
+*/
+void statsClientAno(Tudo tudo){
+    char* cliente = getValidClientInput(
+        "Categoria/Clientes/[7/12]",
+        "Inserir Cliente a pesquisar",
+        "Cliente não existe",
+        tudo);
+    
+    system("clear");
+    printf(BOLD KRED "\t-- Categoria/Clientes/[7/12] --\n\n" RESET);
+    printf("Cliente: %s\n\n", cliente);
+
+    tabClientAno(tudo, cliente);
+    clienteMaisComprados(tudo, cliente);
+
+    printf(HIDE_CURSOR);
+    getchar();
+    printf(SHOW_CURSOR);
+    free(cliente);
+    
+
 }

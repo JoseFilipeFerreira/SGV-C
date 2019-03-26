@@ -29,9 +29,9 @@ void prodsNCompradosUI(Tudo tudo);
 void clientesFieis(Tudo tudo);
 
 /**
-  @brief Query 7
-  */
-void tabClientAno(Tudo tudo);
+@brief Query 6
+*/
+void clientesInfieis(Tudo tudo);
 
 /**
 @brief Query 8
@@ -42,5 +42,15 @@ void tabVendasIntervalo(Tudo tudo);
 @brief Query 10
 */
 void prodMaisCompradoCli(Tudo tudo);
+
+/**
+@brief TODO : Query 11
+*/
+void nMaisComprados(Tudo tudo);
+
+/**
+@brief Query 7 & 12
+*/
+void statsClientAno(Tudo tudo);
 
 #endif

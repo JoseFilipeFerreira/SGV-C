@@ -12,7 +12,7 @@ static void menuCategories (int* loop, Tudo* tudo);
 static void menuLoadFile   (int* loop, Tudo* tudo);
 static void menuLoadCustom (int* loop, Tudo* tudo);
 
-void menuInicial(){ 
+void startControler(){ 
     int loop = 1;
     Tudo tudo = NULL;
     
@@ -236,10 +236,11 @@ void menuClientes(int* loop, Tudo* tudo){
                 break;
 
             case 2:
+                clientesInfieis(*tudo);
                 break;
 
             case 3:
-                tabClientAno(*tudo);
+                statsClientAno(*tudo);
                 break;
 
             case 4:
@@ -284,6 +285,7 @@ void menuProdutos(int* loop, Tudo* tudo){
                 break;
 
             case 5:
+                nMaisComprados(tudo);
                 break;
 
             default:
