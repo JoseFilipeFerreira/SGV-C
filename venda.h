@@ -13,6 +13,9 @@
 */
 typedef struct venda* Venda;
 
+/**
+@brief representação da filial a pesquisar
+*/
 typedef enum filial {A, B, C, ALL} Filial;
 
 typedef enum tipo {N, P, AL} Tipo;

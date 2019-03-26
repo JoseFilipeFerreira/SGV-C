@@ -377,6 +377,12 @@ void tabVendasIntervalo(Tudo tudo){
     free(buf);
 }
 
+/**
+@brief TODO : Query 9
+*/
+void clientesCompraramProduto(Tudo tudo){
+
+}
 
 /**
 @brief TODO (Prints the result of [2] for testing purposes) : Query 10

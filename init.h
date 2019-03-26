@@ -171,18 +171,62 @@ char* getProductPath(const Inicializador i);
 */
 char* getClientPath(const Inicializador i);
 
+/**
+@brief Obter o número de vendas num periodo de tempo 
+
+@param tudo struct que contem tudo
+@param inicio inicio da janela temporal
+@param fim  fim da janela temporal
+@return int número de vendas nessa janela temporal
+*/
 int getNSalesMes(const Tudo tudo, int inicio, int fim);
 
+/**
+@brief Obter o total faturado num periodo de tempo 
+
+@param tudo struct que contem tudo
+@param inicio inicio da janela temporal
+@param fim  fim da janela temporal
+@return int total faturado nessa janela temporal
+*/
 double getTFactMes(const Tudo tudo, int inicio, int fim);
 
+/**
+@brief Número de produtos não comprados
+
+@param tudo struct que contem tudo
+@return int Número de produtos não comprados
+*/
 int getProdNComprados(const Tudo tudo);
 
 int getTudoProductLetter(const Tudo tudo, const char id, char*** array);
 
+/**
+@brief calcular a lista de strings de produtos não comprados
+
+@param tudo struct que contem tudo
+@param filial filial a procurar
+@param array onde guardar o resultado
+@return int número de elementos escritos
+*/
 int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array);
 
+/**
+@brief Afere se um produto é válido ou não
+
+@param tudo struct que contem tudo
+@param produto produto a validar
+@return int resultado da aferição
+*/
 int searchTudoProduct(Tudo tudo, char* produto);
 
+/**
+@brief Afere se um cliente é válido ou não
+
+@param tudo struct que contem tudo
+@param ciente cliente a validar
+@return int resultado da aferição
+*/
 int searchTudoClient(Tudo tudo, char* cliente);
 
 double getFatMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
