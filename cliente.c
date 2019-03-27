@@ -9,6 +9,7 @@
 */
 struct cliente {
     char* id; /**< ID do Cliente*/
+    bool comprou[3];
 };
 
 bool verifyClient(const char* id) {
@@ -21,11 +22,20 @@ bool verifyClient(const char* id) {
     return false;
 }
 
+void updateBuyClient(Cliente c, int filial) {
+    c->comprou[filial] = true;
+}
+
+bool comprouOnde(int filial, Cliente p) {
+    return p->comprou[filial];
+}
+
 Cliente mkClient(char* id) {
     char* client = malloc(strlen(id) + 1);
     Cliente cliente = malloc(sizeof(struct cliente));
     strcpy(client, strtok(id, "\n\r"));
     cliente->id = client;
+    memset(cliente->comprou, false, 3 * sizeof(bool));
     return cliente;
 }
 

@@ -1,4 +1,6 @@
 #include "clientes.h"
+#include <string.h>
+#include <stdlib.h>
 
 #define LETTERS 26
 #define IND(x) ((x) - 'A')
@@ -7,7 +9,6 @@
 \brief AVL que contem os clientes.
 */
 struct clientes {
-    int totalProds; /**< Número de clientes lidos */
     GTree* avlC[LETTERS]; /**< Array de AVL para guardar os clientes lidos */
 };
 
@@ -23,7 +24,10 @@ int searchClient(const Clientes p, const char* id) {
 }
 
 int getClientNumber(const Clientes p) {
-    return p->totalProds;
+    int i, r = 0;
+    for(i = 0; i < LETTERS; i++)
+        r += g_tree_nnodes(p->avlC[i]);
+    return r;
 }
 
 static gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
@@ -44,18 +48,44 @@ int getClientLetter(const Clientes p, const char id, char*** array) {
     return size;
 }
 
+static gboolean comprou(gpointer key, gpointer value, gpointer data) {
+    char** array = *(char***) data;
+    Cliente r = (Cliente) value;
+    if(comprouOnde(0, r) && comprouOnde(1, r) && comprouOnde(2, r)) {
+        *(array++) = (char*) key;
+        *(char***) data = array;
+    }
+    return FALSE;
+}
+
+int getComprador(const Clientes p, char*** array) {
+    int size, i;
+    char** arrayr;
+    size = getClientNumber(p);
+    *array = malloc(size * sizeof(char*));
+    arrayr = *array;
+    for(i = 0; i < LETTERS; i++)
+         g_tree_foreach(p->avlC[i], comprou, &arrayr);
+    return arrayr - *array;
+}
+
+
 Clientes initClients() {
     int i;
     Clientes p = malloc(sizeof(struct clientes));
     for(i = 0; i < LETTERS; i++)
         p->avlC[i] = g_tree_new_full(&cmp, NULL, free, destroyClient);
-    p->totalProds = 0;
     return p;
 }
 
+void clientesUpdateCompra(const char* id, int filial, Clientes r) {
+    Cliente p = g_tree_lookup(r->avlC[IND(id[0])], id);
+    updateBuyClient(p, filial);
+}
+
+
 Clientes addClient(const Cliente p, Clientes l) {
     char* id = getIdClient(p);
-    l->totalProds++;
     g_tree_insert(l->avlC[id[0] - 'A'], (void*) id, p);
     return l;
 }

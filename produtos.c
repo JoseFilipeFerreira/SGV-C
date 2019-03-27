@@ -14,7 +14,6 @@
 \brief Produtos Lidos.
 */
 struct produtos {
-    int totalProds; /**< Número de produtos lidos */
     GTree* avlP[LETTERS][LETTERS]; /**< Matriz de AVL para guardar os produtos */
 };
 
@@ -30,7 +29,11 @@ bool searchProduct(const Produtos p, const char* id) {
 }
 
 int getProductNumber(const Produtos p) {
-    return p->totalProds;
+    int i, j, r = 0;
+    for(i = 0; i < LETTERS; i++)
+        for(j = 0; j < LETTERS; j++)
+            r += g_tree_nnodes(p->avlP[i][j]);
+    return r;
 }
 
 static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
@@ -59,7 +62,6 @@ Produtos initProducts() {
     for(i = 0; i < LETTERS; i++)
         for(j = 0; j < LETTERS; j++)
             p->avlP[i][j] = g_tree_new_full(&cmp, NULL, free, destroyProduct);
-    p->totalProds = 0;
     return p;
 }
 
@@ -87,7 +89,6 @@ int getNaoComprados(const Produtos p, const int filial, char*** array) {
 
 Produtos addProduct(const Produto p, Produtos l) {
     char* id = getIdProduct(p);
-    l->totalProds++;
     g_tree_insert(l->avlP[IND(id[0])][IND(id[1])], id, p);
     return l;
 }

@@ -38,7 +38,33 @@ int getQuantTotal(const Faturas p, int mes) {
 }
 
 int getProdsVendidos (const Faturas f) {
-    return f->produtos;
+    int i, j, r = 0;
+    for(i = 0; i < LETTERS; i++)
+        for(j = 0; j < LETTERS; j++)
+            r += g_tree_nnodes(f->avlF[i][j]);
+    return r;
+}
+
+static gboolean getAll(gpointer key, gpointer value, gpointer data) {
+    FatP* array = *(FatP**) data;
+    (void) key;
+    *(array++) = (FatP) value;
+    *(FatP**) data = array;
+    return FALSE;
+}
+
+int getAllList(const Faturas p) {
+    int size, i, j;
+    FatP* arrayr;
+    FatP* array;
+    size = getProdsVendidos(p);
+    array = malloc(size * sizeof(FatP));
+    arrayr = array;
+    for(i = 0; i < LETTERS; i++)
+        for(j = 0; j < LETTERS; j++)
+            g_tree_foreach(p->avlF[i][j], getAll, &arrayr);
+    qsort(array, size, sizeof(FatP), cmpFat);
+    return arrayr - array;
 }
 
 Faturas initFaturas() {
@@ -49,7 +75,6 @@ Faturas initFaturas() {
             p->avlF[i][j] = g_tree_new_full(cmp, NULL, free, destroyFact);
     memset(p->totalFacts, 0, 12 * sizeof(double));
     memset(p->totalVendas, 0, 12 * sizeof(int));
-    p->produtos = 0;
     return p;
 }
 
@@ -57,7 +82,6 @@ Faturas addFatura(const Venda p, Faturas l) {
     char* id = getProductSale(p);
     FatP ree = searchFatura(l, id);
     if(!ree) {
-        l->produtos++;
         ree = initFatP(p);
         g_tree_insert(l->avlF[IND(id[0])][IND(id[1])], id, ree);
     }

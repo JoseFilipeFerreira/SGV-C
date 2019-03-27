@@ -48,6 +48,7 @@ Tudo tudoInicializado(Inicializador i) {
         }
         else
             destroyProduct(product);
+        free(id);
     }
     fclose(f);
 
@@ -71,7 +72,8 @@ Tudo tudoInicializado(Inicializador i) {
                 char* id = getProductSale(venda); 
                 addFatura(venda, faturas);
                 i->salesNumber++;
-                produtosUpdateCompra(id, getFilialSale(venda), produtos); 
+                produtosUpdateCompra(id, getFilialSale(venda), produtos);
+                clientesUpdateCompra(id, getFilialSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
         }
@@ -83,7 +85,6 @@ Tudo tudoInicializado(Inicializador i) {
     tudo->produtos = produtos;
     tudo->clientes = clientes;
     tudo->faturas = faturas;
-
     return tudo;
 }
 
@@ -197,6 +198,10 @@ int getProdNComprados(const Tudo tudo) {
 
 int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array) {
     return getNaoComprados(tudo->produtos, filial, array);
+}
+
+int clientesCompraramFilial (const Tudo tudo, char*** array) {
+    return getComprador(tudo->clientes, array);
 }
 
 void destroyInit(Inicializador inicial) {

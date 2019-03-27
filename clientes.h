@@ -30,7 +30,7 @@ int searchClient(const Clientes p, const char* id);
  */
 int getClientNumber(const Clientes p);
 
-
+int getComprador(const Clientes p, char*** array);
 /**
 @brief Obter o array de strings de Cliente começadas por uma letra
 
@@ -56,6 +56,8 @@ Clientes initClients();
 @return Clientes Clientes editados
 */
 Clientes addClient(const Cliente p, Clientes l);
+
+void clientesUpdateCompra(const char* id, int filial, Clientes r);
 
 /**
 @brief Libertar uma struct de clientes
