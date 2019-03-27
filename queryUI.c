@@ -152,7 +152,7 @@ void prodPages(Tudo tudo){
 }
 
 /**
-@brief TODO : Query 3
+@brief DONE (improve) : Query 3
 */
 void prodStatsMes(Tudo tudo){
     int fil, loop = 1;
@@ -320,7 +320,7 @@ void tabClientAno(Tudo tudo, char* cliente){
 }
 
 /**
-@brief DONE : Query 8
+@brief DONE (improve) : Query 8
 */
 void tabVendasIntervalo(Tudo tudo){
     int r = 0;

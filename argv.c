@@ -7,7 +7,8 @@ void argvParser(int argc, char** argv){
     clock_t start, end;
     double cpu_time_used;
     char** bloatTab;
-    int v1, v2;
+    char* prod, *cli;
+    int v1, v2, mes;
     Tudo tudo;
     Inicializador i;
 
@@ -20,7 +21,7 @@ void argvParser(int argc, char** argv){
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU Time used to Load Files:%f\n", cpu_time_used );
+    fprintf(stderr, "CPU Time used to Load Files:%f\n", cpu_time_used );
 
     start = clock();
     switch(atoi(argv[1])){
@@ -52,11 +53,13 @@ void argvParser(int argc, char** argv){
             break;
 
         case 3:
+            prod = (argc == 3 && searchTudoProduct(tudo, argv[2]))?argv[2] :  "ZZ1999";
+            mes  =    (argc == 4 && atoi(argv[3]))? atoi(argv[3]) : 1;
             for(v1 = 0; v1 < 3; v1++){
-                getFatMesTudo  (tudo, "ZZ1999", N, v1, 1);
-                getFatMesTudo  (tudo, "ZZ1999", P, v1, 1);
-                getQuantMesTudo(tudo, "ZZ1999", N, v1, 1);
-                getQuantMesTudo(tudo, "ZZ1999", P, v1, 1);
+                getFatMesTudo  (tudo, prod, N, v1, mes);
+                getFatMesTudo  (tudo, prod, P, v1, mes);
+                getQuantMesTudo(tudo, prod, N, v1, mes);
+                getQuantMesTudo(tudo, prod, P, v1, mes);
             }
             break;
         case 4:
@@ -93,7 +96,7 @@ void argvParser(int argc, char** argv){
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU Time used to Answer Query:%f\n", cpu_time_used );
+    fprintf(stderr, "CPU Time used to Answer Query:%f\n", cpu_time_used );
     start = clock();
 
     destroyInit(i);
@@ -101,5 +104,5 @@ void argvParser(int argc, char** argv){
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("CPU Time used to Free structs:%f\n", cpu_time_used );
+    fprintf(stderr, "CPU Time used to Free structs:%f\n", cpu_time_used );
 }
