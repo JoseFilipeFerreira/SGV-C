@@ -17,6 +17,11 @@ struct produtos {
     GTree* avlP[LETTERS][LETTERS]; /**< Matriz de AVL para guardar os produtos */
 };
 
+typedef struct filialSearcher {
+    int filial;
+    char*** array;
+} FilialSearcher;
+
 static int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
@@ -65,12 +70,13 @@ Produtos initProducts() {
     return p;
 }
 
-static gboolean naoComprados(gpointer key, gpointer value, gpointer data) {
-    char** array = *(char***) data;
+static gboolean naoComprados(gpointer key, gpointer value, gpointer struc) {
+    FilialSearcher ree = *(FilialSearcher*) struc;
+    char** array = *(ree.array);
     Produto r = (Produto) value;
-    if(!foiCompradoOnde(0, r) && !foiCompradoOnde(1, r) && !foiCompradoOnde(2, r)) {
+    if(!foiCompradoOnde(ree.filial, r)) {
         *(array++) = (char*) key;
-        *(char***) data = array;
+        *(ree.array) = array;
     }
     return FALSE;
 }
@@ -78,12 +84,15 @@ static gboolean naoComprados(gpointer key, gpointer value, gpointer data) {
 int getNaoComprados(const Produtos p, const int filial, char*** array) {
     int size, i, j;
     char** arrayr;
+    FilialSearcher ree;
+    ree.filial = filial;
     size = getProductNumber(p);
     *array = malloc(size * sizeof(char*));
     arrayr = *array;
+    ree.array = &arrayr;
     for(i = 0; i < LETTERS; i++)
         for(j = 0; j < LETTERS; j++)
-            g_tree_foreach(p->avlP[i][j], naoComprados, &arrayr);
+            g_tree_foreach(p->avlP[i][j], naoComprados, &ree);
     return arrayr - *array;
 }
 

@@ -42,6 +42,8 @@ void updateCompra(Produto p, int filial) {
 }
 
 bool foiCompradoOnde(int filial, Produto p) {
+    if(filial == 3) 
+        return p->comprou[0] || p->comprou[1] || p->comprou[2];
     return p->comprou[filial];
 }
 
