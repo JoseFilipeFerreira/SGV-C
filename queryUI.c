@@ -259,14 +259,16 @@ void prodsNCompradosUI(Tudo tudo){
 }
 
 /**
-@brief TODO (Prints the result of [2] for testing purposes) : Query 5
+@brief DONE : Query 5
 */
 void clientesFieis(Tudo tudo){
-    int sizeCliTab;
     char** cliTab;
+    int sizeCliTab;
 
-    sizeCliTab = getTudoProductLetter(tudo, 'A', &cliTab);
+    sizeCliTab = clientesCompraramFilial(tudo, &cliTab);
     menuPaginasDraw("Categoria/Clientes/[5]", cliTab, sizeCliTab,15 , 6);
+
+    free(cliTab);
 }
 
 /**

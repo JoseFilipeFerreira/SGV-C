@@ -37,6 +37,8 @@ void argvParser(int argc, char** argv){
             }
             /*4*/
             prodsNaoComprados(tudo, 3, &bloatTab);
+            /*5*/
+            clientesCompraramFilial(tudo, &bloatTab);
             /*8*/
             getNSalesMes(tudo, 1, 12);
             getTFactMes(tudo, 1, 12);
@@ -70,6 +72,8 @@ void argvParser(int argc, char** argv){
             free(bloatTab);
             break;
         case 5:
+            clientesCompraramFilial(tudo, &bloatTab);
+            free(bloatTab);
             break;
         case 6:
             break;
