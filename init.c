@@ -73,6 +73,8 @@ Tudo tudoInicializado(Inicializador i) {
                 addFatura(venda, faturas);
                 i->salesNumber++;
                 produtosUpdateCompra(id, getFilialSale(venda), produtos);
+                free(id);
+                id = getClientSale(venda);
                 clientesUpdateCompra(id, getFilialSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
