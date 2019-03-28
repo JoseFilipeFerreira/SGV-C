@@ -59,6 +59,8 @@ Clientes addClient(const Cliente p, Clientes l);
 
 void clientesUpdateCompra(const char* id, int filial, Clientes r);
 
+int getClientesNaoCompradores(const Clientes p);
+
 /**
 @brief Libertar uma struct de clientes
 

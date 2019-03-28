@@ -233,6 +233,8 @@ double getFatMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial fil
 
 int getQuantMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
 
+int getClientesNCompradores(const Tudo tudo);
+
 /**
 @brief Libertar um inicializador
 

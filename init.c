@@ -198,6 +198,10 @@ int getProdNComprados(const Tudo tudo) {
     return getProductNumber(tudo->produtos) - getProdsVendidos(tudo->faturas); 
 }
 
+int getClientesNCompradores(const Tudo tudo) {
+    return getClientesNaoCompradores(tudo->clientes);
+}
+
 int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array) {
     return getNaoComprados(tudo->produtos, filial, array);
 }

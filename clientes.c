@@ -69,6 +69,20 @@ int getComprador(const Clientes p, char*** array) {
     return arrayr - *array;
 }
 
+static gboolean naoComprou(gpointer key, gpointer value, gpointer data) {
+    (void) key;
+    Cliente r = (Cliente) value;
+    if(!comprouOnde(0, r) && !comprouOnde(1, r) && !comprouOnde(2, r))
+        *(int*) data++;
+    return FALSE;
+}
+
+int getClientesNaoCompradores(const Clientes p) {
+    int i, r = 0;
+    for(i = 0; i < LETTERS; i++)
+         g_tree_foreach(p->avlC[i], naoComprou, &r);
+    return r;
+}
 
 Clientes initClients() {
     int i;
