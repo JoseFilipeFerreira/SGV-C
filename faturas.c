@@ -48,12 +48,12 @@ int getProdsVendidos (const Faturas f) {
 static gboolean getAll(gpointer key, gpointer value, gpointer data) {
     FatP* array = *(FatP**) data;
     (void) key;
-    *(array++) = (FatP) value;
+    *(array++) = cloneFat ((FatP) value);
     *(FatP**) data = array;
     return FALSE;
 }
 
-int getAllList(const Faturas p) {
+FatP* getAllList(const Faturas p, int N) {
     int size, i, j;
     FatP* arrayr;
     FatP* array;
@@ -64,7 +64,9 @@ int getAllList(const Faturas p) {
         for(j = 0; j < LETTERS; j++)
             g_tree_foreach(p->avlF[i][j], getAll, &arrayr);
     qsort(array, size, sizeof(FatP), cmpFat);
-    return arrayr - array;
+    for(i = N; i < size; i++)
+        destroyFact(array[i]);
+    return array;
 }
 
 Faturas initFaturas() {

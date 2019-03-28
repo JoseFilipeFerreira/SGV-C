@@ -236,9 +236,13 @@ double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, 
     return 0;
 } 
 
+FatP* getMaisVendidos(const Tudo tudo, int N) {
+    return getAllList(tudo->faturas, N);
+}
+
 int getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
     FatP t = searchFatura(tudo->faturas, id);
     if(t) 
-        return getQuantMesFilial(t, tipo, filial, mes);
+        return getQuantMesFilial(t, filial);
    return 0;
 } 

@@ -23,7 +23,7 @@ Faturas addFatura(const Venda v, Faturas l);
 Faturas initFaturas();
 
 FatP searchFatura(const Faturas f, const char* id);
-int getAllList(const Faturas f);
+FatP* getAllList(const Faturas f, int N);
 void clearFaturas(Faturas f);
 
 #endif

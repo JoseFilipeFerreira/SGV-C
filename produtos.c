@@ -44,7 +44,8 @@ int getProductNumber(const Produtos p) {
 static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     char** array = *(char***) data;
     (void) value;
-    *(array++) = (char*) key;
+    *array = malloc(strlen((char*) key) + 1);
+    strcpy(*(array++), (char*) key);
     *(char***) data = array;
     return FALSE;
 }
@@ -75,7 +76,8 @@ static gboolean naoComprados(gpointer key, gpointer value, gpointer struc) {
     char** array = *(ree.array);
     Produto r = (Produto) value;
     if(!foiCompradoOnde(ree.filial, r)) {
-        *(array++) = (char*) key;
+        *array = malloc(strlen((char*) key) + 1);
+        strcpy(*(array++), (char*) key);
         *(ree.array) = array;
     }
     return FALSE;

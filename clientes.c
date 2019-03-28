@@ -33,7 +33,8 @@ int getClientNumber(const Clientes p) {
 static gboolean clientLetter(gpointer key, gpointer value, gpointer data) {
     char** array = *(char***) data;
     (void) value;
-    *(array++) = (char*) key;
+    *array = malloc(strlen((char*) key) + 1);
+    strcpy(*(array++), (char*) key);
     *(char***) data = array;
     return FALSE;
 }
@@ -52,7 +53,8 @@ static gboolean comprou(gpointer key, gpointer value, gpointer data) {
     char** array = *(char***) data;
     Cliente r = (Cliente) value;
     if(comprouOnde(0, r) && comprouOnde(1, r) && comprouOnde(2, r)) {
-        *(array++) = (char*) key;
+        *array = malloc(strlen((char*) key) + 1);
+        strcpy(*(array++), (char*) key);
         *(char***) data = array;
     }
     return FALSE;
@@ -73,7 +75,7 @@ static gboolean naoComprou(gpointer key, gpointer value, gpointer data) {
     (void) key;
     Cliente r = (Cliente) value;
     if(!comprouOnde(0, r) && !comprouOnde(1, r) && !comprouOnde(2, r))
-        *(int*) data++;
+        (*(int*) data)++;
     return FALSE;
 }
 

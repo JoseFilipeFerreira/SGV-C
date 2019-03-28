@@ -13,13 +13,14 @@ FatP initFatP(Venda v);
 
 void mkFatura(FatP fat, Venda v);
 
+FatP cloneFat(FatP a);
+
 double getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
-int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
+int getQuantMesFilial(FatP f, Filial filial);
 
 void destroyFact(void* f);
 
-void printFat(FatP a);
-
 int cmpFat(FatP* a, FatP* b);
+
 #endif

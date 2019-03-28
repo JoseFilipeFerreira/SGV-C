@@ -231,9 +231,11 @@ int searchTudoClient(Tudo tudo, char* cliente);
 
 double getFatMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
 
-int getQuantMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
+int getQuantFatTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
 
 int getClientesNCompradores(const Tudo tudo);
+
+FatP* getMaisVendidos(const Tudo tudo, int N);
 
 /**
 @brief Libertar um inicializador

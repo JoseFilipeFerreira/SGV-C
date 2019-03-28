@@ -32,17 +32,23 @@ void mkFatura(FatP fatr, Venda v) {
 
 }
 
+FatP cloneFat(FatP a) {
+    FatP f = malloc(sizeof(struct faturacaoProd));
+    f->prod = malloc(strlen(a->prod) + 1);
+    strcpy(f->prod, a->prod);
+    memcpy(f->total, a->total, 2 * 12 * 3 * sizeof(double));
+    memcpy(f->quant, a->quant, 3 * sizeof(int));
+    memcpy(f->nVendas, a->nVendas, 2 * 12 * 3 * sizeof(int));
+    return f;
+}
+
 double getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
     if(filial == ALL) 
         return f->total[tipo][mes-1][0] + f->total[tipo][mes-1][1] + f->total[tipo][mes-1][2];
     return f->total[tipo][mes-1][filial];
 }
 
-void printFat(FatP a) {
-    printf("%s %d\n", a->prod, a->quant[0]+a->quant[1]+a->quant[2]);
-}
-
-int getQuantMesFilial(FatP f, Tipo tipo, Filial filial, int mes) {
+int getQuantMesFilial(FatP f, Filial filial) {
     if(filial == ALL) 
         return f->quant[0] + f->quant[1] + f->quant[2];
     return f->quant[filial];
@@ -58,8 +64,7 @@ int getNVendasFatura(FatP f) {
 }
 
 int cmpFat(FatP* a, FatP* b) {
-   
-     return getQuantMesFilial(*b, N, ALL, 1) - getQuantMesFilial(*a, N, ALL, 1);
+     return getQuantMesFilial(*b, ALL) - getQuantMesFilial(*a, ALL);
 }
 
 void destroyFact(void* f) {
