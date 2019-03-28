@@ -175,7 +175,7 @@ void prodStatsMes(Tudo tudo){
         printf("2 - Total\n");
 
         switch (menuCheck(2))
-        {
+        { 
             case 1:
                 system("clear");
                 printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
@@ -183,12 +183,12 @@ void prodStatsMes(Tudo tudo){
 
                 for(fil = 0; fil < 3; fil++){
                     printf("Total faturado no mês %d na filial %d\n", mes, fil + 1);
-                    printf("   N: %.2f\n", getFatMesTudo(tudo, produto, N, fil, mes));
+                    printf("   N: %.2f\n",   getFatMesTudo(tudo, produto, N, fil, mes));
                     printf("   P: %.2f\n\n", getFatMesTudo(tudo, produto, P, fil, mes));
                 
-                    printf("Total comprado no mês %d na filial %d\n", mes, fil + 1);
-                    printf("   N: %d\n", getQuantMesTudo(tudo, produto, N, fil, mes));
-                    printf("   P: %d\n\n", getQuantMesTudo(tudo, produto, P, fil, mes));
+                    printf("Número de vendas no mês %d na filial %d\n", mes, fil + 1);
+                    printf("   N: %d\n",   getNVendasFat(tudo, produto, N, fil, mes));
+                    printf("   P: %d\n\n", getNVendasFat(tudo, produto, P, fil, mes));
                 }
 
                 loop = 0;
@@ -200,12 +200,12 @@ void prodStatsMes(Tudo tudo){
                 printf("Produto: %s\n\n", produto);
 
                 printf("Total faturado no mês %d\n", mes);
-                printf("   N: %.2f\n", getFatMesTudo(tudo, produto, N, ALL, mes));
+                printf("   N: %.2f\n",   getFatMesTudo(tudo, produto, N, ALL, mes));
                 printf("   P: %.2f\n\n", getFatMesTudo(tudo, produto, P, ALL, mes));
                 
                 printf("Número de vendas no mês %d\n", mes);
-                printf("   N: %d\n", getQuantMesTudo(tudo, produto, N, ALL, mes));
-                printf("   P: %d\n", getQuantMesTudo(tudo, produto, P, ALL, mes));
+                printf("   N: %d\n", getNVendasFat(tudo, produto, N, ALL, mes));
+                printf("   P: %d\n", getNVendasFat(tudo, produto, P, ALL, mes));
                 
                 loop = 0;
                 break;
