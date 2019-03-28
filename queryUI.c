@@ -203,7 +203,7 @@ void prodStatsMes(Tudo tudo){
                 printf("   N: %.2f\n", getFatMesTudo(tudo, produto, N, ALL, mes));
                 printf("   P: %.2f\n\n", getFatMesTudo(tudo, produto, P, ALL, mes));
                 
-                printf("Total comprado no mês %d\n", mes);
+                printf("Número de vendas no mês %d\n", mes);
                 printf("   N: %d\n", getQuantMesTudo(tudo, produto, N, ALL, mes));
                 printf("   P: %d\n", getQuantMesTudo(tudo, produto, P, ALL, mes));
                 
@@ -291,14 +291,10 @@ void clientesInfieis(Tudo tudo){
 */
 void tabClientAno(Tudo tudo, char* cliente){
     int i, j;
-    int** iT;
-
-    iT = malloc(sizeof(int*) * 3);
-    for (i=0; i<3; i++) {
-        iT[i] = malloc(sizeof(int) * 12);
+    int iT[3][12];
+    for (i=0; i<3; i++)
         for (j=0; j<12; j++)
-            iT[i][j] = j*j*j*j*j*j;
-    }
+            iT[i][j] = getClientQuantTudo(cliente, j, i, tudo);
 
     printf("Produtos Comprados [7]:\n");
 
@@ -316,9 +312,9 @@ void tabClientAno(Tudo tudo, char* cliente){
             "OUT",
             "NOV",
             "DEZ" },
-            iT,
             3,
-            12);
+            12,
+            iT);
 }
 
 /**

@@ -85,7 +85,7 @@ void printSeparatorLine(int* sizeCols, int col){
     printf("+\n");
 }
 
-void printTabela(const char* linLabl[], const char* colLabl[], int** iT, int lin, int col){
+void printTabela(const char* linLabl[], const char* colLabl[], int lin, int col, int iT[lin][col]){
     int i, j, lablSize = 0;
     int sizeCols[col+1];
     memset(sizeCols, 0, sizeof(int) * (col + 1));

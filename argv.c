@@ -39,6 +39,10 @@ void argvParser(int argc, char** argv){
             prodsNaoComprados(tudo, 3, &bloatTab);
             /*5*/
             clientesCompraramFilial(tudo, &bloatTab);
+            /*7*/
+            for (v1=0; v1<3; v1++)
+                for (v2=0; v2<12; v2++)
+                    getClientQuantTudo("A1234", v1, v2, tudo);
             /*8*/
             getNSalesMes(tudo, 1, 12);
             getTFactMes(tudo, 1, 12);
@@ -78,6 +82,10 @@ void argvParser(int argc, char** argv){
         case 6:
             break;
         case 7:
+            cli = (argc == 3 && searchTudoClient(tudo, argv[2]))?argv[2] :  "A1234";
+            for (v1=0; v1<3; v1++)
+                    for (v2=0; v2<12; v2++)
+                        getClientQuantTudo(cli, v1, v2, tudo);
             break;
         case 8:
             v1 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;

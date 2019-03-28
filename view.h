@@ -44,6 +44,6 @@ int printStrings(char ** s, int ss, int pSize, int nCols, int pN);
 @param lin número de linhas
 @param col número de colunas
  */
-void printTabela(const char* linLabl[], const char* colLabl[], int** iT, int lin, int col);
+void printTabela(const char* linLabl[], const char* colLabl[], int lin, int col, int iT[lin][col]);
 
 #endif
