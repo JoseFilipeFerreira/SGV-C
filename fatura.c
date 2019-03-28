@@ -54,13 +54,10 @@ int getQuantMesFilial(FatP f, Filial filial) {
     return f->quant[filial];
 }
 
-int getNVendasFatura(FatP f) {
-    int i, j, k, r = 0;
-    for(i=0; i < 2; i++)
-        for(j=0; j < 12; j++)
-            for(k=0; k < 3; k++)
-                r += f->nVendas[i][j][k];
-    return r;
+int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo) {
+    if(filial == ALL) 
+        return f->nVendas[tipo][mes][0] + f->nVendas[tipo][mes][1] + f->nVendas[tipo][mes][2];
+    return f->nVendas[tipo][mes][filial];
 }
 
 int cmpFat(FatP* a, FatP* b) {

@@ -240,6 +240,10 @@ FatP* getMaisVendidos(const Tudo tudo, int N) {
     return getAllList(tudo->faturas, N);
 }
 
+int getNVendasFat(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
+    return getNvendaFaturas(tudo->faturas, id, mes, filial, tipo);
+}
+
 int getClientQuantTudo(const char* id, int mes, int filial, const Tudo tudo) {
     return getClientQuant(id, mes, filial, tudo->clientes);
 }

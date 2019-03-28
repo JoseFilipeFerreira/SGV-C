@@ -19,6 +19,8 @@ double getFatMesFilial(FatP f, Tipo tipo, Filial filial, int mes);
 
 int getQuantMesFilial(FatP f, Filial filial);
 
+int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo);
+
 void destroyFact(void* f);
 
 int cmpFat(FatP* a, FatP* b);
