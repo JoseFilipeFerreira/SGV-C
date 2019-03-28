@@ -94,9 +94,9 @@ Clientes initClients() {
     return p;
 }
 
-void clientesUpdateCompra(const char* id, int filial, Clientes r) {
+void clientesUpdateCompra(const char* id, int filial, int mes, int quant, Clientes r) {
     Cliente p = g_tree_lookup(r->avlC[IND(id[0])], id);
-    updateBuyClient(p, filial);
+    updateBuyClient(p, filial, mes, quant);
 }
 
 
@@ -104,6 +104,11 @@ Clientes addClient(const Cliente p, Clientes l) {
     char* id = getIdClient(p);
     g_tree_insert(l->avlC[id[0] - 'A'], (void*) id, p);
     return l;
+}
+
+int getClientQuant(const char* id, int mes, int filial, const Clientes c) {
+    Cliente p = g_tree_lookup(c->avlC[IND(id[0])], id);
+    return getClientQuantidades(p, mes, filial);
 }
 
 void clearClients(Clientes p) {

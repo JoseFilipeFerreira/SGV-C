@@ -237,6 +237,8 @@ int getClientesNCompradores(const Tudo tudo);
 
 FatP* getMaisVendidos(const Tudo tudo, int N);
 
+int getClientQuantTudo(const char* id, int mes, int filial, const Tudo tudo);
+
 /**
 @brief Libertar um inicializador
 

@@ -75,7 +75,7 @@ Tudo tudoInicializado(Inicializador i) {
                 produtosUpdateCompra(id, getFilialSale(venda), produtos);
                 free(id);
                 id = getClientSale(venda);
-                clientesUpdateCompra(id, getFilialSale(venda), clientes); 
+                clientesUpdateCompra(id, getFilialSale(venda), getMesSale(venda), getQuantSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
         }
@@ -238,6 +238,10 @@ double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, 
 
 FatP* getMaisVendidos(const Tudo tudo, int N) {
     return getAllList(tudo->faturas, N);
+}
+
+int getClientQuantTudo(const char* id, int mes, int filial, const Tudo tudo) {
+    return getClientQuant(id, mes, filial, tudo->clientes);
 }
 
 int getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {

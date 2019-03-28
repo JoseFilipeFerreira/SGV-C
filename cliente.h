@@ -20,7 +20,7 @@ typedef struct cliente* Cliente;
 */
 bool verifyClient(const char* id);
 
-void updateBuyClient(Cliente c, int filial);
+void updateBuyClient(Cliente c, int filial, int mes, int quantidade);
 
 /**
 @brief Criar uma struct de cliente com base numa string 
@@ -39,6 +39,8 @@ Cliente mkClient(char* id);
 char* getIdClient(Cliente cliente);
 
 bool comprouOnde(int filial, Cliente p);
+
+int getClientQuantidades(const Cliente c, int mes, int filial);
 
 /**
 @brief Free de um cliente
