@@ -152,7 +152,7 @@ void prodPages(Tudo tudo){
 }
 
 /**
-@brief DONE (improve) : Query 3
+@brief DONE : Query 3
 */
 void prodStatsMes(Tudo tudo){
     int fil, loop = 1;
@@ -272,19 +272,19 @@ void clientesFieis(Tudo tudo){
 }
 
 /**
-@brief TODO (Prints the result of [2] for testing purposes) : Query 6
+@brief DONE (improve) : Query 6
 */
 void clientesInfieis(Tudo tudo){
     system("clear");
     printf(BOLD KRED"-- Categoria/Clientes/[6] --\n\n"RESET);
-    printf("Clientes que não compraram: \n");
+
+    printf("Clientes que não compraram: %d\n", getClientesNCompradores(tudo));
     printf("Produtos não comprados:     %d\n", getProdNComprados(tudo));
 
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
 }
-
 
 /**
 @brief TODO : Query 7
@@ -436,7 +436,32 @@ void prodMaisCompradoCli(Tudo tudo){
 @brief TODO : Query 11
 */
 void nMaisComprados(Tudo tudo){
-
+    int i, nComprados, r = 0;
+    char* buf = malloc(sizeof(char) * 10);
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Categoria/Produtos/[11] --\n" RESET);
+        if (!r)
+            printf("\n\n");
+        else
+            printf(UNDER "Invalid number\n\n" RESET);
+        printf("Número de clientes a mostrar:\n");
+        fgets(buf, 10, stdin);
+        nComprados = atoi(buf);
+        if(nComprados > 0)
+            break;
+        else
+           r = 1;
+    }
+    free(buf);
+    system("clear");
+    printf(BOLD KRED "\t-- Categoria/Produtos/[11] --\n\n" RESET);
+    printf("Produtos mais vendidos\n");
+    for(i=0; i < nComprados; i++)
+        printf("\treeeeeeeeeeeee\n");
+    printf(HIDE_CURSOR);
+    getchar();
+    printf(SHOW_CURSOR);
 }
 
 /**

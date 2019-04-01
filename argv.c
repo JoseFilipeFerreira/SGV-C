@@ -39,6 +39,9 @@ void argvParser(int argc, char** argv){
             prodsNaoComprados(tudo, 3, &bloatTab);
             /*5*/
             clientesCompraramFilial(tudo, &bloatTab);
+            /*6*/
+            getClientesNCompradores(tudo);
+            getProdNComprados(tudo);
             /*7*/
             for (v1=0; v1<3; v1++)
                 for (v2=0; v2<12; v2++)
@@ -80,6 +83,8 @@ void argvParser(int argc, char** argv){
             free(bloatTab);
             break;
         case 6:
+            getClientesNCompradores(tudo);
+            getProdNComprados(tudo);
             break;
         case 7:
             cli = (argc == 3 && searchTudoClient(tudo, argv[2]))?argv[2] :  "A1234";
