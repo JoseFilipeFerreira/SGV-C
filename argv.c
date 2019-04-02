@@ -9,7 +9,7 @@ void argvParser(int argc, char** argv){
     char** bloatTab;
     char* prod, *cli;
     int v1, v2, mes;
-    Tudo tudo;
+    SGV sgv;
     Inicializador i;
 
     start = clock();
@@ -17,7 +17,7 @@ void argvParser(int argc, char** argv){
     setClientPath(i, "db/Clientes.txt", 1);
     setProductPath(i, "db/Produtos.txt", 1);
     setSalePath(i, "db/Vendas_1M.txt", 1);
-    tudo = tudoInicializado(i);
+    sgv = sgvInicializado(i);
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
@@ -27,59 +27,59 @@ void argvParser(int argc, char** argv){
     switch(atoi(argv[1])){
         case 1: /* Answer all querys */
             /*2*/
-            getTudoProductLetter( tudo, 'A', &bloatTab);
+            getSGVProductLetter( sgv, 'A', &bloatTab);
             /*3*/
             for(v1 = 0; v1 < 3; v1++){
-                getFatMesTudo  (tudo, "ZZ1999", N, v1, 1);
-                getFatMesTudo  (tudo, "ZZ1999", P, v1, 1);
-                getQuantMesTudo(tudo, "ZZ1999", N, v1, 1);
-                getQuantMesTudo(tudo, "ZZ1999", P, v1, 1);
+                getFatMesSGV  (sgv, "ZZ1999", N, v1, 1);
+                getFatMesSGV  (sgv, "ZZ1999", P, v1, 1);
+                getQuantMesSGV(sgv, "ZZ1999", N, v1, 1);
+                getQuantMesSGV(sgv, "ZZ1999", P, v1, 1);
             }
             /*4*/
-            prodsNaoComprados(tudo, 3, &bloatTab);
+            prodsNaoComprados(sgv, 3, &bloatTab);
             /*5*/
-            clientesCompraramFilial(tudo, &bloatTab);
+            clientesCompraramFilial(sgv, &bloatTab);
             /*6*/
-            getClientesNCompradores(tudo);
-            getProdNComprados(tudo);
+            getClientesNCompradores(sgv);
+            getProdNComprados(sgv);
             /*7*/
             for (v1=0; v1<3; v1++)
                 for (v2=0; v2<12; v2++)
-                    getClientQuantTudo("A1234", v1, v2, tudo);
+                    getClientQuantSGV("A1234", v1, v2, sgv);
             /*8*/
-            getNSalesMes(tudo, 1, 12);
-            getTFactMes(tudo, 1, 12);
+            getNSalesMes(sgv, 1, 12);
+            getTFactMes(sgv, 1, 12);
 
             free(bloatTab);
             break;
 
         case 2:
-            getTudoProductLetter(
-                tudo,
+            getSGVProductLetter(
+                sgv,
                 (argc == 3 && argv[2][0] >= 'A' && argv[2][0] <= 'Z') ? argv[2][0] : 'A',
                 &bloatTab);
             free(bloatTab);
             break;
 
         case 3:
-            prod = (argc == 3 && searchTudoProduct(tudo, argv[2]))?argv[2] :  "ZZ1999";
+            prod = (argc == 3 && searchSGVProduct(sgv, argv[2]))?argv[2] :  "ZZ1999";
             mes  =    (argc == 4 && atoi(argv[3]))? atoi(argv[3]) : 1;
             for(v1 = 0; v1 < 3; v1++){
-                getFatMesTudo  (tudo, prod, N, v1, mes);
-                getFatMesTudo  (tudo, prod, P, v1, mes);
-                getQuantMesTudo(tudo, prod, N, v1, mes);
-                getQuantMesTudo(tudo, prod, P, v1, mes);
+                getFatMesSGV  (sgv, prod, N, v1, mes);
+                getFatMesSGV  (sgv, prod, P, v1, mes);
+                getQuantMesSGV(sgv, prod, N, v1, mes);
+                getQuantMesSGV(sgv, prod, P, v1, mes);
             }
             break;
         case 4:
             prodsNaoComprados(
-                tudo,
+                sgv,
                 (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 3,
                 &bloatTab);
             free(bloatTab);
             break;
         case 5:
-            clientesCompraramFilial(tudo, &bloatTab);
+            clientesCompraramFilial(sgv, &bloatTab);
             free(bloatTab);
             break;
         case 6:
@@ -87,16 +87,16 @@ void argvParser(int argc, char** argv){
             getProdNComprados(tudo);
             break;
         case 7:
-            cli = (argc == 3 && searchTudoClient(tudo, argv[2]))?argv[2] :  "A1234";
+            cli = (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234";
             for (v1=0; v1<3; v1++)
                     for (v2=0; v2<12; v2++)
-                        getClientQuantTudo(cli, v1, v2, tudo);
+                        getClientQuantSGV(cli, v1, v2, sgv);
             break;
         case 8:
             v1 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;
             v2 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 12;
-            getNSalesMes(tudo, v1, v2);
-            getTFactMes(tudo, v1, v2);
+            getNSalesMes(sgv, v1, v2);
+            getTFactMes(sgv, v1, v2);
             break;
 
         case 9:
@@ -117,7 +117,7 @@ void argvParser(int argc, char** argv){
     start = clock();
 
     destroyInit(i);
-    destroyTudo(tudo);
+    destroySGV(sgv);
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

@@ -6,7 +6,7 @@
 #define ___CONTROLER_H___
 
 #include "queryUI.h"
-#include "init.h"
+#include "sgv.h"
 
 /**
 \brief Cria o menu inicial

@@ -1,5 +1,5 @@
 /**
-@file init.h
+@file sgv.h
 @brief Módulo de inicialização de struct
 */
 #ifndef ___INIT_H___
@@ -10,7 +10,7 @@
 /**
 @brief Guardar a base de dados 
 */
-typedef struct tudo* Tudo;
+typedef struct sgv* SGV;
 
 /**
 @brief Indica como inicializar a base de dados
@@ -21,48 +21,48 @@ typedef struct inicializador* Inicializador;
 @brief Inicializar a base de dados
 
 @param i Parametros para a leitura
-@return Tudo Base de Dados inicializada
+@return SGV Base de Dados inicializada
 */
-Tudo tudoInicializado(Inicializador i);
+SGV sgvInicializado(Inicializador i);
 
 /**
 @brief Obter os Produtos todos
 
-@param tudo Struct com os produtos todos
+@param sgv Struct com os produtos todos
 @return Produtos Produtos todos
 */
-Produtos getProdutosTodos(const Tudo tudo);
+Produtos getProdutosTodos(const SGV sgv);
 
 /**
 @brief Obter os Clientes todos
 
-@param tudo Struct com os clientes todos
+@param sgv Struct com os clientes todos
 @return Produtos Clientes todos
 */
-Clientes getClientesTodos(const Tudo tudo);
+Clientes getClientesTodos(const SGV sgv);
 
 /**
 @brief Define os produtos todos
 
-@param tudo local onde vai ser definido
+@param sgv local onde vai ser definido
 @param p Produtos todos
 */
-void setProdutos(Tudo tudo, const Produtos p);
+void setProdutos(SGV sgv, const Produtos p);
 
 /**
 @brief Define os Clientes todos
 
-@param tudo local onde vai ser definido
+@param sgv local onde vai ser definido
 @param p Produtos todos
 */
-void setClientes(Tudo tudo, const Clientes p);
+void setClientes(SGV sgv, const Clientes p);
 
 /**
-@brief Libertar um Tudo
+@brief Libertar um SGV
 
-@param tudo Tudo a libertar
+@param sgv SGV a libertar
 */
-void destroyTudo(Tudo tudo);
+void destroySGV(SGV sgv);
 
 /**
 @brief Alocar espaço para um Inicializador
@@ -174,72 +174,74 @@ char* getClientPath(const Inicializador i);
 /**
 @brief Obter o número de vendas num periodo de tempo 
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @param inicio inicio da janela temporal
 @param fim  fim da janela temporal
 @return int número de vendas nessa janela temporal
 */
-int getNSalesMes(const Tudo tudo, int inicio, int fim);
+int getNSalesMes(const SGV sgv, int inicio, int fim);
 
 /**
 @brief Obter o total faturado num periodo de tempo 
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @param inicio inicio da janela temporal
 @param fim  fim da janela temporal
 @return int total faturado nessa janela temporal
 */
-double getTFactMes(const Tudo tudo, int inicio, int fim);
+double getTFactMes(const SGV sgv, int inicio, int fim);
 
 /**
 @brief Número de produtos não comprados
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @return int Número de produtos não comprados
 */
-int getProdNComprados(const Tudo tudo);
+int getProdNComprados(const SGV sgv);
 
-int getTudoProductLetter(const Tudo tudo, const char id, char*** array);
+int getSGVProductLetter(const SGV sgv, const char id, char*** array);
 
 /**
 @brief calcular a lista de strings de produtos não comprados
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @param filial filial a procurar
 @param array onde guardar o resultado
 @return int número de elementos escritos
 */
-int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array);
+int prodsNaoComprados(const SGV sgv, const Filial filial, char*** array);
 
 /**
 @brief Afere se um produto é válido ou não
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @param produto produto a validar
 @return int resultado da aferição
 */
-int searchTudoProduct(Tudo tudo, char* produto);
+int searchSGVProduct(SGV sgv, char* produto);
 
 /**
 @brief Afere se um cliente é válido ou não
 
-@param tudo struct que contem tudo
+@param sgv struct que contem sgv
 @param ciente cliente a validar
 @return int resultado da aferição
 */
-int searchTudoClient(Tudo tudo, char* cliente);
+int searchSGVClient(SGV sgv, char* cliente);
 
-double getFatMesTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
+double getFatMesSGV(const SGV sgv, const char* produto, Tipo tipo, Filial filial, int mes);
 
-int getQuantFatTudo(const Tudo tudo, const char* produto, Tipo tipo, Filial filial, int mes);
+int getQuantFatSGV(const SGV sgv, const char* produto, Tipo tipo, Filial filial, int mes);
 
-int getClientesNCompradores(const Tudo tudo);
+int getClientesNCompradores(const SGV sgv);
 
-FatP* getMaisVendidos(const Tudo tudo, int N);
+FatP* getMaisVendidos(const SGV sgv, int N);
 
-int getNVendasFat(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes);
+int getNVendasFat(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes);
 
-int getClientQuantTudo(const char* id, int mes, int filial, const Tudo tudo);
+int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv);
+
+int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv);
 
 /**
 @brief Libertar um inicializador

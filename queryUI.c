@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){
+char* getValidClientInput(char* header, char* message, char* error, SGV sgv){
     int r = 0;
     char* initBuf;
     char* buf = malloc(sizeof(char) * 10);
@@ -22,7 +22,7 @@ char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){
 
         fgets(initBuf, 10, stdin);
 
-        if(searchTudoClient(tudo, strtok(buf, "\n")))
+        if(searchSGVClient(sgv, strtok(buf, "\n")))
             break;
         else
             r = 1;
@@ -30,7 +30,7 @@ char* getValidClientInput(char* header, char* message, char* error, Tudo tudo){
     return initBuf;
 }
 
-char* getValidProductInput(char* header, char* message, char* error, Tudo tudo){
+char* getValidProductInput(char* header, char* message, char* error, SGV sgv){
     int r = 0;
     char* initBuf;
     char* buf = malloc(sizeof(char) * 10);
@@ -49,7 +49,7 @@ char* getValidProductInput(char* header, char* message, char* error, Tudo tudo){
 
         fgets(initBuf, 10, stdin);
 
-        if(searchTudoProduct(tudo, strtok(buf, "\n")))
+        if(searchSGVProduct(sgv, strtok(buf, "\n")))
             break;
         else
             r = 1;
@@ -131,7 +131,7 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
 /**
 @brief DONE : Query 2
 */
-void prodPages(Tudo tudo){
+void prodPages(SGV sgv){
     char search;
     char** prodTab;
     int sizeProdTab;
@@ -145,7 +145,7 @@ void prodPages(Tudo tudo){
             break;
     }
 
-    sizeProdTab = getTudoProductLetter(tudo, search, &prodTab);
+    sizeProdTab = getSGVProductLetter(sgv, search, &prodTab);
     menuPaginasDraw("Categoria/Produtos/[2]", prodTab, sizeProdTab,15 , 6);
 
     free(prodTab);
@@ -154,13 +154,13 @@ void prodPages(Tudo tudo){
 /**
 @brief DONE : Query 3
 */
-void prodStatsMes(Tudo tudo){
+void prodStatsMes(SGV sgv){
     int fil, loop = 1;
     char* produto = getValidProductInput(
         "Categoria/Produtos/[3]",
         "Inserir Produto a pesquisar",
         "Produto não existe",
-        tudo);
+        sgv);
 
     int mes = getValidMesInput(
         "Categoria/Produtos/[3]",
@@ -183,12 +183,12 @@ void prodStatsMes(Tudo tudo){
 
                 for(fil = 0; fil < 3; fil++){
                     printf("Total faturado no mês %d na filial %d\n", mes, fil + 1);
-                    printf("   N: %.2f\n",   getFatMesTudo(tudo, produto, N, fil, mes));
-                    printf("   P: %.2f\n\n", getFatMesTudo(tudo, produto, P, fil, mes));
+                    printf("   N: %.2f\n",   getFatMesSGV(sgv, produto, N, fil, mes));
+                    printf("   P: %.2f\n\n", getFatMesSGV(sgv, produto, P, fil, mes));
                 
                     printf("Número de vendas no mês %d na filial %d\n", mes, fil + 1);
-                    printf("   N: %d\n",   getNVendasFat(tudo, produto, N, fil, mes));
-                    printf("   P: %d\n\n", getNVendasFat(tudo, produto, P, fil, mes));
+                    printf("   N: %d\n",   getNVendasFat(sgv, produto, N, fil, mes));
+                    printf("   P: %d\n\n", getNVendasFat(sgv, produto, P, fil, mes));
                 }
 
                 loop = 0;
@@ -200,12 +200,12 @@ void prodStatsMes(Tudo tudo){
                 printf("Produto: %s\n\n", produto);
 
                 printf("Total faturado no mês %d\n", mes);
-                printf("   N: %.2f\n",   getFatMesTudo(tudo, produto, N, ALL, mes));
-                printf("   P: %.2f\n\n", getFatMesTudo(tudo, produto, P, ALL, mes));
+                printf("   N: %.2f\n",   getFatMesSGV(sgv, produto, N, ALL, mes));
+                printf("   P: %.2f\n\n", getFatMesSGV(sgv, produto, P, ALL, mes));
                 
                 printf("Número de vendas no mês %d\n", mes);
-                printf("   N: %d\n", getNVendasFat(tudo, produto, N, ALL, mes));
-                printf("   P: %d\n", getNVendasFat(tudo, produto, P, ALL, mes));
+                printf("   N: %d\n", getNVendasFat(sgv, produto, N, ALL, mes));
+                printf("   P: %d\n", getNVendasFat(sgv, produto, P, ALL, mes));
                 
                 loop = 0;
                 break;
@@ -224,7 +224,7 @@ void prodStatsMes(Tudo tudo){
 /**
 @brief DONE : Query 4
 */
-void prodsNCompradosUI(Tudo tudo){
+void prodsNCompradosUI(SGV sgv){
     char** prodTab;
     int sizeProdTab;
     char* initBuf;
@@ -250,7 +250,7 @@ void prodsNCompradosUI(Tudo tudo){
             break;
     }
 
-    sizeProdTab = prodsNaoComprados(tudo, f-1, &prodTab);
+    sizeProdTab = prodsNaoComprados(sgv, f-1, &prodTab);
     menuPaginasDraw("Categoria/Produtos/[4]", prodTab, sizeProdTab,15 , 6);
 
     free(prodTab);
@@ -261,11 +261,11 @@ void prodsNCompradosUI(Tudo tudo){
 /**
 @brief DONE : Query 5
 */
-void clientesFieis(Tudo tudo){
+void clientesFieis(SGV sgv){
     char** cliTab;
     int sizeCliTab;
 
-    sizeCliTab = clientesCompraramFilial(tudo, &cliTab);
+    sizeCliTab = clientesCompraramFilial(sgv, &cliTab);
     menuPaginasDraw("Categoria/Clientes/[5]", cliTab, sizeCliTab,15 , 6);
 
     free(cliTab);
@@ -274,12 +274,12 @@ void clientesFieis(Tudo tudo){
 /**
 @brief DONE (improve) : Query 6
 */
-void clientesInfieis(Tudo tudo){
+void clientesInfieis(SGV sgv){
     system("clear");
     printf(BOLD KRED"-- Categoria/Clientes/[6] --\n\n"RESET);
 
-    printf("Clientes que não compraram: %d\n", getClientesNCompradores(tudo));
-    printf("Produtos não comprados:     %d\n", getProdNComprados(tudo));
+    printf("Clientes que não compraram: %d\n", getClientesNCompradores(sgv));
+    printf("Produtos não comprados:     %d\n", getProdNComprados(sgv));
 
     printf(HIDE_CURSOR);
     getchar();
@@ -289,12 +289,12 @@ void clientesInfieis(Tudo tudo){
 /**
 @brief TODO : Query 7
 */
-void tabClientAno(Tudo tudo, char* cliente){
+void tabClientAno(SGV sgv, char* cliente){
     int i, j;
     int iT[3][12];
     for (i=0; i<3; i++)
         for (j=0; j<12; j++)
-            iT[i][j] = getClientQuantTudo(cliente, j, i, tudo);
+            iT[i][j] = getClientQuantSGV(cliente, j, i, sgv);
 
     printf("Produtos Comprados [7]:\n");
 
@@ -320,7 +320,7 @@ void tabClientAno(Tudo tudo, char* cliente){
 /**
 @brief DONE (improve) : Query 8
 */
-void tabVendasIntervalo(Tudo tudo){
+void tabVendasIntervalo(SGV sgv){
     int r = 0;
     int p1, p2;
     char* initBuf;
@@ -366,8 +366,8 @@ void tabVendasIntervalo(Tudo tudo){
 
     printf("Intervalo: %d -> %d\n\n", p1, p2);
 
-    printf("Numero de Vendas %d\n", getNSalesMes(tudo, p1, p2));
-    printf("Total Faturado: %.2f\n",  getTFactMes(tudo, p1, p2));
+    printf("Numero de Vendas %d\n", getNSalesMes(sgv, p1, p2));
+    printf("Total Faturado: %.2f\n",  getTFactMes(sgv, p1, p2));
 
     printf(HIDE_CURSOR);
     getchar();
@@ -378,14 +378,14 @@ void tabVendasIntervalo(Tudo tudo){
 /**
 @brief TODO : Query 9
 */
-void clientesCompraramProduto(Tudo tudo){
+void clientesCompraramProduto(SGV sgv){
 
 }
 
 /**
 @brief TODO (Prints the result of [2] for testing purposes) : Query 10
 */
-void prodMaisCompradoCli(Tudo tudo){
+void prodMaisCompradoCli(SGV sgv){
     int sizeProdTab, mes, r = 0;
     char** prodTab;
 
@@ -397,7 +397,7 @@ void prodMaisCompradoCli(Tudo tudo){
         "Categoria/Clientes/[10]",
         "Inserir Cliente a pesquisar",
         "Cliente não existe",
-        tudo);
+        sgv);
 
     /* Ler mês válido */
     r = 0;
@@ -426,7 +426,7 @@ void prodMaisCompradoCli(Tudo tudo){
             r = 1;
     }
 
-    sizeProdTab = getTudoProductLetter(tudo, 'A', &prodTab);
+    sizeProdTab = getSGVProductLetter(sgv, 'A', &prodTab);
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab,15 , 6);
 
     free(cliente);
@@ -435,7 +435,7 @@ void prodMaisCompradoCli(Tudo tudo){
 /**
 @brief TODO : Query 11
 */
-void nMaisComprados(Tudo tudo){
+void nMaisComprados(SGV sgv){
     int i, nComprados, r = 0;
     char* buf = malloc(sizeof(char) * 10);
     while(1){
@@ -467,7 +467,7 @@ void nMaisComprados(Tudo tudo){
 /**
 @brief TODO : Query 12
 */
-void clienteMaisComprados(Tudo tudo, char* cliente){
+void clienteMaisComprados(SGV sgv, char* cliente){
 
     printf("\nMais comprados [12]\n");
 }
@@ -475,19 +475,19 @@ void clienteMaisComprados(Tudo tudo, char* cliente){
 /**
 @brief TODO : Query 7 & 12
 */
-void statsClientAno(Tudo tudo){
+void statsClientAno(SGV sgv){
     char* cliente = getValidClientInput(
         "Categoria/Clientes/[7/12]",
         "Inserir Cliente a pesquisar",
         "Cliente não existe",
-        tudo);
+        sgv);
     
     system("clear");
     printf(BOLD KRED "\t-- Categoria/Clientes/[7/12] --\n\n" RESET);
     printf("Cliente: %s\n\n", cliente);
 
-    tabClientAno(tudo, cliente);
-    clienteMaisComprados(tudo, cliente);
+    tabClientAno(sgv, cliente);
+    clienteMaisComprados(sgv, cliente);
 
     printf(HIDE_CURSOR);
     getchar();

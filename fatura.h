@@ -23,6 +23,8 @@ int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo);
 
 void destroyFact(void* f);
 
+char* faturaGetId(const FatP f);
+
 int cmpFat(FatP* a, FatP* b);
 
 #endif

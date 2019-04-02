@@ -5,23 +5,23 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
-static void menuClientes   (int* loop, Tudo* tudo);
-static void menuProdutos   (int* loop, Tudo* tudo);
-static void menuVendas     (int* loop, Tudo* tudo);
-static void menuCategories (int* loop, Tudo* tudo);
-static void menuLoadFile   (int* loop, Tudo* tudo);
-static void menuLoadCustom (int* loop, Tudo* tudo);
+static void menuClientes   (int* loop, SGV* sgv);
+static void menuProdutos   (int* loop, SGV* sgv);
+static void menuVendas     (int* loop, SGV* sgv);
+static void menuCategories (int* loop, SGV* sgv);
+static void menuLoadFile   (int* loop, SGV* sgv);
+static void menuLoadCustom (int* loop, SGV* sgv);
 
 void startControler(){ 
     int loop = 1;
-    Tudo tudo = NULL;
+    SGV sgv = NULL;
     
-    menuLoadFile(&loop, &tudo);
+    menuLoadFile(&loop, &sgv);
 
     printf(SHOW_CURSOR);
     system("clear");
 
-    if(tudo) destroyTudo(tudo);
+    if(sgv) destroySGV(sgv);
 
 }
 
@@ -45,10 +45,10 @@ void menuShowLoad(Inicializador i){
 
 }
 
-void menuLoadFile(int* loop, Tudo* tudo){
+void menuLoadFile(int* loop, SGV* sgv){
     int r;
-    if(*tudo) destroyTudo(*tudo);
-    *tudo = NULL;
+    if(*sgv) destroySGV(*sgv);
+    *sgv = NULL;
     while(*loop){
         Inicializador i;
         system("clear");
@@ -69,10 +69,10 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 setClientPath(i, "db/Clientes.txt", 1);
                 setProductPath(i, "db/Produtos.txt", 1);
                 setSalePath(i, "db/Vendas_1M.txt", 1);
-                *tudo = tudoInicializado(i);
+                *sgv = sgvInicializado(i);
 
                 menuShowLoad(i);
-                menuCategories(loop, tudo);
+                menuCategories(loop, sgv);
                 break;
 
             case 2:
@@ -80,14 +80,14 @@ void menuLoadFile(int* loop, Tudo* tudo){
                 setClientPath(i, "db/Clientes.txt", 0);
                 setProductPath(i, "db/Produtos.txt", 0);
                 setSalePath(i, "db/Vendas_1M.txt", 0);
-                *tudo = tudoInicializado(i);
+                *sgv = sgvInicializado(i);
 
                 menuShowLoad(i);
-                menuCategories(loop, tudo);
+                menuCategories(loop, sgv);
                 break;
 
             case 3:
-                menuLoadCustom(loop, tudo);
+                menuLoadCustom(loop, sgv);
                 break;
 
             case EXIT:
@@ -144,7 +144,7 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
     }
 }
 
-void menuLoadCustom(int* loop, Tudo* tudo){
+void menuLoadCustom(int* loop, SGV* sgv){
     char * bufCli = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
@@ -167,7 +167,7 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     setClientPath(i, bufCli, filterCli);
     setProductPath(i, bufProd, filterProd);
     setSalePath(i, bufSales, filterSales);
-    *tudo = tudoInicializado(i);
+    *sgv = sgvInicializado(i);
     free(bufCli);
     free(bufProd);
     free(bufSales);
@@ -175,10 +175,10 @@ void menuLoadCustom(int* loop, Tudo* tudo){
     printf(SHOW_CURSOR);
 
     menuShowLoad(i);
-    menuCategories(loop, tudo);
+    menuCategories(loop, sgv);
 }
 
-void menuCategories(int* loop, Tudo* tudo){
+void menuCategories(int* loop, SGV* sgv){
     while(*loop){
         system("clear");
         printf(SHOW_CURSOR);
@@ -191,19 +191,19 @@ void menuCategories(int* loop, Tudo* tudo){
         switch (menuCheck(3))
         {
             case 1:
-                menuClientes(loop, tudo);
+                menuClientes(loop, sgv);
                 break;
 
             case 2:
-                menuProdutos(loop, tudo);
+                menuProdutos(loop, sgv);
                 break;
 
             case 3:
-                menuVendas(loop, tudo);
+                menuVendas(loop, sgv);
                 break;
             
             case BACK:
-                menuLoadFile(loop, tudo);
+                menuLoadFile(loop, sgv);
                 break;
 
             case EXIT:
@@ -216,7 +216,7 @@ void menuCategories(int* loop, Tudo* tudo){
     }
 }
 
-void menuClientes(int* loop, Tudo* tudo){
+void menuClientes(int* loop, SGV* sgv){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Clientes --\n\n" RESET);
@@ -228,23 +228,23 @@ void menuClientes(int* loop, Tudo* tudo){
         switch (menuCheck(4))
         {
             case BACK:
-                menuCategories(loop, tudo);
+                menuCategories(loop, sgv);
                 break;
 
             case 1:
-                clientesFieis(*tudo);
+                clientesFieis(*sgv);
                 break;
 
             case 2:
-                clientesInfieis(*tudo);
+                clientesInfieis(*sgv);
                 break;
 
             case 3:
-                statsClientAno(*tudo);
+                statsClientAno(*sgv);
                 break;
 
             case 4:
-                prodMaisCompradoCli(*tudo);
+                prodMaisCompradoCli(*sgv);
                 break;
 
             default:
@@ -253,7 +253,7 @@ void menuClientes(int* loop, Tudo* tudo){
     }
 }
 
-void menuProdutos(int* loop, Tudo* tudo){
+void menuProdutos(int* loop, SGV* sgv){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Produtos --\n\n" RESET);
@@ -266,26 +266,26 @@ void menuProdutos(int* loop, Tudo* tudo){
         switch (menuCheck(5))
         {
             case BACK:
-                menuCategories(loop, tudo);
+                menuCategories(loop, sgv);
                 break;
 
             case 1:
-                prodPages(*tudo);
+                prodPages(*sgv);
                 break;
 
             case 2:
-                prodStatsMes(*tudo);
+                prodStatsMes(*sgv);
                 break;
 
             case 3:
-                prodsNCompradosUI(*tudo);
+                prodsNCompradosUI(*sgv);
                 break;
 
             case 4:
                 break;
 
             case 5:
-                nMaisComprados(tudo);
+                nMaisComprados(sgv);
                 break;
 
             default:
@@ -294,7 +294,7 @@ void menuProdutos(int* loop, Tudo* tudo){
     }
 }
 
-void menuVendas(int* loop, Tudo* tudo){
+void menuVendas(int* loop, SGV* sgv){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Vendas --\n\n" RESET);
@@ -305,11 +305,11 @@ void menuVendas(int* loop, Tudo* tudo){
         switch (menuCheck(1))
         {
             case BACK:
-                menuCategories(loop, tudo);
+                menuCategories(loop, sgv);
                 break;
 
             case 1:
-                tabVendasIntervalo(*tudo);
+                tabVendasIntervalo(*sgv);
                 break;
 
             default:

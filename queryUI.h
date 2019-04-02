@@ -6,76 +6,76 @@
 #define ___QUERYUI_H___
 
 #include "view.h"
-#include "init.h"
+#include "sgv.h"
 
 /**
 @brief Query 2
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void prodPages(Tudo tudo);
+void prodPages(SGV sgv);
 
 /**
 @brief Query 3
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void prodStatsMes(Tudo tudo);
+void prodStatsMes(SGV sgv);
 
 /**
 @brief Query 4
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void prodsNCompradosUI(Tudo tudo);
+void prodsNCompradosUI(SGV sgv);
 
 /**
 @brief Query 5
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void clientesFieis(Tudo tudo);
+void clientesFieis(SGV sgv);
 
 /**
 @brief Query 6
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void clientesInfieis(Tudo tudo);
+void clientesInfieis(SGV sgv);
 
 /**
 @brief Query 8
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void tabVendasIntervalo(Tudo tudo);
+void tabVendasIntervalo(SGV sgv);
 
 /**
 @brief Query 9
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void clientesCompraramProduto(Tudo tudo);
+void clientesCompraramProduto(SGV sgv);
 
 /**
 @brief Query 10
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void prodMaisCompradoCli(Tudo tudo);
+void prodMaisCompradoCli(SGV sgv);
 
 /**
 @brief TODO : Query 11
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void nMaisComprados(Tudo tudo);
+void nMaisComprados(SGV sgv);
 
 /**
 @brief Query 7 & 12
 
-@param tudo struct que conte a base de dados
+@param sgv struct que conte a base de dados
 */
-void statsClientAno(Tudo tudo);
+void statsClientAno(SGV sgv);
 
 #endif

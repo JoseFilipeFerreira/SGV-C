@@ -39,6 +39,10 @@ char* getIdProduct(Produto produto);
 void updateCompra(Produto p, int filial);
 
 bool foiCompradoOnde(int filial, Produto p);
+
+int produtoQuantosCompraram(int filial, Produto p); 
+
+void produtoAddQuemComprou(int filial, char* id, Produto p); 
 /**
 @brief Free de um Produto
 

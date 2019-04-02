@@ -5,7 +5,7 @@
 #ifndef ___ARGV_H___
 #define ___ARGV_H___
 
-#include "init.h"
+#include "sgv.h"
 
 /**
 @brief Parse the command line arguments

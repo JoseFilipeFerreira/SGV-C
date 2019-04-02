@@ -58,7 +58,10 @@ Produtos initProducts();
 
 int getNaoComprados(const Produtos p, int filial, char*** array);
 
-void produtosUpdateCompra(const char* id, int filial, Produtos r);
+void produtosUpdateCompra(const char* id, char* cliente, int filial, Produtos r);
+
+int produtosQuantosCompraram(const char* id, int filial, Produtos r);
+
 /**
 @brief Libertar espaço alocado para Produtos
 

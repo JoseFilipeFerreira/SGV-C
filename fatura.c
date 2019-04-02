@@ -29,7 +29,6 @@ void mkFatura(FatP fatr, Venda v) {
     fat->nVendas[tipo][mes - 1][filial]++;
     fat->total[tipo][mes - 1][filial] += quant * getPUnitSale(v);
     fat->quant[filial] += quant;
-
 }
 
 FatP cloneFat(FatP a) {
@@ -62,6 +61,10 @@ int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo) {
 
 int cmpFat(FatP* a, FatP* b) {
      return getQuantMesFilial(*b, ALL) - getQuantMesFilial(*a, ALL);
+}
+
+char* faturaGetId(const FatP f) {
+    return f->prod;
 }
 
 void destroyFact(void* f) {

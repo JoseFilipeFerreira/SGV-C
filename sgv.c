@@ -1,11 +1,11 @@
-#include "init.h"
+#include "sgv.h"
 
 #include <stdio.h>
 
 /**
 @brief Guardar a base de dados 
 */
-struct tudo {
+struct sgv {
     Produtos produtos; /**< Todos os produtos lidos */
     Clientes clientes; /**< Todos os clientes lidos */
     Faturas faturas;   /**< Todas as faturas lidas */
@@ -32,8 +32,8 @@ struct inicializador {
     int filterSales; /**< Indica se é para filtar o ficheiro de Vendas */
 };
 
-Tudo tudoInicializado(Inicializador i) {
-    Tudo tudo = malloc(sizeof(struct tudo));
+SGV sgvInicializado(Inicializador i) {
+    SGV sgv = malloc(sizeof(struct sgv));
     FILE* f = fopen(i->pathP, "r");
     char* buff = malloc(35);
     Faturas faturas = initFaturas();
@@ -69,48 +69,48 @@ Tudo tudoInicializado(Inicializador i) {
     for(i->salesLines = i->salesNumber = 0; fgets(buff, 35, f); i->salesLines++) {
         if(!i->filterSales || verifySale(buff, produtos, clientes)) {
                 Venda venda = mkSale(buff);
-                char* id = getProductSale(venda); 
+                char* idP = getProductSale(venda); 
+                char* id = getClientSale(venda);
+                produtosUpdateCompra(idP, id, getFilialSale(venda), produtos);
                 addFatura(venda, faturas);
                 i->salesNumber++;
-                produtosUpdateCompra(id, getFilialSale(venda), produtos);
-                free(id);
-                id = getClientSale(venda);
                 clientesUpdateCompra(id, getFilialSale(venda), getMesSale(venda), getQuantSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
+                free(idP);
         }
     }
     fclose(f);
     free(buff);
     i->productNumber = getProductNumber(produtos);
     i->clientNumber = getClientNumber(clientes);
-    tudo->produtos = produtos;
-    tudo->clientes = clientes;
-    tudo->faturas = faturas;
-    return tudo;
+    sgv->produtos = produtos;
+    sgv->clientes = clientes;
+    sgv->faturas = faturas;
+    return sgv;
 }
 
-Produtos getProdutosTodos(const Tudo tudo) {
-    return tudo->produtos;
+Produtos getProdutosTodos(const SGV sgv) {
+    return sgv->produtos;
 }
 
-Clientes getClientesTodos(const Tudo tudo) {
-    return tudo->clientes;
+Clientes getClientesTodos(const SGV sgv) {
+    return sgv->clientes;
 }
 
-void setProduto(Tudo tudo, const Produtos p) {
-    tudo->produtos = p;
+void setProduto(SGV sgv, const Produtos p) {
+    sgv->produtos = p;
 }
 
-void setCliente(Tudo tudo, const Clientes p) {
-    tudo->clientes = p;
+void setCliente(SGV sgv, const Clientes p) {
+    sgv->clientes = p;
 }
 
-void destroyTudo(Tudo tudo) {
-    clearProducts(tudo->produtos);
-    clearClients(tudo->clientes);
-    clearFaturas(tudo->faturas);
-    free(tudo);
+void destroySGV(SGV sgv) {
+    clearProducts(sgv->produtos);
+    clearClients(sgv->clientes);
+    clearFaturas(sgv->faturas);
+    free(sgv);
 }
 
 int getLinesClients(const Inicializador i) {
@@ -178,36 +178,36 @@ char* getClientPath(const Inicializador i) {
     return r;
 }
 
-int getNSalesMes(const Tudo tudo, int inicio, int fim) {
+int getNSalesMes(const SGV sgv, int inicio, int fim) {
     int r;
-    Faturas f = tudo->faturas;
+    Faturas f = sgv->faturas;
     for(r = 0; inicio < fim; inicio++)
         r += getQuantTotal(f, inicio);
     return r;
 }
 
-double getTFactMes(const Tudo tudo, int inicio, int fim) {
+double getTFactMes(const SGV sgv, int inicio, int fim) {
     double r;
-    Faturas f = tudo->faturas;
+    Faturas f = sgv->faturas;
     for(r = 0; inicio < fim; inicio++)
         r += getFatTotal(f, inicio);
     return r;
 }
 
-int getProdNComprados(const Tudo tudo) {
-    return getProductNumber(tudo->produtos) - getProdsVendidos(tudo->faturas); 
+int getProdNComprados(const SGV sgv) {
+    return getProductNumber(sgv->produtos) - getProdsVendidos(sgv->faturas); 
 }
 
-int getClientesNCompradores(const Tudo tudo) {
-    return getClientesNaoCompradores(tudo->clientes);
+int getClientesNCompradores(const SGV sgv) {
+    return getClientesNaoCompradores(sgv->clientes);
 }
 
-int prodsNaoComprados(const Tudo tudo, const Filial filial, char*** array) {
-    return getNaoComprados(tudo->produtos, filial, array);
+int prodsNaoComprados(const SGV sgv, const Filial filial, char*** array) {
+    return getNaoComprados(sgv->produtos, filial, array);
 }
 
-int clientesCompraramFilial (const Tudo tudo, char*** array) {
-    return getComprador(tudo->clientes, array);
+int clientesCompraramFilial (const SGV sgv, char*** array) {
+    return getComprador(sgv->clientes, array);
 }
 
 void destroyInit(Inicializador inicial) {
@@ -217,39 +217,43 @@ void destroyInit(Inicializador inicial) {
     free(inicial);
 }
 
-int getTudoProductLetter(const Tudo tudo, const char id, char*** array){
-    return getProductLetter(getProdutosTodos(tudo),  id, array);
+int getSGVProductLetter(const SGV sgv, const char id, char*** array){
+    return getProductLetter(getProdutosTodos(sgv),  id, array);
 }
 
-int searchTudoProduct(Tudo tudo, char* produto){
-    return searchProduct(getProdutosTodos(tudo), produto);
+int searchSGVProduct(SGV sgv, char* produto){
+    return searchProduct(getProdutosTodos(sgv), produto);
 }
 
-int searchTudoClient(Tudo tudo, char* cliente){
-    return searchClient(getClientesTodos(tudo), cliente);
+int searchSGVClient(SGV sgv, char* cliente){
+    return searchClient(getClientesTodos(sgv), cliente);
 }
 
-double getFatMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
-    FatP t = searchFatura(tudo->faturas, id);
+double getFatMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
+    FatP t = searchFatura(sgv->faturas, id);
     if(t) 
         return getFatMesFilial(t, tipo, filial, mes);
     return 0;
 } 
 
-FatP* getMaisVendidos(const Tudo tudo, int N) {
-    return getAllList(tudo->faturas, N);
+FatP* getMaisVendidos(const SGV sgv, int N) {
+    return getAllList(sgv->faturas, N);
 }
 
-int getNVendasFat(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
-    return getNVendasFaturas(tudo->faturas, id, mes, filial, tipo);
+int getNVendasFat(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
+    return getNVendasFaturas(sgv->faturas, id, mes, filial, tipo);
 }
 
-int getClientQuantTudo(const char* id, int mes, int filial, const Tudo tudo) {
-    return getClientQuant(id, mes, filial, tudo->clientes);
+int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv) {
+    return getClientQuant(id, mes, filial, sgv->clientes);
 }
 
-int getQuantMesTudo(const Tudo tudo, const char* id, Tipo tipo, Filial filial, int mes) {
-    FatP t = searchFatura(tudo->faturas, id);
+int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv) {
+    return produtosQuantosCompraram(id, filial, sgv->produtos);
+}
+
+int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
+    FatP t = searchFatura(sgv->faturas, id);
     if(t) 
         return getQuantMesFilial(t, filial);
    return 0;
