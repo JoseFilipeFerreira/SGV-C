@@ -287,7 +287,7 @@ void clientesInfieis(SGV sgv){
 }
 
 /**
-@brief TODO : Query 7
+@brief DONE : Query 7
 */
 void tabClientAno(SGV sgv, char* cliente){
     int i, j;
@@ -379,19 +379,50 @@ void tabVendasIntervalo(SGV sgv){
 @brief TODO : Query 9
 */
 void clientesCompraramProduto(SGV sgv){
+    int fil, r = 1;
+    char* buf = malloc(sizeof(char) * 10);
+    char* produto = getValidClientInput(
+        "Categoria/Produtos/[9]",
+        "Inserir Cliente a pesquisar",
+        "Cliente não existe",
+        sgv);
+    
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n" RESET);
+        if(r)
+            printf("\n\n");
+        else
+            printf(UNDER"Filial Inválido\n\n"RESET);
+        
+        printf("Filial a pesquisar [1..3]:\n");
+        fgets(buf, 10, stdin);
+        fil = atoi(buf);
+        if(fil > 0 && fil < 4){
+            fil--;
+            break;
+        }
+        else
+            r = 0;
+    }
+    free(buf);
+    system("clear");
+    printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n\n" RESET);
+    
+    printf("%s\n", produto);
+    printf("%d\n", fil);
 
+    printf(HIDE_CURSOR);
+    getchar();
+    printf(SHOW_CURSOR);
 }
 
 /**
 @brief TODO (Prints the result of [2] for testing purposes) : Query 10
 */
 void prodMaisCompradoCli(SGV sgv){
-    int sizeProdTab, mes, r = 0;
+    int sizeProdTab;
     char** prodTab;
-
-    char* initBufMes;
-    char* bufMes = malloc(sizeof(char) * 10);
-    initBufMes = bufMes;
 
     char* cliente = getValidClientInput(
         "Categoria/Clientes/[10]",
@@ -399,32 +430,10 @@ void prodMaisCompradoCli(SGV sgv){
         "Cliente não existe",
         sgv);
 
-    /* Ler mês válido */
-    r = 0;
-    while(1){
-        system("clear");
-        printf(BOLD KRED "\t-- Categoria/Clientes/[10] --\n" RESET);
-
-        if(r)
-            printf(UNDER "Mês inválido\n\n" RESET);
-        else
-            printf("\n\n");
-
-        printf("Inserir Mês a pesquisar:\n");
-        fgets(initBufMes, 10, stdin);
-
-        if(strlen(bufMes) == 0)
-            mes = -1;
-        else{
-            strtok(bufMes, "\n");
-            mes = atoi(bufMes);
-        }
-
-        if(mes > 0 && mes < 13)
-            break;
-        else
-            r = 1;
-    }
+    int mes = getValidMesInput(
+        "Categoria/Clientes/[10]",
+        "Inserir Mês a pesquisar",
+        "Mês inválido");
 
     sizeProdTab = getSGVProductLetter(sgv, 'A', &prodTab);
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab,15 , 6);
@@ -433,7 +442,7 @@ void prodMaisCompradoCli(SGV sgv){
 }
 
 /**
-@brief TODO : Query 11
+@brief DONE : Query 11
 */
 void nMaisComprados(SGV sgv){
     int i, fil, nComprados, r = 0;
@@ -445,7 +454,7 @@ void nMaisComprados(SGV sgv){
             printf("\n\n");
         else
             printf(UNDER "Invalid number\n\n" RESET);
-        printf("Número de clientes a mostrar:\n");
+        printf("Número de Produtos a mostrar:\n");
         fgets(buf, 10, stdin);
         nComprados = atoi(buf);
         if(nComprados > 0)

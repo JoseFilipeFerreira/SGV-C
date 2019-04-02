@@ -129,17 +129,14 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
         aR = access(buf, R_OK);
 
         if (stat(buf, &sb) == 0 && S_ISDIR(sb.st_mode))
-        {
             fl = 2;
-        }
         else{
             if( aR != -1 ) {
                 *filter = messageCheck(sndPrint);
                 break;
             }
-            else {
-                fl = 1;   
-            }
+            else
+                fl = 1;
         }
     }
 }
@@ -282,6 +279,7 @@ void menuProdutos(int* loop, SGV* sgv){
                 break;
 
             case 4:
+                clientesCompraramProduto(*sgv);
                 break;
 
             case 5:
@@ -298,9 +296,7 @@ void menuVendas(int* loop, SGV* sgv){
     while(*loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Vendas --\n\n" RESET);
-        printf("1 - total faturado em intervalo de tempo [8]\n");
-        printf("2 - \n");
-        printf("3 - \n");
+        printf("1 - total faturado em intervalo de tempo [8]\n\n\n\n");
         printf("b - BACK\n");
         switch (menuCheck(1))
         {
