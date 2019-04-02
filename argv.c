@@ -8,8 +8,9 @@ void argvParser(int argc, char** argv){
     double cpu_time_used;
     char** bloatTab;
     char* prod, *cli;
-    int v1, v2, mes;
+    int v1, v2, mes, nComprados;
     SGV sgv;
+    FatP* fatArr;
     Inicializador i;
 
     start = clock();
@@ -49,7 +50,14 @@ void argvParser(int argc, char** argv){
             /*8*/
             getNSalesMes(sgv, 1, 12);
             getTFactMes(sgv, 1, 12);
-
+            /*11*/
+            fatArr = getMaisVendidos(sgv, 20);
+            for(v1=0; v1 < 20; v1++){
+                for(v2=0; v2 < 3; v2++){
+                    getQuantMesFilial(fatArr[v1], v2);
+                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[v1]), v2, sgv);
+                }
+            }
             free(bloatTab);
             break;
 
@@ -83,8 +91,8 @@ void argvParser(int argc, char** argv){
             free(bloatTab);
             break;
         case 6:
-            getClientesNCompradores(tudo);
-            getProdNComprados(tudo);
+            getClientesNCompradores(sgv);
+            getProdNComprados(sgv);
             break;
         case 7:
             cli = (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234";
@@ -104,6 +112,14 @@ void argvParser(int argc, char** argv){
         case 10:
             break;
         case 11:
+            nComprados = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 20;
+            fatArr = getMaisVendidos(sgv, nComprados);
+            for(v1=0; v1 < nComprados; v1++){
+                for(v2=0; v2 < 3; v2++){
+                    getQuantMesFilial(fatArr[v1], v2);
+                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[v1]), v2, sgv);
+                }
+            }
             break;
         case 12:
             break;

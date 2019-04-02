@@ -436,7 +436,7 @@ void prodMaisCompradoCli(SGV sgv){
 @brief TODO : Query 11
 */
 void nMaisComprados(SGV sgv){
-    int i, nComprados, r = 0;
+    int i, fil, nComprados, r = 0;
     char* buf = malloc(sizeof(char) * 10);
     while(1){
         system("clear");
@@ -454,11 +454,36 @@ void nMaisComprados(SGV sgv){
            r = 1;
     }
     free(buf);
+
     system("clear");
     printf(BOLD KRED "\t-- Categoria/Produtos/[11] --\n\n" RESET);
     printf("Produtos mais vendidos\n");
-    for(i=0; i < nComprados; i++)
-        printf("\treeeeeeeeeeeee\n");
+
+    int iT[nComprados][6];
+    FatP* fatArr = getMaisVendidos(sgv, nComprados);
+    char*names [nComprados];
+    for(i=0; i < nComprados; i++){
+        names[i] = faturaGetId(fatArr[i]);
+        for(fil=0; fil < 3; fil++){
+            iT[i][2*fil] = getQuantMesFilial(fatArr[i], fil);
+            iT[i][2*fil+1] = sgvQuantosCompraramProdutos(names[i], fil, sgv);
+        }
+    }
+    
+    printTabela(
+            names,
+            (const char *[]){
+                "F1-unidades",
+                "F1-compradores",
+                "F2-unidades",
+                "F2-compradores",
+                "F3-unidades",
+                "F3-compradores",
+            },
+            nComprados,
+            6,
+            iT);
+
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);

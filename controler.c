@@ -285,7 +285,7 @@ void menuProdutos(int* loop, SGV* sgv){
                 break;
 
             case 5:
-                nMaisComprados(sgv);
+                nMaisComprados(*sgv);
                 break;
 
             default:
