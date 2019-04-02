@@ -252,6 +252,10 @@ int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv) {
     return produtosQuantosCompraram(id, filial, sgv->produtos);
 }
 
+int sgvQuemComprouProduto(const char* id, char*** array, SGV sgv) {
+    return produtosQuemComprou(id, array, sgv->produtos);
+}
+
 int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
     FatP t = searchFatura(sgv->faturas, id);
     if(t) 

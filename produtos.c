@@ -115,6 +115,11 @@ int produtosQuantosCompraram(const char* id, int filial, Produtos r) {
     return produtoQuantosCompraram(filial, p);
 }
 
+int produtosQuemComprou(const char* id, char*** array, Produtos r) {
+    Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
+    return produtoQuemComprou(p, array);
+}
+
 void clearProducts(Produtos p) {
     int i, j;
     for(i = 0; i < LETTERS; i++)

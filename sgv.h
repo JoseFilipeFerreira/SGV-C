@@ -243,6 +243,7 @@ int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv);
 
 int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv);
 
+int sgvQuemComprouProduto(const char* id, char*** array, SGV sgv);
 /**
 @brief Libertar um inicializador
 

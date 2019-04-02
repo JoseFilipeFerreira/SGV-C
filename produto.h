@@ -42,6 +42,8 @@ bool foiCompradoOnde(int filial, Produto p);
 
 int produtoQuantosCompraram(int filial, Produto p); 
 
+int produtoQuemComprou(const Produto p, char*** array);
+
 void produtoAddQuemComprou(int filial, char* id, Produto p); 
 /**
 @brief Free de um Produto

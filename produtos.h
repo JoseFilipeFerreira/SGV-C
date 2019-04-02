@@ -62,6 +62,7 @@ void produtosUpdateCompra(const char* id, char* cliente, int filial, Produtos r)
 
 int produtosQuantosCompraram(const char* id, int filial, Produtos r);
 
+int produtosQuemComprou(const char* id, char*** array, Produtos r);
 /**
 @brief Libertar espaço alocado para Produtos
 

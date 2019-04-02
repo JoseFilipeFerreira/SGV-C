@@ -8,17 +8,16 @@ struct faturacaoProd {
 };
 
 FatP initFatP(Venda p) {
-    FatP f =(FatP) malloc(sizeof(struct faturacaoProd));
+    FatP f = malloc(sizeof(struct faturacaoProd));
     f->prod = getProductSale(p);
+    memset(f->nVendas, 0, 2 * 12 * 3 * sizeof(int));
     memset(f->total, 0, 2 * 12 * 3 * sizeof(double));
     memset(f->quant, 0, 3 * sizeof(int));
-    memset(f->nVendas, 0, 2 * 12 * 3 * sizeof(int));
     mkFatura(f, p);
     return f;
 }
 
-void mkFatura(FatP fatr, Venda v) { 
-    FatP fat = fatr;
+void mkFatura(FatP fat, Venda v) { 
     int mes, quant;
     Filial filial;
     Tipo tipo;
@@ -56,7 +55,7 @@ int getQuantMesFilial(FatP f, Filial filial) {
 int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo) {
     if(filial == ALL) 
         return f->nVendas[tipo][mes][0] + f->nVendas[tipo][mes][1] + f->nVendas[tipo][mes][2];
-    return f->nVendas[tipo][mes][filial];
+    return f->nVendas[tipo][mes - 1][filial];
 }
 
 int cmpFat(FatP* a, FatP* b) {

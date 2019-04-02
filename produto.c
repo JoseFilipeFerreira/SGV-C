@@ -67,6 +67,27 @@ void produtoAddQuemComprou(int filial, char* idC, Produto p) {
     g_tree_replace(p->quemComprou[filial], id, id);
 }
 
+static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
+    char** array = *(char***) data;
+    (void) value;
+    *array = malloc(strlen((char*) key) + 1);
+    strcpy(*(array++), (char*) key);
+    *(char***) data = array;
+    return FALSE;
+}
+
+int produtoQuemComprou(const Produto p, char*** array) {
+    int i, size = 0;
+    char** arrayr;
+    for(i = 0; i < 3; i++) 
+        size += g_tree_nnodes(p->quemComprou[i]);
+    *array = malloc(size * sizeof(char*));
+    arrayr = *array;
+    for(i = 0; i < 3; i++)
+        g_tree_foreach(p->quemComprou[i], productLetter, &arrayr);
+    return size;
+}
+
 void destroyProduct(void* pr) {
     Produto produto = (Produto) pr;
     free(produto->id);
