@@ -181,7 +181,8 @@ char* getClientPath(const Inicializador i) {
 int getNSalesMes(const SGV sgv, int inicio, int fim) {
     int r;
     Faturas f = sgv->faturas;
-    for(r = 0; inicio < fim; inicio++)
+    printf("%d %d\n", inicio, fim);
+    for(r = 0; inicio <= fim; inicio++)
         r += getQuantTotal(f, inicio);
     return r;
 }
@@ -189,7 +190,7 @@ int getNSalesMes(const SGV sgv, int inicio, int fim) {
 double getTFactMes(const SGV sgv, int inicio, int fim) {
     double r;
     Faturas f = sgv->faturas;
-    for(r = 0; inicio < fim; inicio++)
+    for(r = 0; inicio <= fim + 1; inicio++)
         r += getFatTotal(f, inicio);
     return r;
 }
