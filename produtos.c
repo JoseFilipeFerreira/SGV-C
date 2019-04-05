@@ -106,18 +106,7 @@ Produtos addProduct(const Produto p, Produtos l) {
 
 void produtosUpdateCompra(const char* id, char* cliente, int filial, Produtos r) {
     Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
-    produtoAddQuemComprou(filial, cliente, p);
     updateCompra(p, filial);
-}
-
-int produtosQuantosCompraram(const char* id, int filial, Produtos r) {
-    Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
-    return produtoQuantosCompraram(filial, p);
-}
-
-int produtosQuemComprou(const char* id, char*** array, Produtos r) {
-    Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
-    return produtoQuemComprou(p, array);
 }
 
 void clearProducts(Produtos p) {

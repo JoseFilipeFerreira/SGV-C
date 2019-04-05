@@ -40,8 +40,6 @@ char* getIdClient(Cliente cliente);
 
 bool comprouOnde(int filial, Cliente p);
 
-int getClientQuantidades(const Cliente c, int mes, int filial);
-
 /**
 @brief Free de um cliente
 

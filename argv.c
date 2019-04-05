@@ -46,7 +46,7 @@ void argvParser(int argc, char** argv){
             /*7*/
             for (v1=0; v1<3; v1++)
                 for (v2=0; v2<12; v2++)
-                    getClientQuantSGV("A1234", v1, v2, sgv);
+                    getClientQuantSGV("A1234", v2, v1, sgv);
             /*8*/
             getNSalesMes(sgv, 1, 12);
             getTFactMes(sgv, 1, 12);

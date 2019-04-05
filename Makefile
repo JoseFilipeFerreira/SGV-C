@@ -1,5 +1,5 @@
 ############################# Makefile ##########################
-CFLAGS= -W -Wall -Wextra -ansi -g -O2 `pkg-config --cflags --libs glib-2.0`
+CFLAGS= -W -Wall -Wextra -ansi -O2 `pkg-config --cflags --libs glib-2.0`
 
 OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
 FICHEIROSVAL = db/ProdutosOK.txt db/ClientesOK.txt db/VendasOK.txt

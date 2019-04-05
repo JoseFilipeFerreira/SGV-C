@@ -61,8 +61,6 @@ void clientesUpdateCompra(const char* id, int filial, int mes, int quant, Client
 
 int getClientesNaoCompradores(const Clientes p);
 
-int getClientQuant(const char* id, int mes, int filial, const Clientes c);
-
 /**
 @brief Libertar uma struct de clientes
 

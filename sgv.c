@@ -1,7 +1,7 @@
 #include "sgv.h"
 
 #include <stdio.h>
-
+#include "filial.h"
 /**
 @brief Guardar a base de dados 
 */
@@ -9,6 +9,7 @@ struct sgv {
     Produtos produtos; /**< Todos os produtos lidos */
     Clientes clientes; /**< Todos os clientes lidos */
     Faturas faturas;   /**< Todas as faturas lidas */
+    Filiais filiais[3];
 };
 
 /**
@@ -34,11 +35,13 @@ struct inicializador {
 
 SGV sgvInicializado(Inicializador i) {
     SGV sgv = malloc(sizeof(struct sgv));
+    int is;
     FILE* f = fopen(i->pathP, "r");
     char* buff = malloc(35);
     Faturas faturas = initFaturas();
     Clientes clientes = initClients(); 
-
+    for(is = 0; is < 3; is++) 
+        sgv->filiais[is] = filialInit();
     Produtos produtos = initProducts(); 
     for(i->productLines = 0; fgets(buff, 10, f); i->productLines++) {
         Produto product = mkProduct(buff);
@@ -74,6 +77,7 @@ SGV sgvInicializado(Inicializador i) {
                 produtosUpdateCompra(idP, id, getFilialSale(venda), produtos);
                 addFatura(venda, faturas);
                 i->salesNumber++;
+                filialUpdate(sgv->filiais[getFilialSale(venda)], venda);
                 clientesUpdateCompra(id, getFilialSale(venda), getMesSale(venda), getQuantSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
@@ -246,15 +250,15 @@ int getNVendasFat(const SGV sgv, const char* id, Tipo tipo, Filial filial, int m
 }
 
 int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv) {
-    return getClientQuant(id, mes, filial, sgv->clientes);
+    return getClientQuant(id, mes, sgv->filiais[filial]);
 }
 
 int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv) {
-    return produtosQuantosCompraram(id, filial, sgv->produtos);
+    return produtosQuantosCompraram(id, sgv->filiais[filial]);
 }
 
-int sgvQuemComprouProduto(const char* id, char*** array, SGV sgv) {
-    return produtosQuemComprou(id, array, sgv->produtos);
+int sgvQuemComprouProduto(const char* id, char*** array, Filial filial, SGV sgv) {
+    return produtoQuemComprou(sgv->filiais[filial], id, array);
 }
 
 int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
@@ -262,4 +266,12 @@ int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int 
     if(t) 
         return getQuantMesFilial(t, filial);
    return 0;
-} 
+}
+
+int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array) {
+    return getMaisVendidosCliente(sgv->filiais, id, 3, array);
+}
+
+int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array) {
+    return getMaisCompradosCliente(sgv->filiais, id, 3, array);
+}

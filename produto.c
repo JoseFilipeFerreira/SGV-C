@@ -11,7 +11,6 @@
 struct produto {
     char* id; /**< ID do Produto*/
     bool comprou[3];
-    GTree* quemComprou[3];
 };
 
 static int cmp(const void* a, const void* b, void* c) {
@@ -30,13 +29,10 @@ bool verifyProduct(const char* id) {
 }
 
 Produto mkProduct(char* id) {
-    int i;
     char* product = malloc(strlen(id) + 1);
     Produto produto = malloc(sizeof(struct produto));
     memset(produto->comprou, 0, sizeof(bool) * 3);
     strcpy(product, strtok(id, "\n\r"));
-    for(i = 0; i < 3; i++) 
-        produto->quemComprou[i] = g_tree_new_full(cmp, NULL, NULL, free);
     produto->id = product;
     return produto;
 }
@@ -55,37 +51,6 @@ bool foiCompradoOnde(int filial, Produto p) {
     if(filial == 3) 
         return p->comprou[0] || p->comprou[1] || p->comprou[2];
     return p->comprou[filial];
-}
-
-int produtoQuantosCompraram(int filial, Produto p) {
-    return g_tree_nnodes(p->quemComprou[filial]);
-}
-
-void produtoAddQuemComprou(int filial, char* idC, Produto p) {
-    char* id = malloc(strlen(idC) + 1);
-    strcpy(id, idC);
-    g_tree_replace(p->quemComprou[filial], id, id);
-}
-
-static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
-    char** array = *(char***) data;
-    (void) value;
-    *array = malloc(strlen((char*) key) + 1);
-    strcpy(*(array++), (char*) key);
-    *(char***) data = array;
-    return FALSE;
-}
-
-int produtoQuemComprou(const Produto p, char*** array) {
-    int i, size = 0;
-    char** arrayr;
-    for(i = 0; i < 3; i++) 
-        size += g_tree_nnodes(p->quemComprou[i]);
-    *array = malloc(size * sizeof(char*));
-    arrayr = *array;
-    for(i = 0; i < 3; i++)
-        g_tree_foreach(p->quemComprou[i], productLetter, &arrayr);
-    return size;
 }
 
 void destroyProduct(void* pr) {

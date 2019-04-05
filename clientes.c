@@ -106,11 +106,6 @@ Clientes addClient(const Cliente p, Clientes l) {
     return l;
 }
 
-int getClientQuant(const char* id, int mes, int filial, const Clientes c) {
-    Cliente p = g_tree_lookup(c->avlC[IND(id[0])], id);
-    return getClientQuantidades(p, mes, filial);
-}
-
 void clearClients(Clientes p) {
     int i;
     for(i = 0; i < 26; i++)

@@ -10,7 +10,6 @@
 struct cliente {
     char* id; /**< ID do Cliente*/
     bool comprou[3];
-    int quantidades[3][12];
 };
 
 bool verifyClient(const char* id) {
@@ -24,7 +23,6 @@ bool verifyClient(const char* id) {
 }
 
 void updateBuyClient(Cliente c, int filial, int mes, int quantidade) {
-    c->quantidades[filial][mes - 1] += quantidade;
     c->comprou[filial] = true;
 }
 
@@ -38,7 +36,6 @@ Cliente mkClient(char* id) {
     strcpy(client, strtok(id, "\n\r"));
     cliente->id = client;
     memset(cliente->comprou, false, 3 * sizeof(bool));
-    memset(cliente->quantidades, 0, 3 * 12 * sizeof(int));
     return cliente;
 }
 
@@ -46,10 +43,6 @@ char* getIdClient(Cliente cliente) {
     char* r = malloc(strlen(cliente->id) + 1);
     strcpy(r, cliente->id);
     return r;
-}
-
-int getClientQuantidades(const Cliente c, int mes, int filial) {
-    return c->quantidades[filial][mes - 1];
 }
 
 void destroyClient(void* cl) {
