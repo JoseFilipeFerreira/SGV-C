@@ -50,6 +50,8 @@ void argvParser(int argc, char** argv){
             /*8*/
             getNSalesMes(sgv, 1, 12);
             getTFactMes(sgv, 1, 12);
+            /*10*/
+            sgvGetMaisCompradosCliente(sgv, "A1234", &bloatTab);
             /*11*/
             fatArr = getMaisVendidos(sgv, 20);
             for(v1=0; v1 < 20; v1++){
@@ -58,6 +60,8 @@ void argvParser(int argc, char** argv){
                     sgvQuantosCompraramProdutos(faturaGetId(fatArr[v1]), v2, sgv);
                 }
             }
+            /*12*/
+            sgvGetMaisVendidosCliente(sgv, "A1234", &bloatTab);
             free(bloatTab);
             break;
 
@@ -110,6 +114,10 @@ void argvParser(int argc, char** argv){
         case 9:
             break;
         case 10:
+            sgvGetMaisCompradosCliente(
+                sgv,
+                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234",
+                &bloatTab);
             break;
         case 11:
             nComprados = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 20;
@@ -122,6 +130,10 @@ void argvParser(int argc, char** argv){
             }
             break;
         case 12:
+            sgvGetMaisVendidosCliente(
+                sgv,
+                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234",
+                &bloatTab);
             break;
         default:
             break;      

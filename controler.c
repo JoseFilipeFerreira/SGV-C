@@ -53,9 +53,8 @@ void menuLoadFile(int* loop, SGV* sgv){
         Inicializador i;
         system("clear");
         printf(BOLD KRED "\t-- Load Files [1] --\n\n" RESET);
-        printf("1 - Load Default (filtered)\n");
-        printf("2 - Load Default (non filtered)\n");
-        printf("3 - Load Custom\n");
+        printf("1 - Load Default\n");
+        printf("2 - Load Custom\n");
         printf("e - EXIT\n");
         r = menuCheck(3);
         system("clear");
@@ -76,17 +75,6 @@ void menuLoadFile(int* loop, SGV* sgv){
                 break;
 
             case 2:
-                i = initInicial();
-                setClientPath(i, "db/Clientes.txt", 0);
-                setProductPath(i, "db/Produtos.txt", 0);
-                setSalePath(i, "db/Vendas_1M.txt", 0);
-                *sgv = sgvInicializado(i);
-
-                menuShowLoad(i);
-                menuCategories(loop, sgv);
-                break;
-
-            case 3:
                 menuLoadCustom(loop, sgv);
                 break;
 
@@ -132,7 +120,7 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
             fl = 2;
         else{
             if( aR != -1 ) {
-                *filter = messageCheck(sndPrint);
+                *filter = 1;
                 break;
             }
             else

@@ -418,11 +418,11 @@ void clientesCompraramProduto(SGV sgv){
 }
 
 /**
-@brief TODO (Prints the result of [2] for testing purposes) : Query 10
+@brief DONE : Query 10
 */
 void prodMaisCompradoCli(SGV sgv){
     int sizeProdTab;
-    char** prodTab;
+    char** prodTab; 
 
     char* cliente = getValidClientInput(
         "Categoria/Clientes/[10]",
@@ -434,11 +434,12 @@ void prodMaisCompradoCli(SGV sgv){
         "Categoria/Clientes/[10]",
         "Inserir Mês a pesquisar",
         "Mês inválido");
-
-    sizeProdTab = getSGVProductLetter(sgv, 'A', &prodTab);
-    menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab,15 , 6);
+    
+    sizeProdTab =  sgvGetMaisCompradosCliente(sgv, cliente, &prodTab);
+    menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab, 15 , 6);
 
     free(cliente);
+    free(prodTab);
 }
 
 /**
@@ -499,15 +500,20 @@ void nMaisComprados(SGV sgv){
 }
 
 /**
-@brief TODO : Query 12
+@brief DONE : Query 12
 */
 void clienteMaisComprados(SGV sgv, char* cliente){
+    char**prodTab;
+    int i, sizeProdTab;
+    printf("\nProdutos mais comprados [12]\n");
+    sizeProdTab = sgvGetMaisVendidosCliente(sgv, cliente, &prodTab);
 
-    printf("\nMais comprados [12]\n");
+    for(i = 0; i < sizeProdTab; i++)
+        printf("%dº   %s", i+1, prodTab[i]);
 }
 
 /**
-@brief TODO : Query 7 & 12
+@brief DONE : Query 7 & 12
 */
 void statsClientAno(SGV sgv){
     char* cliente = getValidClientInput(
