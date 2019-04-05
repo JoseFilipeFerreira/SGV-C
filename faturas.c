@@ -58,7 +58,7 @@ static gboolean getAll(gpointer key, gpointer value, gpointer data) {
     return FALSE;
 }
 
-FatP* getAllList(const Faturas p, int N) {
+FatP* getAllList(const Faturas p, int* N) {
     int size, i, j;
     FatP* arrayr;
     FatP* array;
@@ -69,8 +69,9 @@ FatP* getAllList(const Faturas p, int N) {
         for(j = 0; j < LETTERS; j++)
             g_tree_foreach(p->avlF[i][j], getAll, &arrayr);
     qsort(array, size, sizeof(FatP), cmpFat);
-    for(i = N; i < size; i++)
+    for(i = *N; i < size; i++)
         destroyFact(array[i]);
+    *N = *N > size ? size : *N;
     return array;
 }
 

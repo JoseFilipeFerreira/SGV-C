@@ -122,7 +122,7 @@ int produtoQuemComprou(const Filiais f, const char* id, char*** array) {
     ProdCompra p = g_hash_table_lookup(f->cliCompra, id);
     int size;
     char** arrayr;
-    size = g_tree_nnodes(p->quemComprou);
+    size = p ? g_tree_nnodes(p->quemComprou) : 0;
     *array = malloc(size * sizeof(char*));
     arrayr = *array;
     g_tree_foreach(p->quemComprou, productLetter, &arrayr);
@@ -158,12 +158,12 @@ void filialUpdate(Filiais f, Venda v) {
 
 int getClientQuant(const char* id, int mes, const Filiais f) {
     CliCompra p = g_hash_table_lookup(f->cliCompra, id);
-    return p->quantidade[mes];
+    return p ? p->quantidade[mes] : 0;
 }
 
 int produtosQuantosCompraram(const char* id, Filiais f) {
     ProdCompra p = g_hash_table_lookup(f->prodCompra, id);
-    return g_tree_nnodes(p->quemComprou);
+    return p ? g_tree_nnodes(p->quemComprou) : 0;
 }
 
 static int prodCliCmp(const void* a, const void* b) {

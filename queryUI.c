@@ -469,8 +469,8 @@ void nMaisComprados(SGV sgv){
     printf(BOLD KRED "\t-- Categoria/Produtos/[11] --\n\n" RESET);
     printf("Produtos mais vendidos\n");
 
+    FatP* fatArr = getMaisVendidos(sgv, &nComprados);
     int iT[nComprados][6];
-    FatP* fatArr = getMaisVendidos(sgv, nComprados);
     char*names [nComprados];
     for(i=0; i < nComprados; i++){
         names[i] = faturaGetId(fatArr[i]);

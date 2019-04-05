@@ -244,7 +244,7 @@ double getFatMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int
     return 0;
 } 
 
-FatP* getMaisVendidos(const SGV sgv, int N) {
+FatP* getMaisVendidos(const SGV sgv, int* N) {
     return getAllList(sgv->faturas, N);
 }
 

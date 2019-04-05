@@ -235,7 +235,7 @@ int getQuantFatSGV(const SGV sgv, const char* produto, Tipo tipo, Filial filial,
 
 int getClientesNCompradores(const SGV sgv);
 
-FatP* getMaisVendidos(const SGV sgv, int N);
+FatP* getMaisVendidos(const SGV sgv, int* N);
 
 int getNVendasFat(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes);
 
