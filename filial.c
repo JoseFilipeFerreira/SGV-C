@@ -33,7 +33,7 @@ static int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-ProdCli prodCliInit(char* cliente, char* produto, Tipo tipo, int quantidade, double total, int mes) {
+static ProdCli prodCliInit(char* cliente, char* produto, Tipo tipo, int quantidade, double total, int mes) {
     ProdCli pcl = malloc(sizeof(struct prodCli));
     pcl->prod = malloc(strlen(produto) + 1);
     strcpy(pcl->prod, produto);
@@ -46,19 +46,19 @@ ProdCli prodCliInit(char* cliente, char* produto, Tipo tipo, int quantidade, dou
     return pcl;
 }
 
-void prodCliUpdate(ProdCli pcl, Tipo tipo, int quantidade, int mes, double total) {
+static void prodCliUpdate(ProdCli pcl, Tipo tipo, int quantidade, int mes, double total) {
     pcl->tipo[tipo] = true;
     pcl->quantidade[mes - 1] += quantidade;
     pcl->total += total;
 }
 
-void prodCliDestroy(void* pc) {
+static void prodCliDestroy(void* pc) {
     ProdCli pcl = (ProdCli) pc;
     free(pcl->prod);
     free(pcl);
 }
 
-CliCompra cliCompraInit(char* cliente) {
+static CliCompra cliCompraInit(const char* cliente) {
     CliCompra cc = malloc(sizeof(struct cliCompra));
     cc->cliente = malloc(strlen(cliente) + 1);
     strcpy(cc->cliente, cliente);
@@ -67,7 +67,7 @@ CliCompra cliCompraInit(char* cliente) {
     return cc;
 }
 
-void cliCompraUpdate(CliCompra cc, char* produto, Tipo tipo, int quantidade, double total, int mes) {
+static void cliCompraUpdate(CliCompra cc, char* produto, Tipo tipo, int quantidade, double total, int mes) {
     ProdCli pcl = g_hash_table_lookup(cc->prodCli, produto);
     cc->quantidade[mes-1] += quantidade;
     if(pcl) 
@@ -78,14 +78,14 @@ void cliCompraUpdate(CliCompra cc, char* produto, Tipo tipo, int quantidade, dou
     }
 } 
 
-void cliCompraDestroy(void* c) {
+static void cliCompraDestroy(void* c) {
     CliCompra cc = (CliCompra) c;
     g_hash_table_destroy(cc->prodCli);
     free(cc->cliente);
     free(cc);
 }
 
-ProdCompra prodCompraInit(char* prod, char* cli) {
+static ProdCompra prodCompraInit(const char* prod, const char* cli) {
     ProdCompra r = malloc(sizeof(struct prodCompra));
     char* cliente = malloc(strlen(cli) + 1);
     strcpy(cliente, cli);
@@ -96,14 +96,13 @@ ProdCompra prodCompraInit(char* prod, char* cli) {
     return r;
 } 
 
-void prodCompraUpdate(ProdCompra r, char* cliente) {
+static void prodCompraUpdate(ProdCompra r, char* cliente) {
     g_tree_insert(r->quemComprou, cliente, cliente);
 }
 
-void prodCompraDestroy(void* o) {
+static void prodCompraDestroy(void* o) {
     ProdCompra r = (ProdCompra) o;
     g_tree_destroy(r->quemComprou);
-    free(r->prod);
     free(r);
 } 
 
@@ -166,26 +165,28 @@ int produtosQuantosCompraram(const char* id, Filiais f) {
     return g_tree_nnodes(p->quemComprou);
 }
 
-int prodCliCmp(const void* a, const void* b) {
+static int prodCliCmp(const void* a, const void* b) {
     ProdCli aa = *(ProdCli*) a;
     ProdCli bb = *(ProdCli*) b;
     return bb->total - aa->total;
 }
 
-int prodCliCmpQuant(const void* a, const void* b) {
+static int prodCliCmpQuant(const void* a, const void* b) {
     ProdCli aa = *(ProdCli*) a;
     ProdCli bb = *(ProdCli*) b;
     return bb->quantidade - aa->quantidade;
 }
 
-gboolean mergeUpdate(void* key, void* value, void* data) {
+void mergeUpdate(void* key, void* value, void* data) {
     char* ke = (char*) key;
     ProdCli valu = (ProdCli) value;
     GHashTable* dat = (GHashTable*) data;
     ProdCli tmp = g_hash_table_lookup(dat, ke);
+    int quants = 0, i;
+    for(i = 0; i < 12; i++)
+        quants += valu->quantidade[i];
     if(tmp) tmp->total += valu->total; 
-    else g_hash_table_insert(dat, key, prodCliInit(valu->cliente, valu->prod, 0, valu->quantidade, valu->total, 1));
-    return FALSE;
+    else g_hash_table_insert(dat, key, prodCliInit(valu->cliente, valu->prod, 0, quants, valu->total, 1));
 }
 
 int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr) {
@@ -210,6 +211,7 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
         (*rrr)[i] = malloc(strlen(array[i]->prod));
         strcpy((*rrr)[i], array[i]->prod);
     }
+    g_hash_table_destroy(merge);
     return i;
 }
 
@@ -230,11 +232,18 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rr
     *rrr = malloc(sizeof(char*) * size);
     while(g_hash_table_iter_next(&r, &lixo, &prod))
         array[i++] = prod;
-    qsort(array, size, sizeof(ProdCli), prodCliCmp);
+    qsort(array, size, sizeof(ProdCli), prodCliCmpQuant);
     for(i = 0; i < size; i++) {
         (*rrr)[i] = malloc(strlen(array[i]->prod));
         strcpy((*rrr)[i], array[i]->prod);
     }
+    g_hash_table_destroy(merge);
     return i;
+}
+
+void destroyFilial(Filiais f) {
+    g_hash_table_destroy(f->cliCompra);
+    g_hash_table_destroy(f->prodCompra);
+    free(f);
 }
 

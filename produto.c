@@ -13,11 +13,6 @@ struct produto {
     bool comprou[3];
 };
 
-static int cmp(const void* a, const void* b, void* c) {
-    (void) c;
-    return strcmp((char*) a, (char*) b);
-}
-
 bool verifyProduct(const char* id) {
     char c1, c2;
     int n;

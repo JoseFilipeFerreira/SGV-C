@@ -75,13 +75,13 @@ SGV sgvInicializado(Inicializador i) {
                 char* idP = getProductSale(venda); 
                 char* id = getClientSale(venda);
                 produtosUpdateCompra(idP, id, getFilialSale(venda), produtos);
+                free(idP);
                 addFatura(venda, faturas);
                 i->salesNumber++;
                 filialUpdate(sgv->filiais[getFilialSale(venda)], venda);
                 clientesUpdateCompra(id, getFilialSale(venda), getMesSale(venda), getQuantSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
-                free(idP);
         }
     }
     fclose(f);
@@ -111,9 +111,12 @@ void setCliente(SGV sgv, const Clientes p) {
 }
 
 void destroySGV(SGV sgv) {
+    int i;
     clearProducts(sgv->produtos);
     clearClients(sgv->clientes);
     clearFaturas(sgv->faturas);
+    for(i = 0; i < 3; i++)
+        destroyFilial(sgv->filiais[i]);
     free(sgv);
 }
 
