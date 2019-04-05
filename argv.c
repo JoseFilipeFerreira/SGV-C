@@ -3,22 +3,31 @@
 #include <time.h>
 #include <stdio.h>
 
+/* Default query parameters */
+#define DEAFULT_SIZE 20
+#define DEFAULT_CHAR 'A'
+#define DEFAULT_PROD "ZZ1999"
+#define DEFAULT_CLI  "A1234"
+
 void argvParser(int argc, char** argv){
     clock_t start, end;
     double cpu_time_used;
-    char** bloatTab;
+
     char* prod, *cli;
-    int v1, v2, mes, nComprados;
+    char** bloatTab;
+    int i, j;
+    int mes, nComprados;
     SGV sgv;
     FatP* fatArr;
-    Inicializador i;
+    Inicializador init;
 
+    /*Benchmark Loading*/
     start = clock();
-    i = initInicial();
-    setClientPath(i, "db/Clientes.txt", 1);
-    setProductPath(i, "db/Produtos.txt", 1);
-    setSalePath(i, "db/Vendas_1M.txt", 1);
-    sgv = sgvInicializado(i);
+    init = initInicial();
+    setClientPath (init, "db/Clientes.txt" , 1);
+    setProductPath(init, "db/Produtos.txt" , 1);
+    setSalePath   (init, "db/Vendas_1M.txt", 1);
+    sgv = sgvInicializado(init);
 
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
@@ -28,59 +37,63 @@ void argvParser(int argc, char** argv){
     switch(atoi(argv[1])){
         case 1: /* Answer all querys */
             /*2*/
-            getSGVProductLetter( sgv, 'A', &bloatTab);
+            getSGVProductLetter( sgv, DEFAULT_CHAR, &bloatTab);
+            free(bloatTab);
             /*3*/
-            for(v1 = 0; v1 < 3; v1++){
-                getFatMesSGV  (sgv, "ZZ1999", N, v1, 1);
-                getFatMesSGV  (sgv, "ZZ1999", P, v1, 1);
-                getQuantMesSGV(sgv, "ZZ1999", N, v1, 1);
-                getQuantMesSGV(sgv, "ZZ1999", P, v1, 1);
+            for(i = 0; i < 3; i++){
+                getFatMesSGV  (sgv, DEFAULT_PROD, N, i, 1);
+                getFatMesSGV  (sgv, DEFAULT_PROD, P, i, 1);
+                getQuantMesSGV(sgv, DEFAULT_PROD, N, i, 1);
+                getQuantMesSGV(sgv, DEFAULT_PROD, P, i, 1);
             }
             /*4*/
             prodsNaoComprados(sgv, 3, &bloatTab);
+            free(bloatTab);
             /*5*/
             clientesCompraramFilial(sgv, &bloatTab);
+            free(bloatTab);
             /*6*/
             getClientesNCompradores(sgv);
             getProdNComprados(sgv);
             /*7*/
-            for (v1=0; v1<3; v1++)
-                for (v2=0; v2<12; v2++)
-                    getClientQuantSGV("A1234", v2, v1, sgv);
+            for (i=0; i<3; i++)
+                for (j=0; j<12; j++)
+                    getClientQuantSGV(DEFAULT_CLI, j, i, sgv);
             /*8*/
             getNSalesMes(sgv, 1, 12);
             getTFactMes(sgv, 1, 12);
             /*10*/
-            sgvGetMaisCompradosCliente(sgv, "A1234", &bloatTab);
+            sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab);
+            free(bloatTab);
             /*11*/
-            fatArr = getMaisVendidos(sgv, 20);
-            for(v1=0; v1 < 20; v1++){
-                for(v2=0; v2 < 3; v2++){
-                    getQuantMesFilial(fatArr[v1], v2);
-                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[v1]), v2, sgv);
+            fatArr = getMaisVendidos(sgv, DEAFULT_SIZE);
+            for(i=0; i < DEAFULT_SIZE; i++){
+                for(j=0; j < 3; j++){
+                    getQuantMesFilial(fatArr[i], j);
+                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[i]), j, sgv);
                 }
             }
             /*12*/
-            sgvGetMaisVendidosCliente(sgv, "A1234", &bloatTab);
+            sgvGetMaisVendidosCliente(sgv, DEFAULT_CLI, &bloatTab);
             free(bloatTab);
             break;
 
         case 2:
             getSGVProductLetter(
                 sgv,
-                (argc == 3 && argv[2][0] >= 'A' && argv[2][0] <= 'Z') ? argv[2][0] : 'A',
+                (argc == 3 && argv[2][0] >= 'A' && argv[2][0] <= 'Z') ? argv[2][0] : DEFAULT_CHAR,
                 &bloatTab);
             free(bloatTab);
             break;
 
         case 3:
-            prod = (argc == 3 && searchSGVProduct(sgv, argv[2]))?argv[2] :  "ZZ1999";
+            prod = (argc == 3 && searchSGVProduct(sgv, argv[2]))?argv[2] :  DEFAULT_PROD;
             mes  =    (argc == 4 && atoi(argv[3]))? atoi(argv[3]) : 1;
-            for(v1 = 0; v1 < 3; v1++){
-                getFatMesSGV  (sgv, prod, N, v1, mes);
-                getFatMesSGV  (sgv, prod, P, v1, mes);
-                getQuantMesSGV(sgv, prod, N, v1, mes);
-                getQuantMesSGV(sgv, prod, P, v1, mes);
+            for(i = 0; i < 3; i++){
+                getFatMesSGV  (sgv, prod, N, i, mes);
+                getFatMesSGV  (sgv, prod, P, i, mes);
+                getQuantMesSGV(sgv, prod, N, i, mes);
+                getQuantMesSGV(sgv, prod, P, i, mes);
             }
             break;
         case 4:
@@ -99,16 +112,16 @@ void argvParser(int argc, char** argv){
             getProdNComprados(sgv);
             break;
         case 7:
-            cli = (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234";
-            for (v1=0; v1<3; v1++)
-                    for (v2=0; v2<12; v2++)
-                        getClientQuantSGV(cli, v1, v2, sgv);
+            cli = (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI;
+            for (i=0; i<3; i++)
+                for (j = 0; j < 12; j++)
+                    getClientQuantSGV(cli, i, j, sgv);
             break;
         case 8:
-            v1 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;
-            v2 = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 12;
-            getNSalesMes(sgv, v1, v2);
-            getTFactMes(sgv, v1, v2);
+            i = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;
+            j = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 12;
+            getNSalesMes(sgv, i, j);
+            getTFactMes(sgv, i, j);
             break;
 
         case 9:
@@ -116,24 +129,26 @@ void argvParser(int argc, char** argv){
         case 10:
             sgvGetMaisCompradosCliente(
                 sgv,
-                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234",
+                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI,
                 &bloatTab);
+            free(bloatTab);
             break;
         case 11:
-            nComprados = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 20;
+            nComprados = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : DEAFULT_SIZE;
             fatArr = getMaisVendidos(sgv, nComprados);
-            for(v1=0; v1 < nComprados; v1++){
-                for(v2=0; v2 < 3; v2++){
-                    getQuantMesFilial(fatArr[v1], v2);
-                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[v1]), v2, sgv);
+            for(i=0; i < nComprados; i++){
+                for(j = 0; j < 3; j++){
+                    getQuantMesFilial(fatArr[i], j);
+                    sgvQuantosCompraramProdutos(faturaGetId(fatArr[i]), j, sgv);
                 }
             }
             break;
         case 12:
             sgvGetMaisVendidosCliente(
                 sgv,
-                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  "A1234",
+                (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI,
                 &bloatTab);
+            free(bloatTab);
             break;
         default:
             break;      
@@ -144,7 +159,7 @@ void argvParser(int argc, char** argv){
     fprintf(stderr, "CPU Time used to Answer Query:%f\n", cpu_time_used );
     start = clock();
 
-    destroyInit(i);
+    destroyInit(init);
     destroySGV(sgv);
 
     end = clock();

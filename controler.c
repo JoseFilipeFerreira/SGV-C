@@ -42,7 +42,6 @@ void menuShowLoad(Inicializador i){
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
-
 }
 
 void menuLoadFile(int* loop, SGV* sgv){
@@ -88,8 +87,8 @@ void menuLoadFile(int* loop, SGV* sgv){
     }
 }
 
-void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
-    int aR, fl = 0;
+void lCustomSingle(char* fstPrint, char* buf, int* filter){
+    int fl = 0;
     struct stat sb;
     while(1){
         system("clear");
@@ -114,12 +113,11 @@ void lCustomSingle(char* fstPrint,char* sndPrint, char* buf, int* filter){
         fflush(stdout);
         fgets(buf, MAX_FILE_NAME, stdin);
         buf = strtok(buf, "\n");
-        aR = access(buf, R_OK);
 
         if (stat(buf, &sb) == 0 && S_ISDIR(sb.st_mode))
             fl = 2;
         else{
-            if( aR != -1 ) {
+            if(access(buf, R_OK) != -1){
                 *filter = 1;
                 break;
             }
@@ -137,11 +135,9 @@ void menuLoadCustom(int* loop, SGV* sgv){
     Inicializador i; 
     printf(SHOW_CURSOR);
 
-    lCustomSingle("Nome ficheiro de Clientes:\n", "Filter clientes", bufCli, &filterCli);
-
-    lCustomSingle("Nome ficheiro de Produtos:\n", "Filter produtos", bufProd, &filterProd);
-
-    lCustomSingle("Nome ficheiro de Vendas:\n", "Filter vendas", bufSales, &filterSales);
+    lCustomSingle("Nome ficheiro de Clientes:\n", bufCli, &filterCli);
+    lCustomSingle("Nome ficheiro de Produtos:\n", bufProd, &filterProd);
+    lCustomSingle("Nome ficheiro de Vendas:\n", bufSales, &filterSales);
 
     system("clear");
     printf(HIDE_CURSOR);

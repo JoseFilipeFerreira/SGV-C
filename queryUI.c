@@ -505,11 +505,11 @@ void nMaisComprados(SGV sgv){
 void clienteMaisComprados(SGV sgv, char* cliente){
     char**prodTab;
     int i, sizeProdTab;
-    printf("\nProdutos mais comprados [12]\n");
+    printf("\n\nProdutos mais comprados [12]\n");
     sizeProdTab = sgvGetMaisVendidosCliente(sgv, cliente, &prodTab);
 
     for(i = 0; i < sizeProdTab; i++)
-        printf("%dº   %s", i+1, prodTab[i]);
+        printf("%dº   %s\n", i+1, prodTab[i]);
 }
 
 /**
