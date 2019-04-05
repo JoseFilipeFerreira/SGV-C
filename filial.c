@@ -91,18 +91,21 @@ static ProdCompra prodCompraInit(const char* prod, const char* cli) {
     strcpy(cliente, cli);
     r->prod = malloc(strlen(prod) + 1);
     strcpy(r->prod, prod);
-    r->quemComprou = g_tree_new_full(cmp, NULL, NULL, NULL);
+    r->quemComprou = g_tree_new_full(cmp, NULL, free, NULL);
     g_tree_insert(r->quemComprou, cliente, cliente);
     return r;
 } 
 
-static void prodCompraUpdate(ProdCompra r, char* cliente) {
+static void prodCompraUpdate(ProdCompra r, char* client) {
+    char* cliente = malloc(strlen(client) + 1);
+    strcpy(cliente, client);
     g_tree_insert(r->quemComprou, cliente, cliente);
 }
 
 static void prodCompraDestroy(void* o) {
     ProdCompra r = (ProdCompra) o;
     g_tree_destroy(r->quemComprou);
+    free(r->prod);
     free(r);
 } 
 
