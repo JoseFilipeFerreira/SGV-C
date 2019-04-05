@@ -62,7 +62,7 @@ static CliCompra cliCompraInit(const char* cliente) {
     CliCompra cc = malloc(sizeof(struct cliCompra));
     cc->cliente = malloc(strlen(cliente) + 1);
     strcpy(cc->cliente, cliente);
-    cc->prodCli = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCliDestroy);
+    cc->prodCli = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
     memset(cc->quantidade, 0, 12 * sizeof(int));
     return cc;
 }
@@ -91,7 +91,7 @@ static ProdCompra prodCompraInit(const char* prod, const char* cli) {
     strcpy(cliente, cli);
     r->prod = malloc(strlen(prod) + 1);
     strcpy(r->prod, prod);
-    r->quemComprou = g_tree_new_full(cmp, NULL, NULL, free);
+    r->quemComprou = g_tree_new_full(cmp, NULL, NULL, NULL);
     g_tree_insert(r->quemComprou, cliente, cliente);
     return r;
 } 
@@ -128,8 +128,8 @@ int produtoQuemComprou(const Filiais f, const char* id, char*** array) {
 
 Filiais filialInit() {
     Filiais f = malloc(sizeof(struct filiais));
-    f->prodCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCompraDestroy);
-    f->cliCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, cliCompraDestroy);
+    f->prodCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
+    f->cliCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
     return f;
 }
 
@@ -151,8 +151,6 @@ void filialUpdate(Filiais f, Venda v) {
         pc = prodCompraInit(produto, cliente);
         g_hash_table_insert(f->prodCompra, pc->prod, pc);
     }
-    free(produto);
-    free(cliente);
 }
 
 int getClientQuant(const char* id, int mes, const Filiais f) {
