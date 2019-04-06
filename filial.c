@@ -209,7 +209,7 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
         array[i++] = prod;
     qsort(array, size, sizeof(ProdCli), prodCliCmp);
     for(i = 0; i < 3 && i < size; i++) {
-        (*rrr)[i] = malloc(strlen(array[i]->prod));
+        (*rrr)[i] = malloc(strlen(array[i]->prod) + 1);
         strcpy((*rrr)[i], array[i]->prod);
     }
     g_hash_table_destroy(merge);
@@ -235,7 +235,7 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rr
         array[i++] = prod;
     qsort(array, size, sizeof(ProdCli), prodCliCmpQuant);
     for(i = 0; i < size; i++) {
-        (*rrr)[i] = malloc(strlen(array[i]->prod));
+        (*rrr)[i] = malloc(strlen(array[i]->prod) + 1);
         strcpy((*rrr)[i], array[i]->prod);
     }
     g_hash_table_destroy(merge);
