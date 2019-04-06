@@ -83,7 +83,7 @@ static CliCompra cliCompraInit(const char* cliente) {
     CliCompra cc = malloc(sizeof(struct cliCompra));
     cc->cliente = malloc(strlen(cliente) + 1);
     strcpy(cc->cliente, cliente);
-    cc->prodCli = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
+    cc->prodCli = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCliDestroy);
     memset(cc->quantidade, 0, 12 * sizeof(int));
     return cc;
 }
@@ -158,8 +158,8 @@ Compradores produtoQuemComprou(const Filiais f, const char* id) {
 
 Filiais filialInit() {
     Filiais f = malloc(sizeof(struct filiais));
-    f->prodCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
-    f->cliCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
+    f->prodCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCompraDestroy);
+    f->cliCompra = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, cliCompraDestroy);
     return f;
 }
 
