@@ -135,11 +135,11 @@ static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     ProdCli r = (ProdCli) value;
     if(r->tipo[N]) {
         c->compradores[N][c->quantidades[N]] = malloc(strlen((char*) key) + 1);
-        strcpy(c->compradores[N][c->quantidades[N]++] = (char*) key);
+        strcpy(c->compradores[N][c->quantidades[N]++], (char*) key);
     }
     if(r->tipo[P]) {
         c->compradores[P][c->quantidades[P]] = malloc(strlen((char*) key) + 1);
-        strcpy(c->compradores[P][c->quantidades[P]++] = (char*) key);
+        strcpy(c->compradores[P][c->quantidades[P]++], (char*) key);
     }
     return FALSE;
 }
