@@ -6,6 +6,7 @@
 #define ___SGV_H___
 
 #include "faturas.h"
+#include "filial.h"
 
 /**
 @brief Guardar a base de dados 
@@ -243,7 +244,7 @@ int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv);
 
 int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv);
 
-int sgvQuemComprouProduto(const char* id, char*** array, Filial f, SGV sgv);
+Compradores sgvQuemComprouProduto(const char* id, Filial f, SGV sgv);
 
 int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array);
 

@@ -1,7 +1,6 @@
 #include "sgv.h"
 
 #include <stdio.h>
-#include "filial.h"
 /**
 @brief Guardar a base de dados 
 */
@@ -259,8 +258,8 @@ int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv) {
     return produtosQuantosCompraram(id, sgv->filiais[filial]);
 }
 
-int sgvQuemComprouProduto(const char* id, char*** array, Filial filial, SGV sgv) {
-    return produtoQuemComprou(sgv->filiais[filial], id, array);
+Compradores sgvQuemComprouProduto(const char* id, Filial filial, SGV sgv) {
+    return produtoQuemComprou(sgv->filiais[filial], id);
 }
 
 int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {

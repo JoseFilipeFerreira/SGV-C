@@ -28,6 +28,27 @@ typedef struct prodCli {
     double total;
 } *ProdCli;
 
+struct compradores {
+    char** compradores[2];
+    int quantidades[2];
+};
+
+int filialGetProdutosCliente(Compradores c, Tipo t, char*** array) {
+    if(array)
+        *array = c->compradores[t];
+    return c->quantidades[t];
+}
+
+void compradoresDestroy(Compradores c) {
+    int i, j;
+    for(i = 0; i < 2; i++) {
+        for(j = 0; j < c->quantidades[i]; i++)
+            free(c->compradores[i][j]);
+        free(c->quantidades[i]);
+    }
+    free(c);
+}
+
 static int cmp(const void* a, const void* b, void* c) {
     (void) c;
     return strcmp((char*) a, (char*) b);
@@ -110,22 +131,28 @@ static void prodCompraDestroy(void* o) {
 } 
 
 static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
-    char** array = *(char***) data;
-    (void) value;
-    *array = malloc(strlen((char*) key) + 1);
-    strcpy(*(array++), (char*) key);
-    *(char***) data = array;
+    Compradores c = (Compradores) data;
+    ProdCli r = (ProdCli) value;
+    if(r->tipo[N]) {
+        c->compradores[N][c->quantidades[N]] = malloc(strlen((char*) key) + 1);
+        strcpy(c->compradores[N][c->quantidades[N]++] = (char*) key);
+    }
+    if(r->tipo[P]) {
+        c->compradores[P][c->quantidades[P]] = malloc(strlen((char*) key) + 1);
+        strcpy(c->compradores[P][c->quantidades[P]++] = (char*) key);
+    }
     return FALSE;
 }
 
-int produtoQuemComprou(const Filiais f, const char* id, char*** array) {
+Compradores produtoQuemComprou(const Filiais f, const char* id) {
     ProdCompra p = g_hash_table_lookup(f->cliCompra, id);
     int size;
-    char** arrayr;
+    Compradores c = malloc(sizeof(struct compradores));
     size = p ? g_tree_nnodes(p->quemComprou) : 0;
-    *array = malloc(size * sizeof(char*));
-    arrayr = *array;
-    g_tree_foreach(p->quemComprou, productLetter, &arrayr);
+    c->compradores[0] = malloc(size * sizeof(char*));
+    c->compradores[1] = malloc(size * sizeof(char*));
+    c->quantidades[0] = c->quantidades[1] = 0;
+    g_tree_foreach(p->quemComprou, productLetter, c);
     return size;
 }
 
