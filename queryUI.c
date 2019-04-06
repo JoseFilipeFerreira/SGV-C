@@ -3,10 +3,12 @@
 
 #include <stdio.h>
 
+#define BUF_SIZE 100
+
 char* getValidClientInput(char* header, char* message, char* error, SGV sgv){
     int r = 0;
     char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
 
     while(1){
@@ -20,7 +22,7 @@ char* getValidClientInput(char* header, char* message, char* error, SGV sgv){
 
         printf("%s:\n", message);
 
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
 
         if(searchSGVClient(sgv, strtok(buf, "\n")))
             break;
@@ -33,7 +35,7 @@ char* getValidClientInput(char* header, char* message, char* error, SGV sgv){
 char* getValidProductInput(char* header, char* message, char* error, SGV sgv){
     int r = 0;
     char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
 
     while(1){
@@ -47,7 +49,7 @@ char* getValidProductInput(char* header, char* message, char* error, SGV sgv){
 
         printf("%s:\n", message);
 
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
 
         if(searchSGVProduct(sgv, strtok(buf, "\n")))
             break;
@@ -61,7 +63,7 @@ char* getValidProductInput(char* header, char* message, char* error, SGV sgv){
 int getValidMesInput(char* header, char* message, char* error){
     int mes, r = 0;
     char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
     while(1){
         system("clear");
@@ -73,7 +75,7 @@ int getValidMesInput(char* header, char* message, char* error){
             printf("\n\n");
 
         printf("%s:\n", message);
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
 
         if(strlen(buf) == 0)
             mes = -1;
@@ -228,7 +230,7 @@ void prodsNCompradosUI(SGV sgv){
     char** prodTab;
     int sizeProdTab;
     char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
 
     int f;
@@ -242,7 +244,7 @@ void prodsNCompradosUI(SGV sgv){
         printf("3 - Filial 3\n");
         printf("4 - Todas as Filiais\n");
 
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
 
         f = atoi(strtok(buf, "\n"));
 
@@ -324,7 +326,7 @@ void tabVendasIntervalo(SGV sgv){
     int r = 0;
     int p1, p2;
     char* initBuf;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
     while(1){
         system("clear");
@@ -337,7 +339,7 @@ void tabVendasIntervalo(SGV sgv){
 
         printf("Inserir Inicio do intervalo:\n");
 
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
         if(strlen(buf) == 0)
             p1 = -1;
         else{
@@ -347,7 +349,7 @@ void tabVendasIntervalo(SGV sgv){
 
         printf("Inserir Fim do intervalo:\n");
 
-        fgets(initBuf, 10, stdin);
+        fgets(initBuf, BUF_SIZE, stdin);
         if(strlen(buf) == 0)
             p2 = -1;
         else{
@@ -381,9 +383,8 @@ void tabVendasIntervalo(SGV sgv){
 void clientesCompraramProduto(SGV sgv){
     int sizeCliTabN, sizeCliTabP, fil, r = 1;
     Compradores compra;
-    Tipo t;
-    char** cliTabN, cliTabP;
-    char* buf = malloc(sizeof(char) * 10);
+    char** cliTabN, **cliTabP;
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     char* produto = getValidClientInput(
         "Categoria/Produtos/[9]",
         "Inserir Cliente a pesquisar",
@@ -399,7 +400,7 @@ void clientesCompraramProduto(SGV sgv){
             printf(UNDER"Filial Inválido\n\n"RESET);
         
         printf("Filial a pesquisar [1..3]:\n");
-        fgets(buf, 10, stdin);
+        fgets(buf, BUF_SIZE, stdin);
         fil = atoi(buf);
         if(fil > 0 && fil < 4){
             fil--;
@@ -423,7 +424,7 @@ void clientesCompraramProduto(SGV sgv){
             printf(UNDER"Tipo Inválido\n\n"RESET);
         
         printf("Tipo de vendas a analisar[N/P]:\n");
-        fgets(buf, 10, stdin);
+        fgets(buf, BUF_SIZE, stdin);
         if(strlen(buf) == 1){
             if(buf[0] == 'N' ){
                 menuPaginasDraw("Categoria/Produtos/[9]", cliTabN, sizeCliTabN, 15 , 6);
@@ -473,7 +474,7 @@ void prodMaisCompradoCli(SGV sgv){
 */
 void nMaisComprados(SGV sgv){
     int i, fil, nComprados, r = 0;
-    char* buf = malloc(sizeof(char) * 10);
+    char* buf = malloc(sizeof(char) * BUF_SIZE);
     while(1){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Produtos/[11] --\n" RESET);
@@ -482,7 +483,7 @@ void nMaisComprados(SGV sgv){
         else
             printf(UNDER "Invalid number\n\n" RESET);
         printf("Número de Produtos a mostrar:\n");
-        fgets(buf, 10, stdin);
+        fgets(buf, BUF_SIZE, stdin);
         nComprados = atoi(buf);
         if(nComprados > 0)
             break;
@@ -507,7 +508,7 @@ void nMaisComprados(SGV sgv){
     }
     
     printTabela(
-            names,
+            (const char**)names,
             (const char *[]){
                 "F1-unidades",
                 "F1-compradores",

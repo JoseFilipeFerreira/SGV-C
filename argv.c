@@ -5,6 +5,8 @@
 
 /* Default query parameters */
 #define DEFAULT_FIL  1
+#define DEFAULT_MES_LOW 1
+#define DEFAULT_MES_HIGH 12
 #define DEAFULT_SIZE 20
 #define DEFAULT_CHAR 'A'
 #define DEFAULT_PROD "ZZ1999"
@@ -72,7 +74,7 @@ void argvParser(int argc, char** argv){
             free(bloatTab);
             compradoresDestroy(compra);
             /*10*/
-            sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab);
+            sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab, DEFAULT_MES_HIGH);
             free(bloatTab);
             /*11*/
             nComprados = DEAFULT_SIZE;
@@ -135,12 +137,19 @@ void argvParser(int argc, char** argv){
             break;
 
         case 9:
+            compra = sgvQuemComprouProduto(DEFAULT_PROD, DEFAULT_FIL, sgv);
+            filialGetProdutosCliente(compra, N, &bloatTab);
+            free(bloatTab);
+            filialGetProdutosCliente(compra, P, &bloatTab);
+            free(bloatTab);
+            compradoresDestroy(compra);
             break;
         case 10:
             sgvGetMaisCompradosCliente(
                 sgv,
                 (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI,
-                &bloatTab);
+                &bloatTab,
+                (argc == 4 && atoi(argv[4]))?atoi(argv[4]) : DEFAULT_MES_HIGH);
             free(bloatTab);
             break;
         case 11:
