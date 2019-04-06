@@ -73,12 +73,12 @@ SGV sgvInicializado(Inicializador i) {
                 Venda venda = mkSale(buff);
                 char* idP = getProductSale(venda); 
                 char* id = getClientSale(venda);
-                produtosUpdateCompra(idP, id, getFilialSale(venda), produtos);
+                produtosUpdateCompra(idP, getFilialSale(venda), produtos);
                 free(idP);
                 addFatura(venda, faturas);
                 i->salesNumber++;
                 filialUpdate(sgv->filiais[getFilialSale(venda)], venda);
-                clientesUpdateCompra(id, getFilialSale(venda), getMesSale(venda), getQuantSale(venda), clientes); 
+                clientesUpdateCompra(id, getFilialSale(venda), clientes); 
                 destroySale(venda);
                 free(id);
         }
@@ -262,7 +262,7 @@ Compradores sgvQuemComprouProduto(const char* id, Filial filial, SGV sgv) {
     return produtoQuemComprou(sgv->filiais[filial], id);
 }
 
-int getQuantMesSGV(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes) {
+int getQuantMesSGV(const SGV sgv, const char* id, Filial filial) {
     FatP t = searchFatura(sgv->faturas, id);
     if(t) 
         return getQuantMesFilial(t, filial);

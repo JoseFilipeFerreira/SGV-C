@@ -57,8 +57,23 @@ Clientes initClients();
 */
 Clientes addClient(const Cliente p, Clientes l);
 
-void clientesUpdateCompra(const char* id, int filial, int mes, int quant, Clientes r);
+/**
+ * \brief Atualiza um cliente com informacoes de uma venda
+ *
+ * @param id Id do cliente a atualizar
+ * @param filial Filial onde efetuou uma compra
+ * @param r Catalogo de produtos
+ */
+void clientesUpdateCompra(const char* id, int filial, Clientes r);
 
+/**
+ * \brief Calcula o numero de clientes registados que nunca
+ * fizeram compras
+ *
+ * @param p Catalogo de clientes
+ *
+ * @return Numero de clientes que nunca efetuaram compras
+ */
 int getClientesNaoCompradores(const Clientes p);
 
 /**

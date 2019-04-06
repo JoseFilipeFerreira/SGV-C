@@ -22,7 +22,7 @@ bool verifyClient(const char* id) {
     return false;
 }
 
-void updateBuyClient(Cliente c, int filial, int mes, int quantidade) {
+void updateBuyClient(Cliente c, int filial) {
     c->comprou[filial] = true;
 }
 

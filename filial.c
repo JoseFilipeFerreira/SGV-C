@@ -3,6 +3,7 @@
 #include "glibW.h"
 #include <gmodule.h>
 #include <string.h>
+#include <stdlib.h>
 
 struct filiais {
     GHashTable* cliCompra;
@@ -44,7 +45,7 @@ void compradoresDestroy(Compradores c) {
     for(i = 0; i < 2; i++) {
         for(j = 0; j < c->quantidades[i]; i++)
             free(c->compradores[i][j]);
-        free(c->quantidades[i]);
+        free(c->compradores[i]);
     }
     free(c);
 }
@@ -153,7 +154,7 @@ Compradores produtoQuemComprou(const Filiais f, const char* id) {
     c->compradores[1] = malloc(size * sizeof(char*));
     c->quantidades[0] = c->quantidades[1] = 0;
     g_tree_foreach(p->quemComprou, productLetter, c);
-    return size;
+    return c;
 }
 
 Filiais filialInit() {
@@ -202,8 +203,8 @@ static int prodCliCmp(const void* a, const void* b) {
 static int prodCliCmpQuant(const void* a, const void* b, void* c) {
     ProdCli aa = *(ProdCli*) a;
     ProdCli bb = *(ProdCli*) b;
-    int mes = (int) c;
-    return bb->quantidade[mes] - aa->quantidade[mes];
+    int mes = *(int*) c;
+    return bb->quantidade[mes - 1] - aa->quantidade[mes - 1];
 }
 
 void mergeUpdate(void* key, void* value, void* data) {
@@ -233,7 +234,7 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
     size = g_hash_table_size(merge);
     ProdCli array[size];
     *rrr = malloc(sizeof(char*) * 3);
-    while(g_hash_table_iter_next(&r, &lixo, &prod))
+    while(g_hash_table_iter_next(&r, (void*) &lixo, (void*) &prod))
         array[i++] = prod;
     qsort(array, size, sizeof(ProdCli), prodCliCmp);
     for(i = 0; i < 3 && i < size; i++) {
@@ -259,9 +260,9 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rr
     size = g_hash_table_size(merge);
     ProdCli array[size];
     *rrr = malloc(sizeof(char*) * size);
-    while(g_hash_table_iter_next(&r, &lixo, &prod))
+    while(g_hash_table_iter_next(&r, (void*) &lixo, (void*) &prod))
         array[i++] = prod;
-    qsort_r(array, size, sizeof(ProdCli), prodCliCmpQuant, mes - 1);
+    qsort_r(array, size, sizeof(ProdCli), prodCliCmpQuant, &mes);
     for(i = 0; i < size; i++) {
         (*rrr)[i] = malloc(strlen(array[i]->prod) + 1);
         strcpy((*rrr)[i], array[i]->prod);

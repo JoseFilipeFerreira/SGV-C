@@ -94,9 +94,10 @@ Clientes initClients() {
     return p;
 }
 
-void clientesUpdateCompra(const char* id, int filial, int mes, int quant, Clientes r) {
+void clientesUpdateCompra(const char* id, int filial, Clientes r) {
     Cliente p = g_tree_lookup(r->avlC[IND(id[0])], id);
-    updateBuyClient(p, filial, mes, quant);
+    if(p)
+        updateBuyClient(p, filial);
 }
 
 

@@ -56,9 +56,26 @@ Produtos addProduct(const Produto p, Produtos l);
 */
 Produtos initProducts();
 
+/**
+@brief Procurar os produtos nao comprados
+
+@param p Catalogo dos produtos
+@param filial Filial onde procurar
+@param array Estrutura para devolver a lista dos produtos nao 
+comprados
+
+@returns Total de produtos nao comprados na filial
+*/
 int getNaoComprados(const Produtos p, int filial, char*** array);
 
-void produtosUpdateCompra(const char* id, char* cliente, int filial, Produtos r);
+/**
+@brief Atualiza os produtos comforme as compras
+
+@param id Id do produto
+@param filial Filial onde foi comprado
+@param r Catalogo dos produtos
+*/
+void produtosUpdateCompra(const char* id, int filial, Produtos r);
 
 /**
 @brief Libertar espaço alocado para Produtos

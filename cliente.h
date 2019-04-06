@@ -13,14 +13,20 @@
 typedef struct cliente* Cliente;
 
 /**
-@brief Verifica se uma string representa uma string
+@brief Verifica se uma string representa uma cliente valido
 
 @param id string a verificar
 @return int se é válido ou não
 */
 bool verifyClient(const char* id);
 
-void updateBuyClient(Cliente c, int filial, int mes, int quantidade);
+/**
+@brief Atualiza o cliente com informacao de onde fez compras
+
+@param c Cliente a atualizar
+@param filial Filial onde fez compras
+*/
+void updateBuyClient(Cliente c, int filial);
 
 /**
 @brief Criar uma struct de cliente com base numa string 

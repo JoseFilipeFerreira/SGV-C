@@ -104,7 +104,7 @@ Produtos addProduct(const Produto p, Produtos l) {
     return l;
 }
 
-void produtosUpdateCompra(const char* id, char* cliente, int filial, Produtos r) {
+void produtosUpdateCompra(const char* id, int filial, Produtos r) {
     Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
     updateCompra(p, filial);
 }

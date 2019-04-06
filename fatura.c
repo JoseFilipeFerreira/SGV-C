@@ -58,8 +58,10 @@ int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo) {
     return f->nVendas[tipo][mes - 1][filial];
 }
 
-int cmpFat(FatP* a, FatP* b) {
-     return getQuantMesFilial(*b, ALL) - getQuantMesFilial(*a, ALL);
+int cmpFat(const void* aa, const void* bb) {
+    FatP a = *(FatP*) aa;  
+    FatP b = *(FatP*) bb;  
+    return getQuantMesFilial(b, ALL) - getQuantMesFilial(a, ALL);
 }
 
 char* faturaGetId(const FatP f) {

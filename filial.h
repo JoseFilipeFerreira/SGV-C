@@ -27,5 +27,9 @@ Compradores produtoQuemComprou(const Filiais f, const char* id);
 
 int filialGetProdutosCliente(Compradores c, Tipo t, char*** array);
 
+int produtosQuantosCompraram(const char* id, Filiais f);
+
 void compradoresDestroy(Compradores c);
+
+void destroyFilial(Filiais f);
 #endif
