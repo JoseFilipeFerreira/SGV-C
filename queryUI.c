@@ -379,7 +379,10 @@ void tabVendasIntervalo(SGV sgv){
 @brief TODO : Query 9
 */
 void clientesCompraramProduto(SGV sgv){
-    int fil, r = 1;
+    int sizeCliTabN, sizeCliTabP, fil, r = 1;
+    Compradores compra;
+    Tipo t;
+    char** cliTabN, cliTabP;
     char* buf = malloc(sizeof(char) * 10);
     char* produto = getValidClientInput(
         "Categoria/Produtos/[9]",
@@ -405,16 +408,39 @@ void clientesCompraramProduto(SGV sgv){
         else
             r = 0;
     }
-    free(buf);
-    system("clear");
-    printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n\n" RESET);
-    
-    printf("%s\n", produto);
-    printf("%d\n", fil);
+    compra = sgvQuemComprouProduto(produto, fil, sgv);
+    sizeCliTabN = filialGetProdutosCliente(compra, N, &cliTabN);
+    sizeCliTabP = filialGetProdutosCliente(compra, P, &cliTabP);
+    while(1){
+        system("clear");
+        printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n\n" RESET);
+        printf("Total N:   %d\n", sizeCliTabN);
+        printf("Total P:   %d\n", sizeCliTabP);
 
-    printf(HIDE_CURSOR);
-    getchar();
-    printf(SHOW_CURSOR);
+        if(r)
+            printf("\n\n");
+        else
+            printf(UNDER"Tipo Inválido\n\n"RESET);
+        
+        printf("Tipo de vendas a analisar[N/P]:\n");
+        fgets(buf, 10, stdin);
+        if(strlen(buf) == 1){
+            if(buf[0] == 'N' ){
+                menuPaginasDraw("Categoria/Produtos/[9]", cliTabN, sizeCliTabN, 15 , 6);
+                break;
+            }
+            if(buf[0] == 'N' ){
+                menuPaginasDraw("Categoria/Produtos/[9]", cliTabP, sizeCliTabP, 15 , 6);
+                break;
+            }
+        }
+        r = 0;
+    }
+
+    free(buf);
+    free(cliTabN);
+    free(cliTabP);
+    compradoresDestroy(compra);
 }
 
 /**
@@ -435,7 +461,7 @@ void prodMaisCompradoCli(SGV sgv){
         "Inserir Mês a pesquisar",
         "Mês inválido");
     
-    sizeProdTab =  sgvGetMaisCompradosCliente(sgv, cliente, &prodTab);
+    sizeProdTab =  sgvGetMaisCompradosCliente(sgv, cliente, &prodTab, mes);
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab, 15 , 6);
 
     free(cliente);

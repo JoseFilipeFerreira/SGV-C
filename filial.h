@@ -1,3 +1,7 @@
+/**
+@file filial.h
+\brief Módulo de tratamento de filiais.
+*/
 #ifndef ___FILIAL_H___
 #define ___FILIAL_H___
 

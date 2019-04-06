@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 /* Default query parameters */
+#define DEFAULT_FIL  1
 #define DEAFULT_SIZE 20
 #define DEFAULT_CHAR 'A'
 #define DEFAULT_PROD "ZZ1999"
@@ -20,6 +21,7 @@ void argvParser(int argc, char** argv){
     SGV sgv;
     FatP* fatArr;
     Inicializador init;
+    Compradores compra;
 
     /*Benchmark Loading*/
     start = clock();
@@ -62,11 +64,19 @@ void argvParser(int argc, char** argv){
             /*8*/
             getNSalesMes(sgv, 1, 12);
             getTFactMes(sgv, 1, 12);
+            /*9*/
+            compra = sgvQuemComprouProduto(DEFAULT_PROD, DEFAULT_FIL, sgv);
+            filialGetProdutosCliente(compra, N, &bloatTab);
+            free(bloatTab);
+            filialGetProdutosCliente(compra, P, &bloatTab);
+            free(bloatTab);
+            compradoresDestroy(compra);
             /*10*/
             sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab);
             free(bloatTab);
             /*11*/
-            fatArr = getMaisVendidos(sgv, DEAFULT_SIZE);
+            nComprados = DEAFULT_SIZE;
+            fatArr = getMaisVendidos(sgv, &nComprados);
             for(i=0; i < DEAFULT_SIZE; i++){
                 for(j=0; j < 3; j++){
                     getQuantMesFilial(fatArr[i], j);
@@ -135,7 +145,7 @@ void argvParser(int argc, char** argv){
             break;
         case 11:
             nComprados = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : DEAFULT_SIZE;
-            fatArr = getMaisVendidos(sgv, nComprados);
+            fatArr = getMaisVendidos(sgv, &nComprados); 
             for(i=0; i < nComprados; i++){
                 for(j = 0; j < 3; j++){
                     getQuantMesFilial(fatArr[i], j);
