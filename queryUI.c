@@ -381,14 +381,15 @@ void tabVendasIntervalo(SGV sgv){
 @brief TODO : Query 9
 */
 void clientesCompraramProduto(SGV sgv){
+    int loop = 1;
     int sizeCliTabN, sizeCliTabP, fil, r = 1;
     Compradores compra;
     char** cliTabN, **cliTabP;
     char* buf = malloc(sizeof(char) * BUF_SIZE);
-    char* produto = getValidClientInput(
+    char* produto = getValidProductInput(
         "Categoria/Produtos/[9]",
-        "Inserir Cliente a pesquisar",
-        "Cliente não existe",
+        "Inserir Produto a pesquisar",
+        "Produto não existe",
         sgv);
     
     while(1){
@@ -409,10 +410,11 @@ void clientesCompraramProduto(SGV sgv){
         else
             r = 0;
     }
+    printf("%d\n\n\n",fil);
     compra = sgvQuemComprouProduto(produto, fil, sgv);
     sizeCliTabN = filialGetProdutosCliente(compra, N, &cliTabN);
     sizeCliTabP = filialGetProdutosCliente(compra, P, &cliTabP);
-    while(1){
+    while(loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n\n" RESET);
         printf("Total N:   %d\n", sizeCliTabN);
@@ -423,16 +425,21 @@ void clientesCompraramProduto(SGV sgv){
         else
             printf(UNDER"Tipo Inválido\n\n"RESET);
         
-        printf("Tipo de vendas a analisar[N/P]:\n");
+        printf("Tipo de vendas a analisar[N/P/b]:\n");
         fgets(buf, BUF_SIZE, stdin);
-        if(strlen(buf) == 1){
-            if(buf[0] == 'N' ){
-                menuPaginasDraw("Categoria/Produtos/[9]", cliTabN, sizeCliTabN, 15 , 6);
-                break;
-            }
-            if(buf[0] == 'N' ){
-                menuPaginasDraw("Categoria/Produtos/[9]", cliTabP, sizeCliTabP, 15 , 6);
-                break;
+        if(strlen(buf) == 2){
+            switch (buf[0])
+            {
+                case 'N':
+                    menuPaginasDraw("Categoria/Produtos/[9]", cliTabN, sizeCliTabN, 15 , 6);
+                    break;
+                
+                case 'P':
+                    menuPaginasDraw("Categoria/Produtos/[9]", cliTabP, sizeCliTabP, 15 , 6);
+                    break;
+                case 'b':
+                    loop = 0;
+                    break;
             }
         }
         r = 0;

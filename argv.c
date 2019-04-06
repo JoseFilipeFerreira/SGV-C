@@ -127,7 +127,7 @@ void argvParser(int argc, char** argv){
             cli = (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI;
             for (i=0; i<3; i++)
                 for (j = 0; j < 12; j++)
-                    getClientQuantSGV(cli, i, j, sgv);
+                    getClientQuantSGV(cli, j, i, sgv);
             break;
         case 8:
             i = (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 1;
