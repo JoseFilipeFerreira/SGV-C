@@ -248,7 +248,7 @@ Compradores sgvQuemComprouProduto(const char* id, Filial f, SGV sgv);
 
 int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array);
 
-int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array);
+int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array, int mes);
 /**
 @brief Libertar um inicializador
 

@@ -17,7 +17,7 @@ int getClientQuant(const char* id, int mes, const Filiais f);
 
 int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** array);
 
-int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** array);
+int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** array, int mes);
 
 Compradores produtoQuemComprou(const Filiais f, const char* id);
 

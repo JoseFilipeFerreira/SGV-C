@@ -199,10 +199,11 @@ static int prodCliCmp(const void* a, const void* b) {
     return bb->total - aa->total;
 }
 
-static int prodCliCmpQuant(const void* a, const void* b) {
+static int prodCliCmpQuant(const void* a, const void* b, void* c) {
     ProdCli aa = *(ProdCli*) a;
     ProdCli bb = *(ProdCli*) b;
-    return bb->quantidade - aa->quantidade;
+    int mes = (int) c;
+    return bb->quantidade[mes] - aa->quantidade[mes];
 }
 
 void mergeUpdate(void* key, void* value, void* data) {
@@ -243,7 +244,7 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
     return i;
 }
 
-int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rrr) {
+int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rrr, int mes) {
     GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
     GHashTableIter r;
     ProdCli prod;
@@ -260,7 +261,7 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rr
     *rrr = malloc(sizeof(char*) * size);
     while(g_hash_table_iter_next(&r, &lixo, &prod))
         array[i++] = prod;
-    qsort(array, size, sizeof(ProdCli), prodCliCmpQuant);
+    qsort_r(array, size, sizeof(ProdCli), prodCliCmpQuant, mes - 1);
     for(i = 0; i < size; i++) {
         (*rrr)[i] = malloc(strlen(array[i]->prod) + 1);
         strcpy((*rrr)[i], array[i]->prod);

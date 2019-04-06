@@ -273,6 +273,6 @@ int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array) {
     return getMaisVendidosCliente(sgv->filiais, id, 3, array);
 }
 
-int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array) {
-    return getMaisCompradosCliente(sgv->filiais, id, 3, array);
+int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array, int mes) {
+    return getMaisCompradosCliente(sgv->filiais, id, 3, array, mes);
 }
