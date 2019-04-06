@@ -39,7 +39,7 @@ int getQuantTotal(const Faturas p, int mes) {
 
 int getNVendasFaturas(const Faturas p, const char* id, int mes, Filial filial, Tipo tipo) {
     FatP f = g_tree_lookup(p->avlF[IND(id[0])][IND(id[1])], id);
-    return getNVendasFatura(f, mes, filial, tipo);
+    return f ? getNVendasFatura(f, mes, filial, tipo) : 0;
 }
 
 int getProdsVendidos (const Faturas f) {

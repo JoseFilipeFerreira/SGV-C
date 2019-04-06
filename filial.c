@@ -153,7 +153,7 @@ Compradores produtoQuemComprou(const Filiais f, const char* id) {
     c->compradores[0] = malloc(size * sizeof(char*));
     c->compradores[1] = malloc(size * sizeof(char*));
     c->quantidades[0] = c->quantidades[1] = 0;
-    g_tree_foreach(p->quemComprou, productLetter, c);
+    if(p) g_tree_foreach(p->quemComprou, productLetter, c);
     return c;
 }
 
@@ -227,7 +227,8 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
     int i, size;
     for(i = 0; i < N; i++) {
         CliCompra cliCompra = g_hash_table_lookup(f[i]->cliCompra, id);
-        g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
+        if(cliCompra)
+            g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
     }
     g_hash_table_iter_init(&r, merge);
     i=0;
@@ -253,7 +254,8 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rr
     int i, size;
     for(i = 0; i < N; i++) {
         CliCompra cliCompra = g_hash_table_lookup(f[i]->cliCompra, id);
-        g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
+        if(cliCompra)
+            g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
     }
     g_hash_table_iter_init(&r, merge);
     i=0;
