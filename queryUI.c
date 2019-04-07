@@ -368,13 +368,13 @@ void tabVendasIntervalo(SGV sgv){
 
     printf("Intervalo: %d -> %d\n\n", p1, p2);
 
-    printf("Numero de Vendas %d\n", getNSalesMes(sgv, p1, p2));
-    printf("Total Faturado: %.2f\n",  getTFactMes(sgv, p1, p2));
+    printf("Numero de Vendas: %d\n", getNSalesMes(sgv, p1, p2));
+    printf("Total Faturado:   %.2f\n",  getTFactMes(sgv, p1, p2));
 
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
-    free(buf);
+    free(initBuf);
 }
 
 /**
@@ -410,10 +410,10 @@ void clientesCompraramProduto(SGV sgv){
         else
             r = 0;
     }
-    printf("%d\n\n\n",fil);
     compra = sgvQuemComprouProduto(produto, fil, sgv);
     sizeCliTabN = filialGetProdutosCliente(compra, N, &cliTabN);
     sizeCliTabP = filialGetProdutosCliente(compra, P, &cliTabP);
+    r = 1;
     while(loop){
         system("clear");
         printf(BOLD KRED "\t-- Categoria/Produtos/[9] --\n\n" RESET);
@@ -423,7 +423,7 @@ void clientesCompraramProduto(SGV sgv){
         if(r)
             printf("\n\n");
         else
-            printf(UNDER"Tipo Inválido\n\n"RESET);
+            printf(UNDER"\nTipo Inválido\n"RESET);
         
         printf("Tipo de vendas a analisar[N/P/b]:\n");
         fgets(buf, BUF_SIZE, stdin);
@@ -432,20 +432,25 @@ void clientesCompraramProduto(SGV sgv){
             {
                 case 'N':
                     menuPaginasDraw("Categoria/Produtos/[9]", cliTabN, sizeCliTabN, 15 , 6);
+                    r = 1;
                     break;
                 
                 case 'P':
                     menuPaginasDraw("Categoria/Produtos/[9]", cliTabP, sizeCliTabP, 15 , 6);
+                    r = 1;
                     break;
                 case 'b':
                     loop = 0;
                     break;
+                default:
+                    r = 0;
+                    break;
             }
         }
-        r = 0;
     }
 
     free(buf);
+    free(produto);
     compradoresDestroy(compra);
 }
 
