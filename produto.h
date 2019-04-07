@@ -36,8 +36,25 @@ Produto mkProduct(char* id);
 */
 char* getIdProduct(Produto produto);
 
+/**
+ * \brief Atualiza um dado produto com informacao
+ * sobre as filiais onde foi comprado
+ *
+ * @param p Produto a atualizar
+ * @param filial Filial onde foi comprado
+ */
 void updateCompra(Produto p, int filial);
 
+/**
+ * \brief Procura se um produto foi ou nao comprado
+ * numa dada filial
+ *
+ * @param filial Filial onde se quer saber se o
+ * produto foi la comprado
+ * @param p Produto em questao
+ *
+ * @return Se o produto foi comprado na filial dada ou nao
+ */
 bool foiCompradoOnde(int filial, Produto p);
 
 /**

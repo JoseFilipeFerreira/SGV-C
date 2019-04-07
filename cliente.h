@@ -44,6 +44,16 @@ Cliente mkClient(char* id);
 */
 char* getIdClient(Cliente cliente);
 
+/** 
+ * \brief Procura se um cliente comprou ou nao 
+ * numa dada filial
+ *
+ * @param filial Filial onde queremos saber se 
+ * o cliente comprou ou nao
+ * @param p Cliente em questao
+ *
+ * @return True se comprou na filial, false se nao
+ */
 bool comprouOnde(int filial, Cliente p);
 
 /**

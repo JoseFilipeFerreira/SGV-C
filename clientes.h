@@ -30,16 +30,20 @@ int searchClient(const Clientes p, const char* id);
  */
 int getClientNumber(const Clientes p);
 
-int getComprador(const Clientes p, char*** array);
 /**
-@brief Obter o array de strings de Cliente começadas por uma letra
-
-@param p Todos os clientes
-@param id O primeiro caracter
-@param array Onde vão ser guardadas as strings
-@return int Número de clientes com o caracter
-*/
-int getClientLetter(const Clientes p, const char id, char*** array);
+ * \brief Calcula a lista de clientes que fizeram compras 
+ * em todas as filiais
+ *
+ * E necessario dar free deste array
+ *
+ * Funcao relativa a query 5
+ *
+ * @param p Catalogo de clientes a pesquisar
+ * @param array Array a preencher com os ids de clientes
+ *
+ * @return Numero de clientes que comprou em todas as filiais
+ */
+int getComprador(const Clientes p, char*** array);
 
 /**
 @brief Inicializar os clientes todos

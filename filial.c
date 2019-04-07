@@ -18,7 +18,7 @@ typedef struct cliCompra {
 
 typedef struct prodCompra {
     char* prod;
-    GTree* quemComprou;
+    GHashTable* quemComprou;
 } *ProdCompra;
 
 typedef struct prodCli {
@@ -47,11 +47,6 @@ void compradoresDestroy(Compradores c) {
         free(c->compradores[i]);
     }
     free(c);
-}
-
-static int cmp(const void* a, const void* b, void* c) {
-    (void) c;
-    return strcmp((char*) a, (char*) b);
 }
 
 static ProdCli prodCliInit(char* cliente, char* produto, int quantidade, double total, int mes) {
@@ -111,13 +106,13 @@ static ProdCompra prodCompraInit(const char* prod, const char* cli, const Tipo t
     strcpy(cliente, cli);
     r->prod = malloc(strlen(prod) + 1);
     strcpy(r->prod, prod);
-    r->quemComprou = g_tree_new_full(cmp, NULL, free, free);
-    g_tree_insert(r->quemComprou, cliente, t);
+    r->quemComprou = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
+    g_hash_table_insert(r->quemComprou, cliente, t);
     return r;
 } 
 
 static void prodCompraUpdate(ProdCompra r, char* client, Tipo t) {
-    Tipo* tipo = g_tree_lookup(r->quemComprou, client);
+    Tipo* tipo = g_hash_table_lookup(r->quemComprou, client);
     if(tipo && *tipo != t) 
         *tipo = AL;
     else if(!tipo) {
@@ -125,18 +120,18 @@ static void prodCompraUpdate(ProdCompra r, char* client, Tipo t) {
         strcpy(cliente, client);
         tipo = malloc(sizeof(Tipo));
         *tipo = t;
-        g_tree_insert(r->quemComprou, cliente, tipo);
+        g_hash_table_insert(r->quemComprou, cliente, tipo);
     }
 }
 
 static void prodCompraDestroy(void* o) {
     ProdCompra r = (ProdCompra) o;
-    g_tree_destroy(r->quemComprou);
+    g_hash_table_destroy(r->quemComprou);
     free(r->prod);
     free(r);
 } 
 
-static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
+static void productLetter(gpointer key, gpointer value, gpointer data) {
     Compradores c = (Compradores) data;
     Tipo t = *(Tipo*) value;
     if(t != P) {
@@ -147,18 +142,17 @@ static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
         c->compradores[P][c->quantidades[P]] = malloc(strlen((char*) key) + 1);
         strcpy(c->compradores[P][c->quantidades[P]++], (char*) key);
     }
-    return FALSE;
 }
 
 Compradores produtoQuemComprou(const Filiais f, const char* id) {
     ProdCompra p = g_hash_table_lookup(f->prodCompra, id);
     int size;
     Compradores c = malloc(sizeof(struct compradores));
-    size = p ? g_tree_nnodes(p->quemComprou) : 0;
+    size = p ? g_hash_table_size(p->quemComprou) : 0;
     c->compradores[0] = malloc(size * sizeof(char*));
     c->compradores[1] = malloc(size * sizeof(char*));
     c->quantidades[0] = c->quantidades[1] = 0;
-    if(p) g_tree_foreach(p->quemComprou, productLetter, c);
+    if(p) g_hash_table_foreach(p->quemComprou, productLetter, c);
     return c;
 }
 
@@ -196,7 +190,7 @@ int getClientQuant(const char* id, int mes, const Filiais f) {
 
 int produtosQuantosCompraram(const char* id, Filiais f) {
     ProdCompra p = g_hash_table_lookup(f->prodCompra, id);
-    return p ? g_tree_nnodes(p->quemComprou) : 0;
+    return p ? g_hash_table_size(p->quemComprou) : 0;
 }
 
 static int prodCliCmp(const void* a, const void* b) {
@@ -251,7 +245,7 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
     return i;
 }
 
-int getMaisCompradosCliente(const Filiais f[], const char* id, int N, char*** rrr, int mes) {
+int getMaisCompradosCliente(const Filiais f[], const char* id, char*** rrr, int mes) {
     GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
     GHashTableIter r;
     ProdCli prod;

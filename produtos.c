@@ -1,5 +1,5 @@
 #include "produtos.h"
-
+#include <gmodule.h>
 /**
 @brief Número de Letras no alfabeto
 */
@@ -14,7 +14,7 @@
 \brief Produtos Lidos.
 */
 struct produtos {
-    GTree* avlP[LETTERS][LETTERS]; /**< Matriz de AVL para guardar os produtos */
+    GHashTable* avlP; /**< Matriz de AVL para guardar os produtos */
 };
 
 typedef struct filialSearcher {
@@ -22,56 +22,52 @@ typedef struct filialSearcher {
     char*** array;
 } FilialSearcher;
 
-static int cmp(const void* a, const void* b, void* c) {
-    (void) c;
-    return strcmp((char*) a, (char*) b);
-}
-
 bool searchProduct(const Produtos p, const char* id) {
     if(verifyProduct(id)) 
-        return (g_tree_lookup(p->avlP[IND(id[0])][IND(id[1])], id) != NULL);
+        return (g_hash_table_lookup(p->avlP, id) != NULL);
     return false;
 }
 
 int getProductNumber(const Produtos p) {
-    int i, j, r = 0;
-    for(i = 0; i < LETTERS; i++)
-        for(j = 0; j < LETTERS; j++)
-            r += g_tree_nnodes(p->avlP[i][j]);
-    return r;
+    return g_hash_table_size(p->avlP);
 }
 
-static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
-    char** array = *(char***) data;
+static int sortL(const void* a, const void* b) {
+    return strcmp(*(char**) a, *(char**) b);
+}
+
+static void productLetter(gpointer key, gpointer value, gpointer data) {
+    FilialSearcher ree = *(FilialSearcher*) data;
+    char** array = *(ree.array);
     (void) value;
-    *array = malloc(strlen((char*) key) + 1);
-    strcpy(*(array++), (char*) key);
-    *(char***) data = array;
-    return FALSE;
+    if(((char*) key)[0] == ree.filial) {
+        *array = malloc(strlen((char*) key) + 1);
+        strcpy(*(array++), (char*) key);
+        *(ree.array) = array;
+    }
 }
 
 int getProductLetter(const Produtos p, const char id, char*** array) {
-    int i, size = 0;
+    int size;
     char** arrayr;
-    for(i = 0; i < LETTERS; i++) 
-        size += g_tree_nnodes(p->avlP[IND(id)][i]);
+    FilialSearcher r;
+    r.filial = id;
+    size = g_hash_table_size(p->avlP);
     *array = malloc(size * sizeof(char*));
     arrayr = *array;
-    for(i = 0; i < LETTERS; i++)
-        g_tree_foreach(p->avlP[IND(id)][i], productLetter, &arrayr);
-    return size;
+    r.array = &arrayr;
+    g_hash_table_foreach(p->avlP, productLetter, &r);
+    qsort(*array, arrayr - *array, sizeof(char*), sortL);
+    return arrayr- *array;
 }
 
 Produtos initProducts() {
-    int i, j;
     Produtos p = malloc(sizeof(struct produtos));
-    for(i = 0; i < LETTERS; i++)
-        for(j = 0; j < LETTERS; j++)
-            p->avlP[i][j] = g_tree_new_full(&cmp, NULL, free, destroyProduct);
+    p->avlP= g_hash_table_new_full(g_str_hash, g_str_equal, free, destroyProduct);
     return p;
 }
 
-static gboolean naoComprados(gpointer key, gpointer value, gpointer struc) {
+static void naoComprados(gpointer key, gpointer value, gpointer struc) {
     FilialSearcher ree = *(FilialSearcher*) struc;
     char** array = *(ree.array);
     Produto r = (Produto) value;
@@ -80,11 +76,10 @@ static gboolean naoComprados(gpointer key, gpointer value, gpointer struc) {
         strcpy(*(array++), (char*) key);
         *(ree.array) = array;
     }
-    return FALSE;
 }
 
 int getNaoComprados(const Produtos p, const int filial, char*** array) {
-    int size, i, j;
+    int size;
     char** arrayr;
     FilialSearcher ree;
     ree.filial = filial;
@@ -92,28 +87,24 @@ int getNaoComprados(const Produtos p, const int filial, char*** array) {
     *array = malloc(size * sizeof(char*));
     arrayr = *array;
     ree.array = &arrayr;
-    for(i = 0; i < LETTERS; i++)
-        for(j = 0; j < LETTERS; j++)
-            g_tree_foreach(p->avlP[i][j], naoComprados, &ree);
+    g_hash_table_foreach(p->avlP, naoComprados, &ree);
+    qsort(*array, arrayr- *array , sizeof(char*), sortL);
     return arrayr - *array;
 }
 
 Produtos addProduct(const Produto p, Produtos l) {
     char* id = getIdProduct(p);
-    g_tree_insert(l->avlP[IND(id[0])][IND(id[1])], id, p);
+    g_hash_table_insert(l->avlP, id, p);
     return l;
 }
 
 void produtosUpdateCompra(const char* id, int filial, Produtos r) {
-    Produto p = g_tree_lookup(r->avlP[IND(id[0])][IND(id[1])], id);
+    Produto p = g_hash_table_lookup(r->avlP, id);
     if(p)
         updateCompra(p, filial);
 }
 
 void clearProducts(Produtos p) {
-    int i, j;
-    for(i = 0; i < LETTERS; i++)
-        for(j = 0; j < LETTERS; j++)
-            g_tree_destroy(p->avlP[i][j]);
+    g_hash_table_destroy(p->avlP);
     free(p);
 }
