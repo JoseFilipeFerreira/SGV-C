@@ -136,7 +136,7 @@ void menuPaginasDraw(char* header, char** tab, int size, int sizePage, int nCols
 void prodPages(SGV sgv){
     char search;
     char** prodTab;
-    int sizeProdTab;
+    int i, sizeProdTab;
 
     while(1){
         system("clear");
@@ -150,6 +150,8 @@ void prodPages(SGV sgv){
     sizeProdTab = getSGVProductLetter(sgv, search, &prodTab);
     menuPaginasDraw("Categoria/Produtos/[2]", prodTab, sizeProdTab,15 , 6);
 
+    for(i = 0; i < sizeProdTab; i++)
+        free(prodTab[i]);
     free(prodTab);
 }
 
@@ -228,7 +230,7 @@ void prodStatsMes(SGV sgv){
 */
 void prodsNCompradosUI(SGV sgv){
     char** prodTab;
-    int sizeProdTab;
+    int i, sizeProdTab;
     char* initBuf;
     char* buf = malloc(sizeof(char) * BUF_SIZE);
     initBuf = buf;
@@ -255,6 +257,8 @@ void prodsNCompradosUI(SGV sgv){
     sizeProdTab = prodsNaoComprados(sgv, f-1, &prodTab);
     menuPaginasDraw("Categoria/Produtos/[4]", prodTab, sizeProdTab,15 , 6);
 
+    for(i = 0; i < sizeProdTab; i++)
+        free(prodTab[i]);
     free(prodTab);
     free(initBuf);
 
@@ -265,11 +269,13 @@ void prodsNCompradosUI(SGV sgv){
 */
 void clientesFieis(SGV sgv){
     char** cliTab;
-    int sizeCliTab;
+    int i, sizeCliTab;
 
     sizeCliTab = clientesCompraramFilial(sgv, &cliTab);
     menuPaginasDraw("Categoria/Clientes/[5]", cliTab, sizeCliTab,15 , 6);
 
+    for(i = 0; i < sizeCliTab; i++)
+        free(cliTab[i]);
     free(cliTab);
 }
 
@@ -294,8 +300,8 @@ void clientesInfieis(SGV sgv){
 void tabClientAno(SGV sgv, char* cliente){
     int i, j;
     int iT[3][12];
-    for (i=0; i<3; i++)
-        for (j=0; j<12; j++)
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 12; j++)
             iT[i][j] = getClientQuantSGV(cliente, j, i, sgv);
 
     printf("Produtos Comprados [7]:\n");
@@ -378,10 +384,10 @@ void tabVendasIntervalo(SGV sgv){
 }
 
 /**
-@brief TODO : Query 9
+@brief DONE : Query 9
 */
 void clientesCompraramProduto(SGV sgv){
-    int loop = 1;
+    int i, loop = 1;
     int sizeCliTabN, sizeCliTabP, fil, r = 1;
     Compradores compra;
     char** cliTabN, **cliTabP;
@@ -448,17 +454,22 @@ void clientesCompraramProduto(SGV sgv){
             }
         }
     }
+    
 
     free(buf);
     free(produto);
     compradoresDestroy(compra);
+    for(i = 0; i < sizeCliTabN; i++)
+        free(cliTabN[i]);
+    for(i = 0; i < sizeCliTabP; i++)
+        free(cliTabP[i]);
 }
 
 /**
 @brief DONE : Query 10
 */
 void prodMaisCompradoCli(SGV sgv){
-    int sizeProdTab;
+    int i, sizeProdTab;
     char** prodTab; 
 
     char* cliente = getValidClientInput(
@@ -476,6 +487,9 @@ void prodMaisCompradoCli(SGV sgv){
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab, 15 , 6);
 
     free(cliente);
+    free(prodTab);
+    for(i = 0; i < sizeProdTab; i++)
+        free(prodTab[i]);
     free(prodTab);
 }
 
@@ -530,7 +544,11 @@ void nMaisComprados(SGV sgv){
             nComprados,
             6,
             iT);
-
+    
+    for(i = 0; i < nComprados; i++)
+        free(names[i]);
+    
+    destroyFact(fatArr);
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
@@ -545,8 +563,11 @@ void clienteMaisComprados(SGV sgv, char* cliente){
     printf("\n\nProdutos mais comprados [12]\n");
     sizeProdTab = sgvGetMaisVendidosCliente(sgv, cliente, &prodTab);
 
-    for(i = 0; i < sizeProdTab; i++)
+    for(i = 0; i < sizeProdTab; i++){
         printf("%dº   %s\n", i+1, prodTab[i]);
+        free(prodTab[i]);
+    }
+    free(prodTab);
 }
 
 /**
