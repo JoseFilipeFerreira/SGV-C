@@ -446,8 +446,6 @@ void clientesCompraramProduto(SGV sgv){
     }
 
     free(buf);
-    free(cliTabN);
-    free(cliTabP);
     compradoresDestroy(compra);
 }
 

@@ -69,9 +69,7 @@ void argvParser(int argc, char** argv){
             /*9*/
             compra = sgvQuemComprouProduto(DEFAULT_PROD, DEFAULT_FIL, sgv);
             filialGetProdutosCliente(compra, N, &bloatTab);
-            free(bloatTab);
             filialGetProdutosCliente(compra, P, &bloatTab);
-            free(bloatTab);
             compradoresDestroy(compra);
             /*10*/
             sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab, DEFAULT_MES_HIGH);
@@ -139,9 +137,7 @@ void argvParser(int argc, char** argv){
         case 9:
             compra = sgvQuemComprouProduto(DEFAULT_PROD, DEFAULT_FIL, sgv);
             filialGetProdutosCliente(compra, N, &bloatTab);
-            free(bloatTab);
             filialGetProdutosCliente(compra, P, &bloatTab);
-            free(bloatTab);
             compradoresDestroy(compra);
             break;
         case 10:

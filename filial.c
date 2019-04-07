@@ -24,7 +24,6 @@ typedef struct prodCompra {
 typedef struct prodCli {
     char* prod;
     char* cliente;
-    bool tipo[2];
     int quantidade[12];
     double total;
 } *ProdCli;
@@ -43,7 +42,7 @@ int filialGetProdutosCliente(Compradores c, Tipo t, char*** array) {
 void compradoresDestroy(Compradores c) {
     int i, j;
     for(i = 0; i < 2; i++) {
-        for(j = 0; j < c->quantidades[i]; i++)
+        for(j = 0; j < c->quantidades[i]; j++)
             free(c->compradores[i][j]);
         free(c->compradores[i]);
     }
@@ -55,21 +54,18 @@ static int cmp(const void* a, const void* b, void* c) {
     return strcmp((char*) a, (char*) b);
 }
 
-static ProdCli prodCliInit(char* cliente, char* produto, Tipo tipo, int quantidade, double total, int mes) {
+static ProdCli prodCliInit(char* cliente, char* produto, int quantidade, double total, int mes) {
     ProdCli pcl = malloc(sizeof(struct prodCli));
     pcl->prod = malloc(strlen(produto) + 1);
     strcpy(pcl->prod, produto);
     pcl->cliente = cliente;
-    memset(pcl->tipo, false, 2 * sizeof(bool));
     memset(pcl->quantidade, 0, 12 * sizeof(int));
-    pcl->tipo[tipo] = true;
     pcl->quantidade[mes - 1] += quantidade;
     pcl->total = total;
     return pcl;
 }
 
-static void prodCliUpdate(ProdCli pcl, Tipo tipo, int quantidade, int mes, double total) {
-    pcl->tipo[tipo] = true;
+static void prodCliUpdate(ProdCli pcl, int quantidade, int mes, double total) {
     pcl->quantidade[mes - 1] += quantidade;
     pcl->total += total;
 }
@@ -89,13 +85,13 @@ static CliCompra cliCompraInit(const char* cliente) {
     return cc;
 }
 
-static void cliCompraUpdate(CliCompra cc, char* produto, Tipo tipo, int quantidade, double total, int mes) {
+static void cliCompraUpdate(CliCompra cc, char* produto, int quantidade, double total, int mes) {
     ProdCli pcl = g_hash_table_lookup(cc->prodCli, produto);
     cc->quantidade[mes-1] += quantidade;
     if(pcl) 
-        prodCliUpdate(pcl, tipo, quantidade, mes, total);
+        prodCliUpdate(pcl, quantidade, mes, total);
     else {
-        pcl = prodCliInit(cc->cliente, produto, tipo, quantidade, total, mes);
+        pcl = prodCliInit(cc->cliente, produto, quantidade, total, mes);
         g_hash_table_insert(cc->prodCli, pcl->prod, pcl);
     }
 } 
@@ -107,21 +103,30 @@ static void cliCompraDestroy(void* c) {
     free(cc);
 }
 
-static ProdCompra prodCompraInit(const char* prod, const char* cli) {
+static ProdCompra prodCompraInit(const char* prod, const char* cli, const Tipo tipo) {
     ProdCompra r = malloc(sizeof(struct prodCompra));
     char* cliente = malloc(strlen(cli) + 1);
+    Tipo* t = malloc(sizeof(Tipo));
+    *t = tipo;
     strcpy(cliente, cli);
     r->prod = malloc(strlen(prod) + 1);
     strcpy(r->prod, prod);
-    r->quemComprou = g_tree_new_full(cmp, NULL, free, NULL);
-    g_tree_insert(r->quemComprou, cliente, cliente);
+    r->quemComprou = g_tree_new_full(cmp, NULL, free, free);
+    g_tree_insert(r->quemComprou, cliente, t);
     return r;
 } 
 
-static void prodCompraUpdate(ProdCompra r, char* client) {
-    char* cliente = malloc(strlen(client) + 1);
-    strcpy(cliente, client);
-    g_tree_insert(r->quemComprou, cliente, cliente);
+static void prodCompraUpdate(ProdCompra r, char* client, Tipo t) {
+    Tipo* tipo = g_tree_lookup(r->quemComprou, client);
+    if(tipo && *tipo != t) 
+        *tipo = AL;
+    else if(!tipo) {
+        char* cliente = malloc(strlen(client) + 1);
+        strcpy(cliente, client);
+        tipo = malloc(sizeof(Tipo));
+        *tipo = t;
+        g_tree_insert(r->quemComprou, cliente, tipo);
+    }
 }
 
 static void prodCompraDestroy(void* o) {
@@ -133,12 +138,12 @@ static void prodCompraDestroy(void* o) {
 
 static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
     Compradores c = (Compradores) data;
-    ProdCli r = (ProdCli) value;
-    if(r->tipo[N]) {
+    Tipo t = *(Tipo*) value;
+    if(t != P) {
         c->compradores[N][c->quantidades[N]] = malloc(strlen((char*) key) + 1);
         strcpy(c->compradores[N][c->quantidades[N]++], (char*) key);
     }
-    if(r->tipo[P]) {
+    if(t != N) {
         c->compradores[P][c->quantidades[P]] = malloc(strlen((char*) key) + 1);
         strcpy(c->compradores[P][c->quantidades[P]++], (char*) key);
     }
@@ -146,7 +151,7 @@ static gboolean productLetter(gpointer key, gpointer value, gpointer data) {
 }
 
 Compradores produtoQuemComprou(const Filiais f, const char* id) {
-    ProdCompra p = g_hash_table_lookup(f->cliCompra, id);
+    ProdCompra p = g_hash_table_lookup(f->prodCompra, id);
     int size;
     Compradores c = malloc(sizeof(struct compradores));
     size = p ? g_tree_nnodes(p->quemComprou) : 0;
@@ -170,16 +175,16 @@ void filialUpdate(Filiais f, Venda v) {
     ProdCompra pc = g_hash_table_lookup(f->prodCompra, produto);
     CliCompra cc = g_hash_table_lookup(f->cliCompra, cliente);
     if(cc)
-        cliCompraUpdate(cc, produto, getTipoSale(v), getQuantSale(v), getTotalSale(v), getMesSale(v));
+        cliCompraUpdate(cc, produto, getQuantSale(v), getTotalSale(v), getMesSale(v));
     else {
         cc = cliCompraInit(cliente);
-        cliCompraUpdate(cc, produto, getTipoSale(v), getQuantSale(v), getTotalSale(v), getMesSale(v));
+        cliCompraUpdate(cc, produto, getQuantSale(v), getTotalSale(v), getMesSale(v));
         g_hash_table_insert(f->cliCompra, cc->cliente, cc);
     }
     if(pc)
-        prodCompraUpdate(pc, cliente);
+        prodCompraUpdate(pc, cliente, getTipoSale(v));
     else {
-        pc = prodCompraInit(produto, cliente);
+        pc = prodCompraInit(produto, cliente, getTipoSale(v));
         g_hash_table_insert(f->prodCompra, pc->prod, pc);
     }
 }
@@ -216,7 +221,7 @@ void mergeUpdate(void* key, void* value, void* data) {
     for(i = 0; i < 12; i++)
         quants += valu->quantidade[i];
     if(tmp) tmp->total += valu->total; 
-    else g_hash_table_insert(dat, key, prodCliInit(valu->cliente, valu->prod, 0, quants, valu->total, 1));
+    else g_hash_table_insert(dat, key, prodCliInit(valu->cliente, valu->prod, quants, valu->total, 1));
 }
 
 int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr) {
