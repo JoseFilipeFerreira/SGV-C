@@ -47,14 +47,18 @@ void argvParser(int argc, char** argv){
             for(i = 0; i < 3; i++){
                 getFatMesSGV  (sgv, DEFAULT_PROD, N, i, 1);
                 getFatMesSGV  (sgv, DEFAULT_PROD, P, i, 1);
-                getQuantMesSGV(sgv, DEFAULT_PROD, N, i, 1);
-                getQuantMesSGV(sgv, DEFAULT_PROD, P, i, 1);
+                getNVendasFat(sgv, DEFAULT_PROD, N, i, 1);
+                getNVendasFat(sgv, DEFAULT_PROD, P, i, 1);
             }
             /*4*/
-            prodsNaoComprados(sgv, 3, &bloatTab);
+            i = prodsNaoComprados(sgv, 3, &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             /*5*/
-            clientesCompraramFilial(sgv, &bloatTab);
+            i = clientesCompraramFilial(sgv, &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             /*6*/
             getClientesNCompradores(sgv);
@@ -72,7 +76,9 @@ void argvParser(int argc, char** argv){
             filialGetProdutosCliente(compra, P, &bloatTab);
             compradoresDestroy(compra);
             /*10*/
-            sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab, DEFAULT_MES_HIGH);
+            i = sgvGetMaisCompradosCliente(sgv, DEFAULT_CLI, &bloatTab, DEFAULT_MES_HIGH);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             /*11*/
             nComprados = DEAFULT_SIZE;
@@ -84,15 +90,19 @@ void argvParser(int argc, char** argv){
                 }
             }
             /*12*/
-            sgvGetMaisVendidosCliente(sgv, DEFAULT_CLI, &bloatTab);
+            i = sgvGetMaisVendidosCliente(sgv, DEFAULT_CLI, &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
 
         case 2:
-            getSGVProductLetter(
+            i = getSGVProductLetter(
                 sgv,
                 (argc == 3 && argv[2][0] >= 'A' && argv[2][0] <= 'Z') ? argv[2][0] : DEFAULT_CHAR,
                 &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
 
@@ -102,19 +112,23 @@ void argvParser(int argc, char** argv){
             for(i = 0; i < 3; i++){
                 getFatMesSGV  (sgv, prod, N, i, mes);
                 getFatMesSGV  (sgv, prod, P, i, mes);
-                getQuantMesSGV(sgv, prod, N, i, mes);
-                getQuantMesSGV(sgv, prod, P, i, mes);
+                getNVendasFat(sgv, prod, N, i, mes);
+                getNVendasFat(sgv, prod, P, i, mes);
             }
             break;
         case 4:
-            prodsNaoComprados(
+            i = prodsNaoComprados(
                 sgv,
                 (argc == 3 && atoi(argv[2]) >= 0 && atoi(argv[2]) <= 3) ? atoi(argv[2]) : 3,
                 &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
         case 5:
-            clientesCompraramFilial(sgv, &bloatTab);
+            i = clientesCompraramFilial(sgv, &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
         case 6:
@@ -141,11 +155,13 @@ void argvParser(int argc, char** argv){
             compradoresDestroy(compra);
             break;
         case 10:
-            sgvGetMaisCompradosCliente(
+            i = sgvGetMaisCompradosCliente(
                 sgv,
                 (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI,
                 &bloatTab,
                 (argc == 4 && atoi(argv[4]))?atoi(argv[4]) : DEFAULT_MES_HIGH);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
         case 11:
@@ -159,10 +175,12 @@ void argvParser(int argc, char** argv){
             }
             break;
         case 12:
-            sgvGetMaisVendidosCliente(
+            i = sgvGetMaisVendidosCliente(
                 sgv,
                 (argc == 3 && searchSGVClient(sgv, argv[2]))?argv[2] :  DEFAULT_CLI,
                 &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             break;
         default:

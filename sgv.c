@@ -262,17 +262,10 @@ Compradores sgvQuemComprouProduto(const char* id, Filial filial, SGV sgv) {
     return produtoQuemComprou(sgv->filiais[filial], id);
 }
 
-int getQuantMesSGV(const SGV sgv, const char* id, Filial filial) {
-    FatP t = searchFatura(sgv->faturas, id);
-    if(t) 
-        return getQuantMesFilial(t, filial);
-   return 0;
-}
-
 int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array) {
     return getMaisVendidosCliente(sgv->filiais, id, 3, array);
 }
 
 int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array, int mes) {
-    return getMaisCompradosCliente(sgv->filiais, id, array, mes);
+    return getMaisCompradosCliente(sgv->filiais, 3, id, array, mes);
 }

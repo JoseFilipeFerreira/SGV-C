@@ -77,13 +77,14 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** arr
  * Funcao relativa a query 10
  *
  * @param f Conjunto de filiais a procurar
+ * @param N Numero de filiais
  * @param id Codigo de cliente
  * @param array Array a preencher com os codigos de produto
  * @param mes Mes em qual foram efetuadas as compras
  *
  * @return Numero de codigos de produto colocados no array
  */
-int getMaisCompradosCliente(const Filiais f[], const char* id, char*** array, int mes);
+int getMaisCompradosCliente(const Filiais f[], int N, const char* id, char*** array, int mes);
 
 /**
  * \brief Calcula quem comprou um produto na filial

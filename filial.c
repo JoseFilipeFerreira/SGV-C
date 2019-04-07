@@ -181,6 +181,8 @@ void filialUpdate(Filiais f, Venda v) {
         pc = prodCompraInit(produto, cliente, getTipoSale(v));
         g_hash_table_insert(f->prodCompra, pc->prod, pc);
     }
+    free(cliente);
+    free(produto);
 }
 
 int getClientQuant(const char* id, int mes, const Filiais f) {
@@ -214,12 +216,21 @@ void mergeUpdate(void* key, void* value, void* data) {
     int quants = 0, i;
     for(i = 0; i < 12; i++)
         quants += valu->quantidade[i];
-    if(tmp) tmp->total += valu->total; 
-    else g_hash_table_insert(dat, key, prodCliInit(valu->cliente, valu->prod, quants, valu->total, 1));
+    if(tmp) {
+        tmp->total += valu->total;
+        for(i = 0; i < 12; i++)
+            tmp->quantidade[i] += valu->quantidade[i];
+    }
+    else {
+        tmp = prodCliInit(valu->cliente, valu->prod, valu->quantidade[0], valu->total, 1);
+        for(i = 1; i < 12; i++)
+            tmp->quantidade[i] += valu->quantidade[i];
+        g_hash_table_insert(dat, key, tmp);
+    }
 }
 
 int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr) {
-    GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
+    GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCliDestroy);
     GHashTableIter r;
     ProdCli prod;
     char* lixo;
@@ -229,9 +240,9 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
         if(cliCompra)
             g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
     }
+    size = g_hash_table_size(merge);
     g_hash_table_iter_init(&r, merge);
     i=0;
-    size = g_hash_table_size(merge);
     ProdCli array[size];
     *rrr = malloc(sizeof(char*) * 3);
     while(g_hash_table_iter_next(&r, (void*) &lixo, (void*) &prod))
@@ -245,8 +256,8 @@ int getMaisVendidosCliente(const Filiais f[], const char* id, int N, char*** rrr
     return i;
 }
 
-int getMaisCompradosCliente(const Filiais f[], const char* id, char*** rrr, int mes) {
-    GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
+int getMaisCompradosCliente(const Filiais f[], int N, const char* id, char*** rrr, int mes) {
+    GHashTable* merge = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, prodCliDestroy);
     GHashTableIter r;
     ProdCli prod;
     char* lixo;
@@ -256,9 +267,9 @@ int getMaisCompradosCliente(const Filiais f[], const char* id, char*** rrr, int 
         if(cliCompra)
             g_hash_table_foreach(cliCompra->prodCli, mergeUpdate, merge);
     }
+    size = g_hash_table_size(merge);
     g_hash_table_iter_init(&r, merge);
     i=0;
-    size = g_hash_table_size(merge);
     ProdCli array[size];
     *rrr = malloc(sizeof(char*) * size);
     while(g_hash_table_iter_next(&r, (void*) &lixo, (void*) &prod))

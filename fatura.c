@@ -54,7 +54,7 @@ int getQuantMesFilial(FatP f, Filial filial) {
 
 int getNVendasFatura(FatP f, int mes, Filial filial, Tipo tipo) {
     if(filial == ALL) 
-        return f->nVendas[tipo][mes][0] + f->nVendas[tipo][mes][1] + f->nVendas[tipo][mes][2];
+        return f->nVendas[tipo][mes - 1][0] + f->nVendas[tipo][mes - 1][1] + f->nVendas[tipo][mes - 1][2];
     return f->nVendas[tipo][mes - 1][filial];
 }
 
