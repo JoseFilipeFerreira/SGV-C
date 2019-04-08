@@ -93,20 +93,12 @@ SGV sgvInicializado(Inicializador i) {
     return sgv;
 }
 
-Produtos getProdutosTodos(const SGV sgv) {
+static Produtos getProdutosTodos(const SGV sgv) {
     return sgv->produtos;
 }
 
-Clientes getClientesTodos(const SGV sgv) {
+static Clientes getClientesTodos(const SGV sgv) {
     return sgv->clientes;
-}
-
-void setProduto(SGV sgv, const Produtos p) {
-    sgv->produtos = p;
-}
-
-void setCliente(SGV sgv, const Clientes p) {
-    sgv->clientes = p;
 }
 
 void destroySGV(SGV sgv) {

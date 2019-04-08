@@ -41,7 +41,9 @@ void argvParser(int argc, char** argv){
     switch(atoi(argv[1])){
         case 1: /* Answer all querys */
             /*2*/
-            getSGVProductLetter( sgv, DEFAULT_CHAR, &bloatTab);
+            i = getSGVProductLetter( sgv, DEFAULT_CHAR, &bloatTab);
+            for(j = 0; j < i; j++)
+                free(bloatTab[j]);
             free(bloatTab);
             /*3*/
             for(i = 0; i < 3; i++){
@@ -88,7 +90,9 @@ void argvParser(int argc, char** argv){
                     getQuantMesFilial(fatArr[i], j);
                     sgvQuantosCompraramProdutos(faturaGetId(fatArr[i]), j, sgv);
                 }
+                destroyFact(fatArr[i]);
             }
+            free(fatArr);
             /*12*/
             i = sgvGetMaisVendidosCliente(sgv, DEFAULT_CLI, &bloatTab);
             for(j = 0; j < i; j++)

@@ -27,38 +27,6 @@ typedef struct inicializador* Inicializador;
 SGV sgvInicializado(Inicializador i);
 
 /**
-@brief Obter os Produtos todos
-
-@param sgv Struct com os produtos todos
-@return Produtos Produtos todos
-*/
-Produtos getProdutosTodos(const SGV sgv);
-
-/**
-@brief Obter os Clientes todos
-
-@param sgv Struct com os clientes todos
-@return Produtos Clientes todos
-*/
-Clientes getClientesTodos(const SGV sgv);
-
-/**
-@brief Define os produtos todos
-
-@param sgv local onde vai ser definido
-@param p Produtos todos
-*/
-void setProdutos(SGV sgv, const Produtos p);
-
-/**
-@brief Define os Clientes todos
-
-@param sgv local onde vai ser definido
-@param p Produtos todos
-*/
-void setClientes(SGV sgv, const Clientes p);
-
-/**
 @brief Libertar um SGV
 
 @param sgv SGV a libertar
@@ -200,6 +168,19 @@ double getTFactMes(const SGV sgv, int inicio, int fim);
 */
 int getProdNComprados(const SGV sgv);
 
+/**
+ * \brief Obtem a lista de produtos cujo id começa por uma determinada letra
+ *
+ * Função relativa à query 2
+ *
+ * É necessário fazer free dos elementos do array
+ *
+ * @param sgv Struct que contem o sgv
+ * @param id Letra que pretendemos procurar
+ * @param array Array a preencher com os ids dos produtos obtidos
+ *
+ * @return Número de produtos começados com a letra dada
+ */
 int getSGVProductLetter(const SGV sgv, const char id, char*** array);
 
 /**
@@ -230,26 +211,121 @@ int searchSGVProduct(SGV sgv, char* produto);
 */
 int searchSGVClient(SGV sgv, char* cliente);
 
+/**
+ * \brief Calcula o total faturado de um produto num mês 
+ *
+ * @param sgv SGV com a informação da faturação
+ * @param produto Id do produto a pesquisar
+ * @param tipo Tipo de venda do qual pretendemos a faturação
+ * @param filial Filial onde foram efetuadas as vendas
+ * @param mes Mês onde foram efetuadas as vendas
+ *
+ * @return Total faturado por um produto conforme os parametros dados
+ */
 double getFatMesSGV(const SGV sgv, const char* produto, Tipo tipo, Filial filial, int mes);
 
-int getQuantFatSGV(const SGV sgv, const char* produto, Tipo tipo, Filial filial, int mes);
-
+/**
+ * \brief Calcula o número de clientes que não efetuaram compras
+ *
+ * @param sgv SGV com a informação dos clientes
+ *
+ * @return Número de clientes que nunca fizeram compras
+ */
 int getClientesNCompradores(const SGV sgv);
 
+/**
+ * \brief Determina a lista de produtos mais vendidos, ordenados por ordem
+ * decrescente
+ *
+ * É necessário fazer free dos elementos do array de return
+ *
+ * @param sgv SGV com a informação da faturação
+ * @param N Tamanho do array de return
+ *
+ * @return Lista de Faturas ordenadas
+ */
 FatP* getMaisVendidos(const SGV sgv, int* N);
 
+/**
+ * \brief Calcula o número de vendas num mês de um produto
+ *
+ * @param sgv SGV com a informação da faturação
+ * @param id Id do produto a procurar
+ * @param tipo Tipo de venda do qual pretendemos o número de vendas
+ * @param filial Filial onde foram efetuadas as vendas
+ * @param mes Mês onde foram feitas as vendas
+ *
+ * @return Total de vendas do produto dado conforme os parametros
+ */
 int getNVendasFat(const SGV sgv, const char* id, Tipo tipo, Filial filial, int mes);
 
+/**
+ * \brief Calcula o número total de produtos comprados por um cliente
+ *
+ * @param id Id do cliente em questão
+ * @param mes Mês onde foram efetuadas as compras
+ * @param filial Filial onde o cliente fez as compras
+ * @param sgv SGV com a informação da faturação e filiais
+ *
+ * @return Número de produtos que o cliente em questão fez conforme os 
+ * parametros
+ */
 int getClientQuantSGV(const char* id, int mes, int filial, const SGV sgv);
 
+/**
+ * \brief Calcula o número de clientes que compraram um determinado produto
+ *
+ * @param id Produto a pesquisar
+ * @param filial Filial onde o produto foi vendido
+ * @param sgv SGV com a informação das filias
+ * 
+ * @return Número de clientes que compraram o produto na filial dada
+ */
 int sgvQuantosCompraramProdutos(const char* id, int filial, SGV sgv);
 
+/**
+ * \brief Determina a lista de quem comprou um produto, separado por tipo de
+ * venda
+ *
+ * @param id Produto a pesquisar
+ * @param f Filial onde foram feitas as compras
+ * @param sgv SGV com a informação das filiais
+ *
+ * @return Estrutura com a informação de quem comprou o produto na filial dada
+ */
 Compradores sgvQuemComprouProduto(const char* id, Filial f, SGV sgv);
 
+/**
+ * \brief Calcula os três produtos onde um cliente gastou mais dinheiro
+ *
+ * @param sgv SGV com a informação das filiais
+ * @param id Id do cliente em questão
+ * @param array Array a preencher com os ids de produtos
+ *
+ * @return Número de produtos inseridos no array dado
+ */
 int sgvGetMaisVendidosCliente(const SGV sgv, const char* id, char*** array);
 
+/**
+ * \brief Calcula a lista ordenada de produtos mais comprados por um cliente
+ *
+ * @param sgv SGV com a informação das filiais
+ * @param id Id do cliente em questão
+ * @param array Array a preencher com os ids de produtos
+ * @param mes Mês onde foram efetuadas as compras
+ *
+ * @return Número de produtos inseridos no array dado
+ */
 int sgvGetMaisCompradosCliente(const SGV sgv, const char* id, char*** array, int mes);
 
+/**
+ * \brief Determina a lista dos clientes que compraram em todas as filiais
+ *
+ * @param sgv SGV com a informação de clientes
+ * @param array Array a preencher com os ids de clientes
+ *
+ * @return Número de clientes inseridos no array dado
+ */
 int clientesCompraramFilial (const SGV sgv, char*** array);
 
 /**
