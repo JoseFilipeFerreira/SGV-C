@@ -3,14 +3,8 @@
 #include <stdlib.h>
 #include "glibW.h"
 
-#define LETTERS 26
-#define IND(x) ((x) - 'A')
-
-/**
-\brief AVL que contem os clientes.
-*/
 struct clientes {
-    GHashTable* avlC; /**< Array de AVL para guardar os clientes lidos */
+    GHashTable* avlC; /**< Hashtable para guardar os clientes lidos */
 };
 
 int searchClient(const Clientes p, const char* id) {

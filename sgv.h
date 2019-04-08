@@ -206,7 +206,7 @@ int searchSGVProduct(SGV sgv, char* produto);
 @brief Afere se um cliente é válido ou não
 
 @param sgv struct que contem sgv
-@param ciente cliente a validar
+@param cliente cliente a validar
 @return int resultado da aferição
 */
 int searchSGVClient(SGV sgv, char* cliente);

@@ -1,23 +1,10 @@
 #include "faturas.h"
 #include <gmodule.h>
-/**
-  @brief Número de Letras no alfabeto
-  */
-#define LETTERS 26
 
-/**
-  @brief Converter uma Letra no seu indice
-  */
-#define IND(x) ((x) - 'A')
-
-/**
-\brief Faturas Lidas.
-*/
 struct faturas {
-    int produtos;
     double totalFacts[12]; /**< Total faturado */
-    int totalVendas[12];
-    GHashTable* avlF; /**< Matriz de AVL para guardar os faturas */
+    int totalVendas[12];  /**< Total de vendas*/
+    GHashTable* avlF; /**< Hashtable para guardar os faturas */
 };
 
 FatP searchFatura(const Faturas p, const char* id) {
@@ -71,7 +58,7 @@ Faturas initFaturas() {
     return p;
 }
 
-Faturas addFatura(const Venda p, Faturas l) {
+void addFatura(const Venda p, Faturas l) {
     char* id = getProductSale(p);
     FatP ree = searchFatura(l, id);
     if(!ree) {
@@ -84,7 +71,6 @@ Faturas addFatura(const Venda p, Faturas l) {
     }
     l->totalFacts[getMesSale(p) - 1] += getTotalSale(p);
     l->totalVendas[getMesSale(p) - 1]++;
-    return l;
 }
 
 void clearFaturas(Faturas p) {

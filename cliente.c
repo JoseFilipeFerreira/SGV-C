@@ -4,12 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/**
-@brief Struct para representar a informação de um cliente
-*/
 struct cliente {
     char* id; /**< ID do Cliente*/
-    bool comprou[3];
+    bool comprou[3]; /**< Informação em que filial comprou */
 };
 
 bool verifyClient(const char* id) {

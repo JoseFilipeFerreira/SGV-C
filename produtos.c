@@ -1,25 +1,13 @@
 #include "produtos.h"
 #include <gmodule.h>
-/**
-@brief Número de Letras no alfabeto
-*/
-#define LETTERS 26
 
-/**
-@brief Converter uma Letra no seu indice
-*/
-#define IND(x) ((x) - 'A')
-
-/**
-\brief Produtos Lidos.
-*/
 struct produtos {
-    GHashTable* avlP; /**< Matriz de AVL para guardar os produtos */
+    GHashTable* avlP; /**< Hashtable para guardar os produtos */
 };
 
 typedef struct filialSearcher {
-    int filial;
-    char*** array;
+    int filial; /**< Filial referente à lista de produtos*/
+    char*** array; /**< Lista com os produtos vendidos numa filial*/
 } FilialSearcher;
 
 bool searchProduct(const Produtos p, const char* id) {

@@ -5,31 +5,31 @@
 #include <stdlib.h>
 
 struct filiais {
-    GHashTable* cliCompra;
-    GHashTable* prodCompra;
+    GHashTable* cliCompra; /**< Hashtable que relaciona clientes com produtos*/
+    GHashTable* prodCompra; /**< Hashtable que relaciona produtos com clientes*/
 };
 
 typedef struct cliCompra {
-    char* cliente;
-    GHashTable* prodCli;
-    int quantidade[12];
+    char* cliente; /**< Id do cliente */
+    GHashTable* prodCli; /**< Hashtable com informação de compras por produto*/
+    int quantidade[12]; /**< Quantidades totais compradas*/
 } *CliCompra;
 
 typedef struct prodCompra {
-    char* prod;
-    GHashTable* quemComprou;
+    char* prod; /**< Id do produtos*/
+    GHashTable* quemComprou; /**< Hashtable com informação de clientes que compraram produto*/
 } *ProdCompra;
 
 typedef struct prodCli {
-    char* prod;
-    char* cliente;
-    int quantidade[12];
-    double total;
+    char* prod; /**< Id do produtos*/
+    char* cliente; /**< Id do cliente */
+    int quantidade[12]; /**< Quantidades vendidas*/
+    double total; /**< Faturação total*/
 } *ProdCli;
 
 struct compradores {
-    char** compradores[2];
-    int quantidades[2];
+    char** compradores[2]; /**< Id de clientes por tipo de venda*/
+    int quantidades[2]; /**< Quantidades compradas por tipo de venda*/
 };
 
 int filialGetProdutosCliente(Compradores c, Tipo t, char*** array) {

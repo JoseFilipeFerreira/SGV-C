@@ -3,10 +3,10 @@
 #include <string.h>
 
 struct faturacaoProd {
-    char* prod;
-    int nVendas[2][12][3];
-    double total[2][12][3];
-    int quant[3];
+    char* prod; /**< Id do produto*/
+    int nVendas[2][12][3]; /**< Número de vendas */
+    double total[2][12][3]; /**< Total faturado */
+    int quant[3]; /**< Quantidades vendidas */
 };
 
 FatP initFatP(Venda p) {

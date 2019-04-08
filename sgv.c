@@ -3,19 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
-@brief Guardar a base de dados 
-*/
 struct sgv {
-    Produtos produtos; /**< Todos os produtos lidos */
-    Clientes clientes; /**< Todos os clientes lidos */
-    Faturas faturas;   /**< Todas as faturas lidas */
-    Filiais filiais[3];
+    Produtos produtos;  /**< Todos os produtos lidos */
+    Clientes clientes;  /**< Todos os clientes lidos */
+    Faturas faturas;    /**< Todas as faturas lidas */
+    Filiais filiais[3]; /**< Todas as filiais lidas */
 };
 
-/**
-@brief Indica como inicializar a base de dados
-*/
 struct inicializador {
 
     char* pathC; /**< Caminho para o ficheiro de Clientes */

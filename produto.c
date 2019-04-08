@@ -4,12 +4,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
-@brief Struct para representar a informação de um produto
-*/
 struct produto {
     char* id; /**< ID do Produto*/
-    bool comprou[3];
+    bool comprou[3]; /**< Informação em que filial foi comprado*/
 };
 
 bool verifyProduct(const char* id) {

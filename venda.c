@@ -85,7 +85,7 @@ char* getProductSale(Venda v) {
     return r;
 }
 
-int getFilialSale(Venda v) {
+Filial getFilialSale(Venda v) {
     return v->filial;
 }
 
