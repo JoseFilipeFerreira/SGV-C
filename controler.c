@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 static void menuClientes   (int* loop, SGV* sgv);
 static void menuProdutos   (int* loop, SGV* sgv);
@@ -25,9 +28,12 @@ void startControler(){
 
 }
 
-void menuShowLoad(Inicializador i){
+void menuShowLoad(Inicializador i, double time){
     system("clear");
     printf(BOLD KRED "\t-- Load Info [1] --\n\n" RESET);
+
+    printf(KGREY "Load Time: %f s%s\n\n", time, RESET);
+
     printf("Clientes Path:    %s\n", getClientPath(i));
     printf("Clientes Lidos:   %d\n", getLinesClients(i));
     printf("Clientes Válidos: %d\n\n", getNumberClients(i));
@@ -39,6 +45,8 @@ void menuShowLoad(Inicializador i){
     printf("Vendas Path:      %s\n", getSalePath(i));
     printf("Vendas Lidas:     %d\n", getLinesSales(i));
     printf("Vendas Válidas:   %d\n", getNumberSales(i));
+
+
     printf(HIDE_CURSOR);
     getchar();
     printf(SHOW_CURSOR);
@@ -46,6 +54,7 @@ void menuShowLoad(Inicializador i){
 
 void menuLoadFile(int* loop, SGV* sgv){
     int r;
+    clock_t start, end;
     if(*sgv) destroySGV(*sgv);
     *sgv = NULL;
     while(*loop){
@@ -67,9 +76,11 @@ void menuLoadFile(int* loop, SGV* sgv){
                 setClientPath(i, "db/Clientes.txt", 1);
                 setProductPath(i, "db/Produtos.txt", 1);
                 setSalePath(i, "db/Vendas_1M.txt", 1);
+                start = clock();
                 *sgv = sgvInicializado(i);
+                end = clock();
 
-                menuShowLoad(i);
+                menuShowLoad(i, ((double) (end - start)) / CLOCKS_PER_SEC);
                 menuCategories(loop, sgv);
                 break;
 
@@ -128,6 +139,7 @@ void lCustomSingle(char* fstPrint, char* buf, int* filter){
 }
 
 void menuLoadCustom(int* loop, SGV* sgv){
+    clock_t start, end;
     char * bufCli = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufProd = malloc(sizeof(char) * MAX_FILE_NAME);
     char * bufSales = malloc(sizeof(char) * MAX_FILE_NAME);
@@ -148,15 +160,18 @@ void menuLoadCustom(int* loop, SGV* sgv){
     setClientPath(i, bufCli, filterCli);
     setProductPath(i, bufProd, filterProd);
     setSalePath(i, bufSales, filterSales);
+    start = clock();
     *sgv = sgvInicializado(i);
-    free(bufCli);
-    free(bufProd);
-    free(bufSales);
+    end = clock();
 
     printf(SHOW_CURSOR);
 
-    menuShowLoad(i);
+    menuShowLoad(i, ((double) (end - start)) / CLOCKS_PER_SEC);
     menuCategories(loop, sgv);
+
+    free(bufCli);
+    free(bufProd);
+    free(bufSales);
 }
 
 void menuCategories(int* loop, SGV* sgv){

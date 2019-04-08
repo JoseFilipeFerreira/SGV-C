@@ -53,10 +53,22 @@ int messageCheck(char* message){
 }
 
 void replicate(char* s, int n){
-    int i;
-    for(i = 0; i < n; i++)
-        printf("%s", s);
+    int s_len;
+    char *buf;
+
+     if (n < 1)
+        return;
+        
+    s_len = strlen(s);
+    buf = malloc(sizeof(char) * s_len * n + 1);
+    buf[0] = '\0';
+
+    while (n--)
+        strcat(buf, s);
+
+    printf("%s", buf);
     fflush(stdout);
+    free(buf);
 }
 
 int printStrings(char** s, int ss, int pSize, int nCols, int pN){

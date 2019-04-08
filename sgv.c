@@ -1,6 +1,8 @@
 #include "sgv.h"
-
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 /**
 @brief Guardar a base de dados 
 */

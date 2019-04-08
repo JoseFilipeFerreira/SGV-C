@@ -2,6 +2,7 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /* Default query parameters */
 #define DEFAULT_FIL  1

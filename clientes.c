@@ -1,6 +1,7 @@
 #include "clientes.h"
 #include <string.h>
 #include <stdlib.h>
+#include "glibW.h"
 
 #define LETTERS 26
 #define IND(x) ((x) - 'A')

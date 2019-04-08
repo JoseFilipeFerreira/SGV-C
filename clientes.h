@@ -5,7 +5,6 @@
 #ifndef ___CLIENTES_H___
 #define ___CLIENTES_H___
 
-#include "glibW.h"
 #include "cliente.h"
 
 /**

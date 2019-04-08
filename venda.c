@@ -1,4 +1,6 @@
 #include "venda.h"
+#include <stdlib.h>
+#include <string.h>
 
 #define CAMPOSVENDA 7
 

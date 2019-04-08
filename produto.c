@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "glibW.h"
 
 /**
 @brief Struct para representar a informação de um produto

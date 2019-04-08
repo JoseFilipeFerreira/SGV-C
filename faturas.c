@@ -1,5 +1,5 @@
 #include "faturas.h"
-
+#include <gmodule.h>
 /**
   @brief Número de Letras no alfabeto
   */

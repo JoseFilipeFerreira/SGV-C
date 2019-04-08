@@ -2,6 +2,8 @@
 #include "formating.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define BUF_SIZE 100
 
@@ -174,7 +176,7 @@ void prodStatsMes(SGV sgv){
 
     while(loop){
         system("clear");
-        printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+        printf(BOLD KRED "\t-- Categoria/Produtos/[3] --\n\n"RESET);
         printf("1 - Filial a Filial\n");
         printf("2 - Total\n");
 
@@ -182,7 +184,7 @@ void prodStatsMes(SGV sgv){
         { 
             case 1:
                 system("clear");
-                printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+                printf(BOLD KRED "\t-- Categoria/Produtos/[3] --\n\n"RESET);
                 printf("Produto: %s\n\n", produto);
 
                 for(fil = 0; fil < 3; fil++){
@@ -200,7 +202,7 @@ void prodStatsMes(SGV sgv){
             
             case 2:
                 system("clear");
-                printf(BOLD KRED "-- Categoria/Produtos/[3] --\n\n"RESET);
+                printf(BOLD KRED "\t-- Categoria/Produtos/[3] --\n\n"RESET);
                 printf("Produto: %s\n\n", produto);
 
                 printf("Total faturado no mês %d\n", mes);
@@ -239,7 +241,7 @@ void prodsNCompradosUI(SGV sgv){
 
     while(1){
         system("clear");
-        printf(BOLD KRED "\t-- Categoria/Produtos/[4] --\n" RESET);
+        printf(BOLD KRED "\t-- Categoria/Produtos/[4] --\n\n" RESET);
         printf(BOLD "Produtos não comprados:\n" RESET);
         printf("1 - Filial 1\n");
         printf("2 - Filial 2\n");
@@ -248,10 +250,12 @@ void prodsNCompradosUI(SGV sgv){
 
         fgets(initBuf, BUF_SIZE, stdin);
 
-        f = atoi(strtok(buf, "\n"));
+        if (strtok(buf, "\n")){
+            f = atoi(buf);
 
-        if(f>0 && f<13)
-            break;
+            if(f>0 && f<13)
+                break;
+        }
     }
 
     sizeProdTab = prodsNaoComprados(sgv, f-1, &prodTab);
@@ -284,7 +288,7 @@ void clientesFieis(SGV sgv){
 */
 void clientesInfieis(SGV sgv){
     system("clear");
-    printf(BOLD KRED"-- Categoria/Clientes/[6] --\n\n"RESET);
+    printf(BOLD KRED"\t-- Categoria/Clientes/[6] --\n\n"RESET);
 
     printf("Clientes que não compraram: %d\n", getClientesNCompradores(sgv));
     printf("Produtos não comprados:     %d\n", getProdNComprados(sgv));
@@ -387,7 +391,7 @@ void tabVendasIntervalo(SGV sgv){
 @brief DONE : Query 9
 */
 void clientesCompraramProduto(SGV sgv){
-    int i, loop = 1;
+    int loop = 1;
     int sizeCliTabN, sizeCliTabP, fil, r = 1;
     Compradores compra;
     char** cliTabN, **cliTabP;
@@ -459,10 +463,6 @@ void clientesCompraramProduto(SGV sgv){
     free(buf);
     free(produto);
     compradoresDestroy(compra);
-    for(i = 0; i < sizeCliTabN; i++)
-        free(cliTabN[i]);
-    for(i = 0; i < sizeCliTabP; i++)
-        free(cliTabP[i]);
 }
 
 /**
@@ -487,7 +487,6 @@ void prodMaisCompradoCli(SGV sgv){
     menuPaginasDraw("Categoria/Clientes/[10]", prodTab, sizeProdTab, 15 , 6);
 
     free(cliente);
-    free(prodTab);
     for(i = 0; i < sizeProdTab; i++)
         free(prodTab[i]);
     free(prodTab);
@@ -560,7 +559,7 @@ void nMaisComprados(SGV sgv){
 void clienteMaisComprados(SGV sgv, char* cliente){
     char**prodTab;
     int i, sizeProdTab;
-    printf("\n\nProdutos mais comprados [12]\n");
+    printf("\n\nProdutos mais comprados [12]:\n");
     sizeProdTab = sgvGetMaisVendidosCliente(sgv, cliente, &prodTab);
 
     for(i = 0; i < sizeProdTab; i++){
@@ -582,7 +581,7 @@ void statsClientAno(SGV sgv){
     
     system("clear");
     printf(BOLD KRED "\t-- Categoria/Clientes/[7/12] --\n\n" RESET);
-    printf("Cliente: %s\n\n", cliente);
+    printf(BOLD "Cliente: %s\n\n%s", cliente, RESET);
 
     tabClientAno(sgv, cliente);
     clienteMaisComprados(sgv, cliente);

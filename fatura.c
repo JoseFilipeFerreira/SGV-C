@@ -1,4 +1,6 @@
 #include "fatura.h"
+#include <stdlib.h>
+#include <string.h>
 
 struct faturacaoProd {
     char* prod;

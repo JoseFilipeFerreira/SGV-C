@@ -1,6 +1,5 @@
 #include "filial.h"
 #include <stdbool.h>
-#include "glibW.h"
 #include <gmodule.h>
 #include <string.h>
 #include <stdlib.h>

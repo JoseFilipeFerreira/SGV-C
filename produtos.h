@@ -5,7 +5,6 @@
 #ifndef ___PRODUTOS_H___
 #define ___PRODUTOS_H___
 
-#include "glibW.h"
 #include "produto.h"
 
 /**
