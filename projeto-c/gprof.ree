@@ -1,0 +1,454 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 21.89      0.28     0.28  4455540     0.00     0.00  mkFatura
+ 13.29      0.45     0.17  4455540     0.00     0.00  cliCompraUpdate
+  9.77      0.58     0.13  5000000     0.00     0.00  verifySale
+  9.38      0.70     0.12  9455540     0.00     0.00  saleFields
+  7.82      0.80     0.10  4455540     0.00     0.00  filialUpdate
+  7.03      0.89     0.09                             prodCliDestroy
+  5.08      0.95     0.07  4455540     0.00     0.00  mkSale
+  3.91      1.00     0.05        1     0.05     1.15  sgvInicializado
+  2.74      1.04     0.04 13536700     0.00     0.00  getProductSale
+  2.74      1.07     0.04  8911080     0.00     0.00  getClientSale
+  2.34      1.10     0.03  5016384     0.00     0.00  verifyClient
+  1.95      1.13     0.03 17822160     0.00     0.00  getFilialSale
+  1.56      1.15     0.02                             destroyFact
+  1.17      1.16     0.02 17822160     0.00     0.00  getMesSale
+  1.17      1.18     0.02  8911080     0.00     0.00  getTipoSale
+  1.17      1.19     0.02  5000000     0.00     0.00  searchClient
+  0.78      1.20     0.01  4678833     0.00     0.00  verifyProduct
+  0.78      1.21     0.01  4455540     0.00     0.00  addFatura
+  0.78      1.22     0.01  4455540     0.00     0.00  destroySale
+  0.78      1.23     0.01  4455540     0.00     0.00  getPUnitSale
+  0.78      1.24     0.01        1     0.01     0.01  initFaturas
+  0.78      1.25     0.01                             prodCompraDestroy
+  0.78      1.26     0.01                             sgvGetMaisCompradosCliente
+  0.39      1.27     0.01  8911080     0.00     0.00  getQuantSale
+  0.39      1.27     0.01  4455540     0.00     0.00  clientesUpdateCompra
+  0.39      1.28     0.01        1     0.01     0.01  initClients
+  0.39      1.28     0.01                             naoComprou
+  0.00      1.28     0.00  8911080     0.00     0.00  getTotalSale
+  0.00      1.28     0.00  4507825     0.00     0.00  searchProduct
+  0.00      1.28     0.00  4455540     0.00     0.00  produtosUpdateCompra
+  0.00      1.28     0.00  4455540     0.00     0.00  updateBuyClient
+  0.00      1.28     0.00  4455540     0.00     0.00  updateCompra
+  0.00      1.28     0.00   891066     0.00     0.00  prodCliInit
+  0.00      1.28     0.00   342016     0.00     0.00  getIdProduct
+  0.00      1.28     0.00   171008     0.00     0.00  addProduct
+  0.00      1.28     0.00   171008     0.00     0.00  mkProduct
+  0.00      1.28     0.00   170080     0.00     0.00  initFatP
+  0.00      1.28     0.00    32768     0.00     0.00  getIdClient
+  0.00      1.28     0.00    16384     0.00     0.00  addClient
+  0.00      1.28     0.00    16384     0.00     0.00  mkClient
+  0.00      1.28     0.00        3     0.00     0.00  destroyFilial
+  0.00      1.28     0.00        3     0.00     0.00  filialInit
+  0.00      1.28     0.00        1     0.00     0.00  clearClients
+  0.00      1.28     0.00        1     0.00     0.00  clearFaturas
+  0.00      1.28     0.00        1     0.00     0.00  clearProducts
+  0.00      1.28     0.00        1     0.00     0.00  destroyInit
+  0.00      1.28     0.00        1     0.00     0.00  destroySGV
+  0.00      1.28     0.00        1     0.00     0.00  getClientNumber
+  0.00      1.28     0.00        1     0.00     0.00  getProductNumber
+  0.00      1.28     0.00        1     0.00     0.00  initInicial
+  0.00      1.28     0.00        1     0.00     0.00  initProducts
+  0.00      1.28     0.00        1     0.00     0.00  setClientPath
+  0.00      1.28     0.00        1     0.00     0.00  setProductPath
+  0.00      1.28     0.00        1     0.00     0.00  setSalePath
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.78% of 1.28 seconds
+
+index % time    self  children    called     name
+                0.05    1.10       1/1           argvParser [2]
+[1]     89.5    0.05    1.10       1         sgvInicializado [1]
+                0.01    0.33 4455540/4455540     addFatura [3]
+                0.10    0.21 4455540/4455540     filialUpdate [4]
+                0.13    0.12 5000000/5000000     verifySale [6]
+                0.07    0.06 4455540/4455540     mkSale [8]
+                0.02    0.00 13366620/17822160     getFilialSale [15]
+                0.02    0.00 4455540/8911080     getClientSale [13]
+                0.01    0.00 4455540/13536700     getProductSale [12]
+                0.01    0.00 4455540/4455540     destroySale [21]
+                0.01    0.00       1/1           initFaturas [23]
+                0.01    0.00 4455540/4455540     clientesUpdateCompra [28]
+                0.01    0.00       1/1           initClients [29]
+                0.00    0.00  171008/4678833     verifyProduct [20]
+                0.00    0.00   16384/5016384     verifyClient [14]
+                0.00    0.00 4455540/4455540     updateCompra [34]
+                0.00    0.00 4455540/4455540     produtosUpdateCompra [32]
+                0.00    0.00 4455540/4455540     updateBuyClient [33]
+                0.00    0.00  171008/171008      addProduct [37]
+                0.00    0.00  171008/171008      mkProduct [38]
+                0.00    0.00  171008/342016      getIdProduct [36]
+                0.00    0.00   16384/16384       addClient [40]
+                0.00    0.00   16384/16384       mkClient [41]
+                0.00    0.00   16384/32768       getIdClient [39]
+                0.00    0.00       3/3           filialInit [43]
+                0.00    0.00       1/1           initProducts [52]
+                0.00    0.00       1/1           getProductNumber [50]
+                0.00    0.00       1/1           getClientNumber [49]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     89.5    0.00    1.15                 argvParser [2]
+                0.05    1.10       1/1           sgvInicializado [1]
+                0.00    0.00       1/1           initInicial [51]
+                0.00    0.00       1/1           setClientPath [53]
+                0.00    0.00       1/1           setProductPath [54]
+                0.00    0.00       1/1           setSalePath [55]
+                0.00    0.00       1/1           destroyInit [47]
+                0.00    0.00       1/1           destroySGV [48]
+-----------------------------------------------
+                0.01    0.33 4455540/4455540     sgvInicializado [1]
+[3]     26.5    0.01    0.33 4455540         addFatura [3]
+                0.27    0.03 4285460/4455540     mkFatura [5]
+                0.00    0.01  170080/170080      initFatP [19]
+                0.01    0.00 4455540/13536700     getProductSale [12]
+                0.01    0.00 8911080/17822160     getMesSale [17]
+                0.00    0.00 4455540/8911080     getTotalSale [31]
+-----------------------------------------------
+                0.10    0.21 4455540/4455540     sgvInicializado [1]
+[4]     24.4    0.10    0.21 4455540         filialUpdate [4]
+                0.17    0.00 4455540/4455540     cliCompraUpdate [7]
+                0.02    0.00 4455540/8911080     getClientSale [13]
+                0.01    0.00 4455540/13536700     getProductSale [12]
+                0.01    0.00 4455540/8911080     getTipoSale [18]
+                0.00    0.00 4455540/17822160     getMesSale [17]
+                0.00    0.00 4455540/8911080     getQuantSale [27]
+                0.00    0.00 4455540/8911080     getTotalSale [31]
+-----------------------------------------------
+                0.01    0.00  170080/4455540     initFatP [19]
+                0.27    0.03 4285460/4455540     addFatura [3]
+[5]     24.2    0.28    0.03 4455540         mkFatura [5]
+                0.01    0.00 4455540/4455540     getPUnitSale [22]
+                0.01    0.00 4455540/8911080     getTipoSale [18]
+                0.01    0.00 4455540/17822160     getFilialSale [15]
+                0.00    0.00 4455540/17822160     getMesSale [17]
+                0.00    0.00 4455540/8911080     getQuantSale [27]
+-----------------------------------------------
+                0.13    0.12 5000000/5000000     sgvInicializado [1]
+[6]     19.0    0.13    0.12 5000000         verifySale [6]
+                0.06    0.00 5000000/9455540     saleFields [9]
+                0.02    0.03 5000000/5000000     searchClient [11]
+                0.00    0.01 4507825/4507825     searchProduct [26]
+-----------------------------------------------
+                0.17    0.00 4455540/4455540     filialUpdate [4]
+[7]     13.3    0.17    0.00 4455540         cliCompraUpdate [7]
+                0.00    0.00  891066/891066      prodCliInit [35]
+-----------------------------------------------
+                0.07    0.06 4455540/4455540     sgvInicializado [1]
+[8]      9.5    0.07    0.06 4455540         mkSale [8]
+                0.06    0.00 4455540/9455540     saleFields [9]
+-----------------------------------------------
+                0.06    0.00 4455540/9455540     mkSale [8]
+                0.06    0.00 5000000/9455540     verifySale [6]
+[9]      9.4    0.12    0.00 9455540         saleFields [9]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     7.0    0.09    0.00                 prodCliDestroy [10]
+-----------------------------------------------
+                0.02    0.03 5000000/5000000     verifySale [6]
+[11]     3.5    0.02    0.03 5000000         searchClient [11]
+                0.03    0.00 5000000/5016384     verifyClient [14]
+-----------------------------------------------
+                0.00    0.00  170080/13536700     initFatP [19]
+                0.01    0.00 4455540/13536700     filialUpdate [4]
+                0.01    0.00 4455540/13536700     addFatura [3]
+                0.01    0.00 4455540/13536700     sgvInicializado [1]
+[12]     2.7    0.04    0.00 13536700         getProductSale [12]
+-----------------------------------------------
+                0.02    0.00 4455540/8911080     filialUpdate [4]
+                0.02    0.00 4455540/8911080     sgvInicializado [1]
+[13]     2.7    0.04    0.00 8911080         getClientSale [13]
+-----------------------------------------------
+                0.00    0.00   16384/5016384     sgvInicializado [1]
+                0.03    0.00 5000000/5016384     searchClient [11]
+[14]     2.3    0.03    0.00 5016384         verifyClient [14]
+-----------------------------------------------
+                0.01    0.00 4455540/17822160     mkFatura [5]
+                0.02    0.00 13366620/17822160     sgvInicializado [1]
+[15]     2.0    0.03    0.00 17822160         getFilialSale [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     1.6    0.02    0.00                 destroyFact [16]
+-----------------------------------------------
+                0.00    0.00 4455540/17822160     filialUpdate [4]
+                0.00    0.00 4455540/17822160     mkFatura [5]
+                0.01    0.00 8911080/17822160     addFatura [3]
+[17]     1.2    0.02    0.00 17822160         getMesSale [17]
+-----------------------------------------------
+                0.01    0.00 4455540/8911080     filialUpdate [4]
+                0.01    0.00 4455540/8911080     mkFatura [5]
+[18]     1.2    0.02    0.00 8911080         getTipoSale [18]
+-----------------------------------------------
+                0.00    0.01  170080/170080      addFatura [3]
+[19]     1.0    0.00    0.01  170080         initFatP [19]
+                0.01    0.00  170080/4455540     mkFatura [5]
+                0.00    0.00  170080/13536700     getProductSale [12]
+-----------------------------------------------
+                0.00    0.00  171008/4678833     sgvInicializado [1]
+                0.01    0.00 4507825/4678833     searchProduct [26]
+[20]     0.8    0.01    0.00 4678833         verifyProduct [20]
+-----------------------------------------------
+                0.01    0.00 4455540/4455540     sgvInicializado [1]
+[21]     0.8    0.01    0.00 4455540         destroySale [21]
+-----------------------------------------------
+                0.01    0.00 4455540/4455540     mkFatura [5]
+[22]     0.8    0.01    0.00 4455540         getPUnitSale [22]
+-----------------------------------------------
+                0.01    0.00       1/1           sgvInicializado [1]
+[23]     0.8    0.01    0.00       1         initFaturas [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     0.8    0.01    0.00                 prodCompraDestroy [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[25]     0.8    0.01    0.00                 sgvGetMaisCompradosCliente [25]
+-----------------------------------------------
+                0.00    0.01 4507825/4507825     verifySale [6]
+[26]     0.8    0.00    0.01 4507825         searchProduct [26]
+                0.01    0.00 4507825/4678833     verifyProduct [20]
+-----------------------------------------------
+                0.00    0.00 4455540/8911080     filialUpdate [4]
+                0.00    0.00 4455540/8911080     mkFatura [5]
+[27]     0.4    0.01    0.00 8911080         getQuantSale [27]
+-----------------------------------------------
+                0.01    0.00 4455540/4455540     sgvInicializado [1]
+[28]     0.4    0.01    0.00 4455540         clientesUpdateCompra [28]
+-----------------------------------------------
+                0.01    0.00       1/1           sgvInicializado [1]
+[29]     0.4    0.01    0.00       1         initClients [29]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.4    0.01    0.00                 naoComprou [30]
+-----------------------------------------------
+                0.00    0.00 4455540/8911080     filialUpdate [4]
+                0.00    0.00 4455540/8911080     addFatura [3]
+[31]     0.0    0.00    0.00 8911080         getTotalSale [31]
+-----------------------------------------------
+                0.00    0.00 4455540/4455540     sgvInicializado [1]
+[32]     0.0    0.00    0.00 4455540         produtosUpdateCompra [32]
+-----------------------------------------------
+                0.00    0.00 4455540/4455540     sgvInicializado [1]
+[33]     0.0    0.00    0.00 4455540         updateBuyClient [33]
+-----------------------------------------------
+                0.00    0.00 4455540/4455540     sgvInicializado [1]
+[34]     0.0    0.00    0.00 4455540         updateCompra [34]
+-----------------------------------------------
+                0.00    0.00  891066/891066      cliCompraUpdate [7]
+[35]     0.0    0.00    0.00  891066         prodCliInit [35]
+-----------------------------------------------
+                0.00    0.00  171008/342016      addProduct [37]
+                0.00    0.00  171008/342016      sgvInicializado [1]
+[36]     0.0    0.00    0.00  342016         getIdProduct [36]
+-----------------------------------------------
+                0.00    0.00  171008/171008      sgvInicializado [1]
+[37]     0.0    0.00    0.00  171008         addProduct [37]
+                0.00    0.00  171008/342016      getIdProduct [36]
+-----------------------------------------------
+                0.00    0.00  171008/171008      sgvInicializado [1]
+[38]     0.0    0.00    0.00  171008         mkProduct [38]
+-----------------------------------------------
+                0.00    0.00   16384/32768       addClient [40]
+                0.00    0.00   16384/32768       sgvInicializado [1]
+[39]     0.0    0.00    0.00   32768         getIdClient [39]
+-----------------------------------------------
+                0.00    0.00   16384/16384       sgvInicializado [1]
+[40]     0.0    0.00    0.00   16384         addClient [40]
+                0.00    0.00   16384/32768       getIdClient [39]
+-----------------------------------------------
+                0.00    0.00   16384/16384       sgvInicializado [1]
+[41]     0.0    0.00    0.00   16384         mkClient [41]
+-----------------------------------------------
+                0.00    0.00       3/3           destroySGV [48]
+[42]     0.0    0.00    0.00       3         destroyFilial [42]
+-----------------------------------------------
+                0.00    0.00       3/3           sgvInicializado [1]
+[43]     0.0    0.00    0.00       3         filialInit [43]
+-----------------------------------------------
+                0.00    0.00       1/1           destroySGV [48]
+[44]     0.0    0.00    0.00       1         clearClients [44]
+-----------------------------------------------
+                0.00    0.00       1/1           destroySGV [48]
+[45]     0.0    0.00    0.00       1         clearFaturas [45]
+-----------------------------------------------
+                0.00    0.00       1/1           destroySGV [48]
+[46]     0.0    0.00    0.00       1         clearProducts [46]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[47]     0.0    0.00    0.00       1         destroyInit [47]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[48]     0.0    0.00    0.00       1         destroySGV [48]
+                0.00    0.00       3/3           destroyFilial [42]
+                0.00    0.00       1/1           clearProducts [46]
+                0.00    0.00       1/1           clearFaturas [45]
+                0.00    0.00       1/1           clearClients [44]
+-----------------------------------------------
+                0.00    0.00       1/1           sgvInicializado [1]
+[49]     0.0    0.00    0.00       1         getClientNumber [49]
+-----------------------------------------------
+                0.00    0.00       1/1           sgvInicializado [1]
+[50]     0.0    0.00    0.00       1         getProductNumber [50]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[51]     0.0    0.00    0.00       1         initInicial [51]
+-----------------------------------------------
+                0.00    0.00       1/1           sgvInicializado [1]
+[52]     0.0    0.00    0.00       1         initProducts [52]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[53]     0.0    0.00    0.00       1         setClientPath [53]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[54]     0.0    0.00    0.00       1         setProductPath [54]
+-----------------------------------------------
+                0.00    0.00       1/1           argvParser [2]
+[55]     0.0    0.00    0.00       1         setSalePath [55]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [40] addClient              [39] getIdClient            [30] naoComprou
+   [3] addFatura              [36] getIdProduct           [10] prodCliDestroy
+  [37] addProduct             [17] getMesSale             [35] prodCliInit
+  [44] clearClients           [22] getPUnitSale           [24] prodCompraDestroy
+  [45] clearFaturas           [50] getProductNumber       [32] produtosUpdateCompra
+  [46] clearProducts          [12] getProductSale          [9] saleFields
+   [7] cliCompraUpdate        [27] getQuantSale           [11] searchClient
+  [28] clientesUpdateCompra   [18] getTipoSale            [26] searchProduct
+  [16] destroyFact            [31] getTotalSale           [53] setClientPath
+  [42] destroyFilial          [29] initClients            [54] setProductPath
+  [47] destroyInit            [19] initFatP               [55] setSalePath
+  [48] destroySGV             [23] initFaturas            [25] sgvGetMaisCompradosCliente
+  [21] destroySale            [51] initInicial             [1] sgvInicializado
+  [43] filialInit             [52] initProducts           [33] updateBuyClient
+   [4] filialUpdate           [41] mkClient               [34] updateCompra
+  [49] getClientNumber         [5] mkFatura               [14] verifyClient
+  [13] getClientSale          [38] mkProduct              [20] verifyProduct
+  [15] getFilialSale           [8] mkSale                  [6] verifySale
