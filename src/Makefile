@@ -2,9 +2,9 @@
 CFLAGS= -W -Wall -Wextra -ansi -O2 -D_GNU_SOURCE `pkg-config --cflags --libs glib-2.0`
 
 OBJECTS:=$(patsubst %.c,%.o,$(wildcard *.c))
-BENCH = bench
+BENCH = ../bench
 IMAGE = $$(date +%F-%T)_memusage.png
-DOC = docs
+DOC = ../docs
 EXECUTAVEL=SGV
 
 $(EXECUTAVEL): $(OBJECTS)
@@ -18,6 +18,7 @@ clean:
 
 doc:
 	doxygen Doxygen
+	mv docs ..
 
 grind:
 	valgrind --leak-check=full --show-reachable=no --show-leak-kinds=all ./$(EXECUTAVEL) 1
