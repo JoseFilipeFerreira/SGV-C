@@ -57,15 +57,12 @@ apresentar alguns testes de performance do nosso projeto final.
 
 \chapter{Problema}
 Três ficheiros são fornecidos contendo informação sobre as transações de uma distribuidora:
-
-Um deles contém ids de produtos.
-
-Outro, ids de clientes.
-
-O último integra informações sobre cada venda efetuada ao longo de um ano. 
-
+\begin{itemize}
+    \item O primeiro contém ids de produtos.
+    \item Outro, ids de clientes.
+    \item O último integra informações sobre cada venda efetuada ao longo de um ano. 
+\end{itemize}
 Com base nesses ficheiros é preciso responder a 12 querys fornecidas:
-
 \begin{enumerate}
     \item Ler os ficheiros acima referidos validando cada linha.
     \item Listar todos os produtos cujo ID comece por uma dada letra.
@@ -178,16 +175,27 @@ em buffers de leitura de nomes de ficheiro.
 Este módulo permite realizar \textit{benchmarks} a queries através dos argumentos da linha de comandos.
 Para tal várias funcionalidades foram implementadas:
 \begin{enumerate}
-    \item \texttt{1} Cronometrar todas as queries com parâmetros default.
-    \item \texttt{2} Cronometrar a query 2, por exemplo, com parâmetros default.
-    \item \texttt{2 A} Cronometrar a query 2, por exemplo, com parâmetro A.
-    \item \texttt{8 3 5} Cronometrar a query 8, por exemplo,no intervalo de 3 a 5.
+    \item \texttt{./SGV 1}: Cronometrar todas as queries com parâmetros default.
+    \item \texttt{./SGV 2}: Cronometrar a query 2, por exemplo, com parâmetros default.
+    \item \texttt{./SGV 2 A}: Cronometrar a query 2, por exemplo, com parâmetro A.
+    \item \texttt{./SGV 8 3 5}: Cronometrar a query 8, por exemplo,no intervalo de 3 a 5.
 \end{enumerate}
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{verbatim}
+        $ ./SGV 8 3 5
+        CPU Time used to Load Files:3.447456
+        CPU Time used to Answer Query:0.000012
+        CPU Time used to Free structs:1.173244
+        \end{verbatim}
+    \end{center}
+\end{figure}
 
 \chapter{Arquitetura do projeto}
 
-Este projeto segue uma Arquitetura do tipo \textit{MVC}, Modelo, Apresentação e
-Controlador.
+Este projeto segue uma Arquitetura do tipo \textit{MVC} (Modelo, Apresentação e
+Controlador).
 
 \section{Modelo}
 
@@ -284,7 +292,7 @@ necessário.
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.4\textwidth]{dependency.png}\par
-        \caption{Grafo de Dependências do projeto}
+        \caption{Grafo de Dependências do projeto gerado pela ferramenta \textit{Doxygen}}
     \end{center}
 \end{figure}
 
@@ -306,7 +314,7 @@ necessário.
             \hline
             & 1 Milhão & 3 Milhões & 5 Milhões \\
             \hline
-            Load Time & 3.30 & 8.88 & 14.93 \\
+            Load Time & 3.30 & 8.88 & 14.22 \\
             \hline
             Query 2 & 0.003 & 0.003 & 0.003 \\
             \hline
