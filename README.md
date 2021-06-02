@@ -1,9 +1,8 @@
-# LI3-SGV-C
+# SGV-C
 
-MVC Sale Management (LI3 Assignment)
+MVC Sale Management (Informatic Labs 3 Assignment)
 
-## Getting Started
-### Setting up
+## Setting up
 
 ```
 cd src && make
